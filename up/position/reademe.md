@@ -1,0 +1,3 @@
+cmakelist中添加cv_bridge使用了制导中的msg最好放在一起。
+
+
