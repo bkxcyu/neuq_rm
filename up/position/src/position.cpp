@@ -14,9 +14,9 @@ using namespace cv;
     public:  
       SubscribeAndPublish()  
       {  
-        //Topic you want to publish  
+    
         pub9 = n_.advertise<geometry_msgs::Point>("chatter2", 1);  
-        //Topic you want to subscribe  
+   
         sub_ = n_.subscribe("chatter1", 1, &SubscribeAndPublish::callback, this); 
       }  
       
@@ -57,13 +57,12 @@ using namespace cv;
       ros::init(argc, argv, "test"); 
       ros::NodeHandle n_;
       ros::Rate loop_rate(10);
-      int count=0;
      while(ros::ok())  
      {
       SubscribeAndPublish test;
       ros::spin();
       loop_rate.sleep();
-      ++count;
+    
      }
       return 0;  
     }  
