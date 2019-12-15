@@ -8,7 +8,8 @@
 #include<iostream>
 #include"zhidao.h"
 #include<cmath>
-#include<aim/angle.h>
+#include<sap/angle.h>
+#include <cstdlib>
 
 using namespace std;
 GimbalContrl::GimbalContrl(int x,int y,int z)
@@ -61,7 +62,7 @@ return pitch;
 void chatterCallback1(const geometry_msgs::Point::ConstPtr& abc)  
 {  
   geometry_msgs::Point point;
-  aim::angle msg;
+  sap::angle msg;
   ROS_INFO("i heard point.x:%f\tpoint.y:%f\tpoint.z:%f\t",abc->x,abc->y,abc->z);
   GimbalContrl hhh(abc->x,abc->y,abc->z);
   hhh.sets();
@@ -69,11 +70,15 @@ void chatterCallback1(const geometry_msgs::Point::ConstPtr& abc)
   hhh.setpitch();
   cout<<"pitch"<<hhh.getpitch()<<"   s\t"<<hhh.gets()<<"    yaw\t"<<hhh.getyaw()<<endl;
   //send(hhh.getpitch(),hhh.gets(),hhh.getyaw())
-  msg.pitch=hhh.getpitch();
-  msg.yaw=hhh.getyaw();
-  msg.s=hhh.gets();
+  //msg.pitch=hhh.getpitch();
+  //msg.yaw=hhh.getyaw();
+  //msg.s=hhh.gets();
+   srand(100);
+   msg.pitch=rand();
+   msg.yaw=rand();
+   msg.s=rand();
   ros::NodeHandle n;
-  ros::Publisher  pserial = n.advertise<aim::angle>("chatter3", 1000);
+  ros::Publisher  pserial = n.advertise<sap::angle>("control", 1000);
   pserial.publish(msg);
 
  //pub.publish(msg1); 
@@ -112,11 +117,12 @@ int main(int argc, char **argv)
 		std::stringstream ss2;
 		msg2.data=ss2.str(); */
 		
-		ros::Subscriber sub1 = n.subscribe("chatter2",100,chatterCallback1);
+		ros::Subscriber point3dsub = n.subscribe("point3d",100,chatterCallback1);
 	    //ros::Subscriber sub2 = n.subscribe("**",100,chatterCallback2);
 	    //ros::Subscriber sub3 = n.subscribe("**",100,chatterCallback3);
 	    //ros::Subscriber sub2 = n.subscribe("**",100,chatterCallback2);
-		ros::Publisher  pserial = n.advertise<aim::angle>("chatter3", 1000);
+		ros::Publisher  pserial = n.advertise<sap::angle>("control", 1000);
+  
 		//ros::Publisher  pub2 = n.advertise<std_msgs::String>("chatter2", 1000); 
 		//ros::MultiThreadedSpinner spinner(2);
                 //spinner.spin();

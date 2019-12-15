@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(hkvs)
 find_package(catkin REQUIRED)
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 find_package( OpenCV 3.3.0 REQUIRED )
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -8,23 +9,25 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   cv_bridge
   image_transport
-  message_generation
-  aim
+ message_generation
 )
-
+add_message_files(
+    FILES
+    square.msg
+)
 find_package(OpenCV REQUIRED)
-
-
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS cv_bridge
                  std_msgs
                  roscpp
                  image_transport
-                 
+message_generation
 )
-
- 
 
 
 include_directories(
@@ -47,23 +50,6 @@ target_link_libraries(hkvs_sub
 )
 
 
-add_executable(hkvs_test
-  src/hkvs_test.cpp
-)
-add_dependencies(hkvs_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(hkvs_test -lX11 -lMvCameraControl -lpthread
-  ${catkin_LIBRARIES}
-)
-
-add_executable(ImageProcess
-  src/ImageProcess.cpp
-)
-add_dependencies(ImageProcess ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(ImageProcess -lMvCameraControl -lpthread
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-)
-
 
 add_executable(hkvs
   src/hkvs.cpp
@@ -75,24 +61,6 @@ target_link_libraries(hkvs -lMvCameraControl -lpthread
 )
 
 
-add_executable(circle
-  src/circle.cpp
-)
-add_dependencies(circle ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(circle -lMvCameraControl -lpthread
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-)
-
-add_executable(hkvs_light
-  src/hkvs_light.cpp
-)
-add_dependencies(hkvs_light ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(hkvs_light -lMvCameraControl -lpthread
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-)
-
 add_executable(hkvs_pub
   src/hkvs_pub.cpp
 )
@@ -101,6 +69,7 @@ target_link_libraries(hkvs_pub -lMvCameraControl -lpthread
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
 )
+
 
 
 

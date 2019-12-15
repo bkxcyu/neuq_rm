@@ -12,6 +12,8 @@
 
 using namespace cv;
 
+
+
 // 等待用户输入enter键来结束取流或结束程序
 // wait for user to input enter to stop grabbing or end the sample program
 void PressEnterToExit(void)
@@ -58,6 +60,7 @@ bool PrintDeviceInfo(MV_CC_DEVICE_INFO* pstMVDevInfo)
 
 int main(int argc, char** argv)
 {
+
     ros::init(argc, argv, "hkvs_pub");
     ros::NodeHandle nh;
     image_transport::ImageTransport it(nh);
@@ -269,10 +272,9 @@ int main(int argc, char** argv)
                     }
                     fwrite(pDataForRGB, 1, stConvertParam.nDstLen, fp);
                     Mat image;
+                    
                     cv::Mat src(stImageInfo.nHeight, stImageInfo.nWidth, CV_8UC3, pDataForRGB);
-                    cvtColor(src,src,COLOR_BGR2GRAY,1);
-                    cv::imshow("a",src);
-                    sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", src).toImageMsg();
+                    sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "rgb8", src).toImageMsg();
                     pub.publish(msg);
                     ros::spinOnce();
                     loop_rate.sleep();

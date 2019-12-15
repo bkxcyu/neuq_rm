@@ -10,14 +10,10 @@
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
 
-
-#include "cv.h"
-#include "highgui.h"
-#include <stdio.h>
-#include <vector>
-#include <aim/square.h>
 using namespace cv;
-using namespace std;
+
+
+
 // 等待用户输入enter键来结束取流或结束程序
 // wait for user to input enter to stop grabbing or end the sample program
 void PressEnterToExit(void)
@@ -60,31 +56,30 @@ bool PrintDeviceInfo(MV_CC_DEVICE_INFO* pstMVDevInfo)
     return true;
 }
 
+
+
 int main(int argc, char** argv)
 {
+
     ros::init(argc, argv, "hkvs_pub");
     ros::NodeHandle nh;
     image_transport::ImageTransport it(nh);
-    image_transport::Publisher pub = it.advertise("camera/image", 1);
-    ros::Publisher squarepublish = nh.advertise<aim::square>("chatter1", 1000);
-    
-    ros::Rate loop_rate(5);
+    image_transport::Publisher pub = it.advertise("camera/image_raw", 1);
+    ros::Rate loop_rate(20);
+
     int nRet = MV_OK;
+    int ready = 0;
+    int end = 0;
 
     void* handle = NULL;
 	unsigned char * pData = NULL;        
     unsigned char *pDataForRGB = NULL;
     unsigned char *pDataForSaveImage = NULL;
-    MV_FRAME_OUT_INFO_EX stImageInfo = {0};
-    Mat src;
-    sensor_msgs::ImagePtr msg;
-    aim::square squared;
-
-   while (1)
+    do 
     {
         MV_CC_DEVICE_INFO_LIST stDeviceList;
         memset(&stDeviceList, 0, sizeof(MV_CC_DEVICE_INFO_LIST));
-
+        
         // 枚举设备
         // enum device
         nRet = MV_CC_EnumDevices(MV_GIGE_DEVICE | MV_USB_DEVICE, &stDeviceList);
@@ -164,7 +159,6 @@ int main(int argc, char** argv)
             printf("MV_CC_SetTriggerMode fail! nRet [%x]\n", nRet);
             break;
         }
-
         // ch:获取数据包大小 | en:Get payload size
         MVCC_INTVALUE stParam;
         memset(&stParam, 0, sizeof(MVCC_INTVALUE));
@@ -174,7 +168,7 @@ int main(int argc, char** argv)
             printf("Get PayloadSize fail! nRet [0x%x]\n", nRet);
             break;
         }
-
+        
         // 开始取流
         // start grab image
         nRet = MV_CC_StartGrabbing(handle);
@@ -184,7 +178,31 @@ int main(int argc, char** argv)
             break;
         }
 
-        
+        int nRet = MV_OK;
+
+    // ch:获取数据包大小 | en:Get payload size
+    //MVCC_INTVALUE stParam;
+    memset(&stParam, 0, sizeof(MVCC_INTVALUE));
+    nRet = MV_CC_GetIntValue(handle, "PayloadSize", &stParam);
+    if (MV_OK != nRet)
+    {
+        printf("Get PayloadSize fail! nRet [0x%x]\n", nRet);
+        return NULL;
+    }
+
+    MV_FRAME_OUT_INFO_EX stImageInfo = {0};
+    memset(&stImageInfo, 0, sizeof(MV_FRAME_OUT_INFO_EX));
+    unsigned char * pData = (unsigned char *)malloc(sizeof(unsigned char) * stParam.nCurValue);
+    if (NULL == pData)
+    {
+        return NULL;
+    }
+    unsigned int nDataSize = stParam.nCurValue;
+
+    while(nh.ok())
+    {
+
+        MV_FRAME_OUT_INFO_EX stImageInfo = {0};
         memset(&stImageInfo, 0, sizeof(MV_FRAME_OUT_INFO_EX));
         pData = (unsigned char *)malloc(sizeof(unsigned char) * stParam.nCurValue);
         if (NULL == pData)
@@ -192,6 +210,8 @@ int main(int argc, char** argv)
             break;
         }
         unsigned int nDataSize = stParam.nCurValue;
+        
+        
 
         nRet = MV_CC_GetOneFrameTimeout(handle, pData, nDataSize, &stImageInfo, 1000);
         if (nRet == MV_OK)
@@ -205,7 +225,18 @@ int main(int argc, char** argv)
             printf("input 0 to do nothing, 1 to convert RGB, 2 to save as BMP\n");
             int nInput = 1;
             //scanf("%d", &nInput);
-            
+            switch (nInput)
+            {
+                // 不做任何事，继续往下走
+                // do nothing, and go on next
+            case 0: 
+                {
+                    break;
+                }
+                // 转换图像为RGB格式，用户可根据自身需求转换其他格式
+                // convert image format to RGB, user can convert to other format by their requirement
+            case 1: 
+                {
                     pDataForRGB = (unsigned char*)malloc(stImageInfo.nWidth * stImageInfo.nHeight * 4 + 2048);
                     if (NULL == pDataForRGB)
                     {
@@ -240,153 +271,24 @@ int main(int argc, char** argv)
                         break;
                     }
                     fwrite(pDataForRGB, 1, stConvertParam.nDstLen, fp);
-
-                    cv::Mat src(stImageInfo.nHeight, stImageInfo.nWidth, CV_8UC3, pDataForRGB);
-                    //cv::imshow("a",src);
                     Mat image;
-                    Mat binBrightImg;
                     
-                    //Mat dstImage = Mat::zeros(src.rows, src.cols, CV_8UC3);
-                    cvtColor(src,image,COLOR_BGR2GRAY,1);
-                    cv::threshold(image, binBrightImg, 210, 255, cv::THRESH_BINARY);
-                    cv::Mat element = cv::getStructuringElement(2, cv::Size(3, 3));
-                    dilate(binBrightImg, binBrightImg, element);
-                    cv::imshow("b",binBrightImg);
-
-
-                   vector<vector<Point> > contours;
-                   vector<Vec4i> hierarchy;
-	               findContours(binBrightImg,contours,hierarchy,RETR_EXTERNAL,CHAIN_APPROX_NONE,Point());
-
-	               Mat imageContours=Mat::zeros(binBrightImg.size(),CV_8UC1);	//最小外接矩形画布
-	               Mat imageContours1=Mat::zeros(binBrightImg.size(),CV_8UC1); //最小外结圆画布
-	               for(int i=0;i<contours.size();i++)
-	                {		
-		            //绘制轮廓
-		                drawContours(imageContours,contours,i,Scalar(255),1,8,hierarchy);
-		                drawContours(imageContours1,contours,i,Scalar(255),1,8,hierarchy);
-
-
-		            //绘制轮廓的最小外结矩形
-		                RotatedRect rect=minAreaRect(contours[i]);
-		                Point2f P[4];
-		                rect.points(P);
-		                for(int j=0;j<=3;j++)
-		                    {
-			                    line(imageContours,P[j],P[(j+1)%4],Scalar(255),2);
-                                cout<< "rect_center" << j << P[j] << endl;
-                                if(j=1){squared.zs_x=P[j].x;squared.zs_y=P[j].y;}
-                                if(j=2){squared.zx_x=P[j].x;squared.zx_y=P[j].y;}
-                                if(j=3){squared.ys_x=P[j].x;squared.ys_y=P[j].y;}
-                                if(j=4){squared.yx_x=P[j].x;squared.yx_y=P[j].y;}
-
-
-		                    }
-
-		            //绘制轮廓的最小外结圆
-		                Point2f center; float radius;
-		                minEnclosingCircle(contours[i],center,radius);
-		                circle(imageContours1,center,radius,Scalar(255),2);
-                        cout << "circle_center=" << center << endl;
-                        squared.o_x=center.x;
-                        squared.o_y=center.y;
-
-                    }
-	                cv::imshow("MinAreaRect",imageContours);	
-	                cv::imshow("MinAreaCircle",imageContours1);	
-                   
-                   
-                   /* vector<vector<Point> > contours;
-                    vector<Vec4i> hierarchy;
-                    findContours(binBrightImg.clone(), contours,hierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE);
-	                vector<Rect> boundRect(contours.size());
-
-	                Mat drawing = Mat::zeros(binBrightImg.size(), CV_8UC3);
-	                for (int i = 0; i < contours.size(); i++)
-	                {
-		                boundRect[i] = boundingRect(Mat(contours[i]));
-		                Scalar color(0, 255, 0);
-		
-		                drawContours(drawing, contours, i, color, 1, 8, hierarchy);
-	                    rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), Scalar(0, 0, 255), 1, 8);
-
-		
-		                cout << "P1 = " << boundRect[i].tl()  << " mm" << endl;
-		                cout << "P2 = " << boundRect[i].br() << " mm"  << endl; 
-                        cout << "p3 = " <<(boundRect[i].br() + boundRect[i].tl())/2 << " mm"  << endl; 
-
-	                }
-	                cv::imshow("output", drawing);*/
-
-
-                    /*vector<vector<Point> > contours;
- 
-	                //使用canny检测出边缘
-	                //Mat edge_image;
-	                //Canny(binBrightImg,edge_image,30,70);
-	                //cv::imshow("canny边缘",edge_image);
-                    findContours(binBrightImg, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
-	                Mat cimage = Mat::zeros(binBrightImg.size(), CV_8UC3);
- 
-	                for(size_t i = 0; i < contours.size(); i++)
-	               {
-		            //拟合的点至少为6
-		            size_t count = contours[i].size();
-		            if( count < 6 )
-			        continue;
- 
-		            //椭圆拟合
-		            RotatedRect box = fitEllipse(contours[i]);
- 
-		            //如果长宽比大于30，则排除，不做拟合
-		            if( MAX(box.size.width, box.size.height) > MIN(box.size.width, box.size.height)*30 )
-			        continue;
- 
-		            //画出追踪出的轮廓
-		            drawContours(cimage, contours, (int)i, Scalar::all(255), 1, 8);
-		
-		            //画出拟合的椭圆
-		            ellipse(cimage, box, Scalar(0,0,255), 1, CV_AA);
-	               }
-                   if(!cimage.empty())
-	               cv::imshow("results", cimage);*/
- 
-
-                    
-                   /* vector<vector<Point> > lightContours;
-                    vector<Vec4i> hierarchy;
-                    findContours(binBrightImg.clone(), lightContours,hierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE);
-                    std::vector<Rect> boundRect(lightContours.size());
-                    int index = 0;
-	                for (int i =0;i<lightContours.size();i++)
-                    {
-                       // 获取最小外接矩形
-                       boundRect[i] = boundingRect(lightContours[i]);
-
-                       // 在原图像上绘制最小外接矩形
-                       rectangle(src, boundRect[i], Scalar(0, 255, 0));
-                    }
-                    if(!src.empty())
-                    imshow("result", src);*/
-                    msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", src).toImageMsg();
-                  if(msg==0)
-                  {
-                   printf("open error\n");
-                  }
-                     
-                     
-                     
-                       cv::waitKey(5);
-                   
-                    
-                    
-
-
+                    cv::Mat src(stImageInfo.nHeight, stImageInfo.nWidth, CV_8UC3, pDataForRGB);
+                    sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", src).toImageMsg();
+                    pub.publish(msg);
+                    ros::spinOnce();
+                    loop_rate.sleep();
                     fclose(fp);
                     printf("convert succeed\n");
-             
-              
+                    break;
+                }
+            default:
+                break;
+            }
         }
+    }
+
+    free(pData);
 
         // 停止取流
         // end grab image
@@ -396,7 +298,8 @@ int main(int argc, char** argv)
             printf("MV_CC_StopGrabbing fail! nRet [%x]\n", nRet);
             break;
         }
-
+        if(end=1)
+        {
         // 销毁句柄
         // destroy handle
         nRet = MV_CC_DestroyHandle(handle);
@@ -405,9 +308,7 @@ int main(int argc, char** argv)
             printf("MV_CC_DestroyHandle fail! nRet [%x]\n", nRet);
             break;
         }
-    } ;
-     
-    if (nRet != MV_OK)
+        if (nRet != MV_OK)
     {
         if (handle != NULL)
         {
@@ -430,15 +331,13 @@ int main(int argc, char** argv)
         free(pDataForSaveImage);
         pDataForSaveImage = NULL;
     }
-
-    while (nh.ok())
-    {
-        
-        squarepublish.publish(squared);
-        ros::spinOnce();
-        loop_rate.sleep();
-    }
-    PressEnterToExit();
+        }
+    //PressEnterToExit();
     printf("exit\n");
+    } while (0);
+
+    
     return 0;
 }
+
+
