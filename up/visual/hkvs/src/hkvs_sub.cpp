@@ -69,47 +69,39 @@ public:
                     dilate(binBrightImg, binBrightImg, element);
                     cv::imshow("b",binBrightImg);
 
-     vector<vector<Point> > contours;
-                   vector<Vec4i> hierarchy;
-	               findContours(binBrightImg,contours,hierarchy,RETR_EXTERNAL,CHAIN_APPROX_NONE,Point());
-
-	               Mat imageContours=Mat::zeros(binBrightImg.size(),CV_8UC1);	//最小外接矩形画布
-
-	               for(int i=0;i<contours.size();i++)
-	                {		
-		            //绘制轮廓
-		                drawContours(imageContours,contours,i,Scalar(255),1,8,hierarchy);
-
-
-
-		            //绘制轮廓的最小外结矩形
-		                RotatedRect rect=minAreaRect(contours[i]);
-		                Point2f P[4];
-		                rect.points(P);
-		                for(int j=0;j<=3;j++)
-		                    {
-			                    line(imageContours,P[j],P[(j+1)%4],Scalar(255),2);
-                                cout<< "rect_center" << j << P[j] << endl;
-                                if(j=0){squared.zs_x=P[j].x;squared.zs_y=P[j].y;}
-                                if(j=1){squared.ys_x=P[j].x;squared.ys_y=P[j].y;}
-                                if(j=2){squared.yx_x=P[j].x;squared.yx_y=P[j].y;}
-                                if(j=3){squared.zx_x=P[j].x;squared.zx_y=P[j].y;}
-		                    }
-                                      cout<<"ffffffffffffffffffffffffffffffff"<<endl;
-                                               squarepub.publish(squared);
-
+                    vector<vector<Point> >contours;
+                    vector<Vec4i> hierarchy;
+                    vector<RotatedRect>rect;
+                    findContours(binBrightImg, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+                    for (int i = 0; i < contours.size(); i++)
+                    {
+                        rect.push_back(minAreaRect(contours[i]));
+                        Point2f vertices[4];      //定义矩形的4个顶点
+                        rect[i].points(vertices);   //计算矩形的4个顶点
+                        float ratio = float(rect[i].size.height) / float(rect[i].size.width); 
+                        
+                    
+                        for (int i = 0; i < 4; i++){
+                        line(img, vertices[i], vertices[(i + 1) % 4], Scalar(255, 0, 0),5);
+                        cout << "rect_center" << i << vertices[i] << endl;
+                        cout <<"width的值："<<rect[i].size.width << endl;
+                        cout << "height的值：" << rect[i].size.height << endl;//其实只有一个外接矩形     
+                        if(i=0){squared.zs_x=vertices[i].x;squared.zs_y=vertices[i].y;}
+                        if(i=1){squared.ys_x=vertices[i].x;squared.ys_y=vertices[i].y;}
+                        if(i=2){squared.yx_x=vertices[i].x;squared.yx_y=vertices[i].y;}
+                        if(i=3){squared.zx_x=vertices[i].x;squared.zx_y=vertices[i].y;}
+                        squarepub.publish(squared);
+                        }
+			
                     }
-	                cv::imshow("MinAreaRect",img);	
-	
+      cv::imshow("img", img);
+
        //cv::cvtColor(img, img_out, CV_RGB2GRAY);  //转换成灰度图象
-
-
-
-       /*if(frame_number<=40) frame_number++;
+       if(frame_number<=1000) frame_number++;
        else frame_number=0;
        string Img_Name = "../rosimage/image"+to_string(frame_number)+".jpg";
        imwrite(Img_Name,img);
-       cv::imshow("INPUT", img);*/
+       cv::imshow("INPUT", img);
        //cv::imshow("OUTPUT", img_out);
        cv::waitKey(5);
     }
@@ -117,10 +109,7 @@ public:
 
 int main(int argc, char** argv)
 {
-
     ros::init(argc, argv, "image_converter");
-
-
     ImageConverter ic;
     //循环等待
     ros::spin();

@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   cv_bridge
   image_transport
- message_generation
+   message_generation
 )
 add_message_files(
     FILES
@@ -26,7 +26,7 @@ catkin_package(
                  std_msgs
                  roscpp
                  image_transport
-message_generation
+                 message_generation
 )
 
 
