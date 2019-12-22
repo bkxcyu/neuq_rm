@@ -64,17 +64,17 @@ speedBindings={
     }
 
 schemaTranslation={
-        '1':"normal",
-        '2':"dodge",
-        '3':"motion",
-        '4':"follow",
-        '5':"auto",
+        #'1':"chassis_normal",
+        #'2':"chassis_dodge",
+       # '3':"chassis_motion",
+       # '4':"chassis_follow",
+        #'5':"gimbal_auto_aim",
         '6':"load",
-        '7':"turn",
-        '8':"side",
-        '9':"hand",
-        '0':"shand",
-        '-':"auto",
+        '7':"gimbal_turn",
+        '8':"gimbal_side",
+        '9':"gimbal_hand",
+        #'0':"gimbal_shand",
+        #'-':"gimbal_auto_fire",
 
       
 }
@@ -147,6 +147,7 @@ if __name__=="__main__":
 		          y=0
 		          z=0
 		          th =0
+			  twist = Twist()
 			  twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
 		          twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
 		          twistpub.publish(twist)

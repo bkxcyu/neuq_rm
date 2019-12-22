@@ -6,77 +6,92 @@
 #include<geometry_msgs/PoseStamped.h>
 #include<geometry_msgs/Twist.h>
 #include<iostream>
-#include"zhidao.h"
 #include<cmath>
-#include<sap/angle.h>
+#include <eigen3/Eigen/Core>
+#include <eigen3/Eigen/Dense>
 #include <cstdlib>
-
+#include<sap/angle.h>
 using namespace std;
-GimbalContrl::GimbalContrl(int x,int y,int z)
-{
-	this->x=x;
-	this->y=y;
-	this->z=z;
+using namespace Eigen;
 
-}
-//~GimbalContrl(){cout<<dd;};
-double GimbalContrl::sets()
-{
-    this->s=sqrt(pow(x,2)+pow(y,2));
-}
-
-double GimbalContrl::setyaw()
-{
-     this->yaw=atan(y/x);
-}
-
-double GimbalContrl::setpitch()
-{
- this->pitch=atan((2*pow(v,2)*s-sqrt(4*pow(v,4)*pow(s,2)-8*9.8*pow(v,2)*pow(s,2)*z-4*9.8*9.8*pow(s,4)))/(2*9.8*pow(s,2)));
-}
-
-double GimbalContrl::getyaw()
-{
-return yaw;
-}
-
-double GimbalContrl::gets()
-{
-return s;
-}
-double GimbalContrl::getpitch()
-{
-return pitch;
-}
-
-//类定义完成
-//
-//
-///
-////
-/////
-//////
-///////
-////////
 
 void chatterCallback1(const geometry_msgs::Point::ConstPtr& abc)  
 {  
+ROS_INFO("i heard point.x:%f\tpoint.y:%f\tpoint.z:%f\t",abc->x,abc->y,abc->z);
+double yaw,pitch,v=20,s;
+Eigen::MatrixXd A(6,6);
+A << 1, 0.02, 0, 0, 0, 0,
+     0, 1, 0, 0, 0, 0,
+     0, 0, 1, 0.02, 0, 0, 
+     0, 0, 0, 1, 0, 0,
+     0, 0, 0, 0, 1, 0.02,
+     0, 0, 0, 0, 0, 1;
+
+Eigen::MatrixXd H(3,6);
+H <<1, 0, 0, 0, 0, 0,
+    0, 0, 1, 0, 0, 0,
+    0, 0, 0, 0, 1, 0;
+
+Eigen::MatrixXd P(6,6);
+P << 1, 1, 0, 0, 0, 0,
+	 1, 1, 0, 0, 0, 0,
+	 0, 0, 1, 1, 0, 0,
+	 0, 0, 1, 1, 0, 0,
+     0, 0, 0, 0, 1, 1,
+     0, 0, 0, 0, 1, 1;
+
+Eigen::MatrixXd Q(6,6);
+Q << 0, 0, 0, 0, 0, 0,
+	 0, 5, 0, 0, 0, 0,
+	 0, 0, 0, 0, 0, 0,
+     0, 0, 0, 5, 0, 0,
+     0, 0, 0, 0, 0, 0,
+	 0, 0, 0, 0, 0, 1;
+
+Eigen::MatrixXd R(3,3);
+R << 200, 0,   0,
+	 0,   200, 0,
+     0,   0,   200;
+
+Eigen::VectorXd x(6);
+x << 0, 0, 0, 0, 0, 0;
   geometry_msgs::Point point;
   sap::angle msg;
   ROS_INFO("i heard point.x:%f\tpoint.y:%f\tpoint.z:%f\t",abc->x,abc->y,abc->z);
-  GimbalContrl hhh(abc->x,abc->y,abc->z);
-  hhh.sets();
-  hhh.setyaw();
-  hhh.setpitch();
-  cout<<"pitch"<<hhh.getpitch()<<"   s\t"<<hhh.gets()<<"    yaw\t"<<hhh.getyaw()<<endl;
-  //send(hhh.getpitch(),hhh.gets(),hhh.getyaw())
-  //msg.pitch=hhh.getpitch();
-  //msg.yaw=hhh.getyaw();
-  //msg.s=hhh.gets();
-   srand(100);
-   msg.pitch=rand();
-   msg.yaw=rand();
-   msg.s=rand();
+  
+  Eigen::MatrixXd z_meas(3,1);
+  z_meas << abc->x,abc->y,abc->z;
+
+  x = A * x;
+cout<<"sssssssssssss";
+  Eigen::MatrixXd A_T = A.transpose();
+
+  P = A * P*A_T + Q;
+	
+  Eigen::MatrixXd temp1, temp2, Ht;
+  Ht = H.transpose();
+  temp1 = H * P * Ht + R;
+  temp2 = temp1.inverse();
+
+  Eigen::MatrixXd K = P * Ht*temp2;
+
+  Eigen::VectorXd z = H * x;
+  x = x + K * (z_meas - z);
+
+  Eigen::MatrixXd I = Eigen::MatrixXd::Identity(6,6);
+  P = (I - K * H)*P;
+ double after_x,after_y,after_z;
+  after_x = x (0,0);
+  after_y = x (1,0);
+  after_z = x (2,0);
+
+  s=sqrt(pow(after_x,2)+pow(after_y,2));
+  yaw=atan(after_y/after_x);
+  pitch=atan((2*pow(v,2)*s-sqrt(4*pow(v,4)*pow(s,2)-8*9.8*pow(v,2)*pow(s,2)*after_z-4*9.8*9.8*pow(s,4)))/(2*9.8*pow(s,2)));
+  
+  msg.pitch=pitch;
+  msg.yaw=yaw;
+  cout<<pitch<<'\n'<<yaw<<endl;
   ros::NodeHandle n;
   ros::Publisher  pserial = n.advertise<sap::angle>("control", 1000);
   pserial.publish(msg);
@@ -104,12 +119,14 @@ void chatterCallback3(const geometry_msgs::Twist::ConstPtr& msg)
 
 
 int main(int argc, char **argv)
-{
+{	
+	
 	ros::init(argc,argv,"sap");
 	ros::NodeHandle n;
 	ros::Rate loop_rate(10);
     while(ros::ok())
 	{
+	cout<<"ssss"<<endl;
 		/*std_msgs::String msg1;
 		std::stringstream ss1;
 		msg1.data=ss1.str();
@@ -122,12 +139,12 @@ int main(int argc, char **argv)
 	    //ros::Subscriber sub3 = n.subscribe("**",100,chatterCallback3);
 	    //ros::Subscriber sub2 = n.subscribe("**",100,chatterCallback2);
 		ros::Publisher  pserial = n.advertise<sap::angle>("control", 1000);
-  
 		//ros::Publisher  pub2 = n.advertise<std_msgs::String>("chatter2", 1000); 
 		//ros::MultiThreadedSpinner spinner(2);
                 //spinner.spin();
-	    loop_rate.sleep();
+	    
 		ros::spin();
+loop_rate.sleep();
 	}
 return 0;
 }
