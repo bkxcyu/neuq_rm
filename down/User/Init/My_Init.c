@@ -20,7 +20,6 @@
 #include "remote_code.h"
 #include "bsp_debug_usart.h"
 #include "bsp_uart7.h"
-#include "gimbal.h"
 
 RCC_ClocksTypeDef get_rcc_clock;		//系统时钟结构体
 
