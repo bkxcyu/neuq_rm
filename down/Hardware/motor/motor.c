@@ -5,6 +5,7 @@
 #include "angle_pid.h"
 #include "stm32f4xx_can.h"
 #include "stm32f4xx.h"
+#include "kinematic.h"
 
 MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,motor7,motor8;
 LOOPBACK loopback;
@@ -111,26 +112,49 @@ void set_trigger_current()
 	u8 current_msg[8];
 	
 	//电机目标电流为速度pid输出
-	motor5.target_current = motor5.target_speed;//测试
+	motor5.target_current = motor5.target_speed;;//测试
 	motor6.target_current = motor6.vpid.PID_OUT;
 	motor7.target_current = motor7.vpid.PID_OUT;
 	motor8.target_current = motor8.vpid.PID_OUT;
 
 	
 	//can总线通信协议，参照电调说明书
-	current_msg[0] =motor5.target_current >> 8;			//5号电机电流高8位
-	current_msg[1] = motor5.target_current & 0xff;		//5号电机电流低8位
-	current_msg[2] = motor6.target_current >> 8;			//6号电机电流高8位
-	current_msg[3] = motor6.target_current & 0xff;		//6号电机电流低8位
-	current_msg[4] = motor7.target_current >> 8;			//7号电机电流高8位
-	current_msg[5] = motor7.target_current & 0xff;		//7号电机电流低8位*/
-	current_msg[6] = motor8.target_current >> 8;			//8号电机电流高8位
-	current_msg[7] = motor8.target_current & 0xff;		//8号电机电流低8位
+	current_msg[0] =motor5.target_current >> 8;			//1号电机电流高8位
+	current_msg[1] = motor5.target_current & 0xff;		//1号电机电流低8位
+	current_msg[2] = motor6.target_current >> 8;			//2号电机电流高8位
+	current_msg[3] = motor6.target_current & 0xff;		//2号电机电流低8位
+	current_msg[4] = motor7.target_current >> 8;			//3号电机电流高8位
+	current_msg[5] = motor7.target_current & 0xff;		//3号电机电流低8位*/
+	current_msg[6] = motor8.target_current >> 8;			//4号电机电流高8位
+	current_msg[7] = motor8.target_current & 0xff;		//4号电机电流低8位
 	
 	//can发送数据帧
 	CAN1_Send_Trigger_Msg(current_msg);
 }
+/*void set_gimbal_current()
+{
+	u8 current_msg[8];
+	
+	//电机目标电流为速度pid输出
+	motor5.target_current = motor5.vpid.PID_OUT;//测试
+	motor6.target_current = motor6.vpid.PID_OUT;
+	motor7.target_current = motor7.vpid.PID_OUT;
+	motor8.target_current = motor8.vpid.PID_OUT;
 
+	
+	//can总线通信协议，参照电调说明书
+	current_msg[0] = motor5.target_current >> 8;			//1号电机电流高8位
+	current_msg[1] = motor5.target_current & 0xff;		//1号电机电流低8位
+	current_msg[2] = motor6.target_current >> 8;			//2号电机电流高8位
+	current_msg[3] = motor6.target_current & 0xff;		//2号电机电流低8位
+	current_msg[4] = motor7.target_current >> 8;			//3号电机电流高8位
+	current_msg[5] = motor7.target_current & 0xff;		//3号电机电流低8位
+	current_msg[6] = motor8.target_current >> 8;			//4号电机电流高8位
+	current_msg[7] = motor8.target_current & 0xff;		//4号电机电流低8位
+	
+	//can发送数据帧
+	CAN1_Send_GIMBAL_Msg(current_msg);
+}*/
 // 函数: stop_allmotor()
 // 描述: 将所有电机停在当前角度
 // 参数：无
@@ -148,7 +172,6 @@ void stop_chassis_motor()
 	//改变角度pid目标角度值
 	set_chassis_motor_angle(motor1.stop_angle,motor2.stop_angle,motor3.stop_angle,motor4.stop_angle);
 	
-	
 }
 void stop_trigger_motor()
 {
@@ -157,7 +180,6 @@ motor5.stop_angle = motor5.total_angle;
 set_trigger_motor_angle(motor5.stop_angle);
 trigger_to_motor(0);
 set_trigger_motor_speed(motor5.target_speed);
-	
 
 }
 

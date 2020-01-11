@@ -2,13 +2,13 @@
 ..\output\remote_code.o: ..\Hardware\remote_code\remote_code.h
 ..\output\remote_code.o: ..\User\sys\sys.h
 ..\output\remote_code.o: ..\User\sys\stm32f4xx.h
-..\output\remote_code.o: D:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f427xx.h
+..\output\remote_code.o: E:\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f427xx.h
 ..\output\remote_code.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\remote_code.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\remote_code.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\remote_code.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\remote_code.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\remote_code.o: ..\Libraries\CMSIS\Include\core_cmSimd.h
-..\output\remote_code.o: D:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\output\remote_code.o: E:\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
 ..\output\remote_code.o: ..\Hardware\DJi_remote\DJi_remote.h
 ..\output\remote_code.o: ..\Hardware\FS_remote\FS_remote.h
 ..\output\remote_code.o: ..\APP\speed_pid\speed_pid.h

@@ -7,16 +7,12 @@
 #include "kinematic.h"
 #include "mode.h"
 #include "bsp_debug_usart.h"
-
+#include "remote_code.h"
 
   extern char receiveBuffer[MAX_LENGTH];
   enum chassis_mode_t chassis_modes;
   enum gimbal_mode_t gimbal_modes;
   enum fric_mode_t fric_modes;
-
-
-
-
 
 
 void send_cgf_info_by_json(void)
@@ -127,6 +123,9 @@ json_t *root;
 
 	float tmp_getx;
 	float tmp_gety;
+
+  float pitch_angle;
+	float yaw_angle;
 //json数据缓冲区
 char json_Buffer[MAX_LENGTH];
 extern char receiveBuffer[MAX_LENGTH];
@@ -152,7 +151,7 @@ void resolve_json_chassis_command(void)
 	item_obj = json_array_get( chassis_obj, 1 );
 	Kinematics.target_velocities.linear_y = 1.0f*json_integer_value(item_obj);
 	item_obj = json_array_get( chassis_obj, 2 );
-	Kinematics.target_velocities.angular_z =1.0f*json_integer_value(item_obj)/100;///100;
+	Kinematics.target_velocities.angular_z = 5;//1.0f*json_integer_value(item_obj)/100;///100;
 	json_decref(item_obj); //Decrement the reference count of json. As soon as a call to json_decref() drops the reference count to zero, the value is destroyed and it can no longer be used.
 	json_decref(chassis_obj);
 	json_decref(root);
@@ -175,7 +174,6 @@ void resolve_json_gimbal_command()
 	json_decref(root);
 
 }
-
 //解析收到的摩擦轮控制指令
 void resolve_json_fric_command()
 	{ 
@@ -184,7 +182,7 @@ void resolve_json_fric_command()
 	json_t *item_obj;
 	json_error_t error;
 	root = json_loads(json_Buffer,0,&error);
-	fric_obj = json_object_get( root, "fric" );
+	fric_obj = json_object_get( root, "fric_angular" );
 	item_obj = json_array_get( fric_obj, 0 );
 	Kinematics.target_angular.fric_angular=1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);
@@ -199,9 +197,9 @@ void resolve_json_trigger_command()
 	json_t *item_obj;
 	json_error_t error;
 	root = json_loads(json_Buffer,0,&error);
-	trigger_obj = json_object_get( root, "trigger" );
+	trigger_obj = json_object_get( root, "trigger_angular" );
 	item_obj = json_array_get( trigger_obj, 0 );
-	Kinematics.target_angular.trigger_angular=1.0f*json_integer_value(item_obj);
+	Kinematics.target_angular.trigger_angular=150;//1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);
 	json_decref(trigger_obj);
 	json_decref(root);
@@ -369,6 +367,20 @@ void jansson_pack_test(void)
 	
 	
 	
+	
+}
+
+
+
+
+
+void caclulate_pwm_pulse()
+{
+	float unit_pwm_pulse= (840.0f/360.0f);
+	
+	pwm_pulse1 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.pitch_angular)*1.0f;
+	
+	pwm_pulse2 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.yaw_angular)*1.0f;
 	
 }
 

@@ -3,7 +3,7 @@
 ..\output\power.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h
 ..\output\power.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\power.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\power.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\power.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\power.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\power.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\power.o: ..\Libraries\CMSIS\Include\core_cmSimd.h

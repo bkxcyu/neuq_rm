@@ -16,6 +16,7 @@ float pwm_pulse2=1500;
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
 float caculate_gembal_pitch_angle(int width,int mid,int min,int max);
+float caculate_gembal_yaw_angle(int width,int mid,int min,int max);
 // º¯Êý: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
 // ²ÎÊý£ºÎÞ
@@ -39,22 +40,25 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		if(stop_CH_width>stop_max_value || stop_CH_width<stop_min_value)		//Èç¹ûµ±Ç°²»ÊÇÍ£Ö¹ÃüÁî
 		{
 			//½«Ò£¿ØÆ÷Êä³öÓ³Éäµ½»úÆ÷ÈËÈýÖáËÙ¶ÈÉÏ
-			x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
-			y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
-			r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);
-			pwm_pulse1=caculate_gembal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+				x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+			  y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
+			  pwm_pulse1=caculate_gembal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+			if((i_CH_width-1024)>60 || (i_CH_width-1024)<-60)   //Ïû³ý²Ù¿ØÔÆÌ¨µÄÎó´¥
+			  r_speed=0;
+			else
+			  r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);
 			if(trigger_CH_width == 1 )
 			{
-			  trigger_speed = 0;
-				fric1_on(1700);
-				fric2_on(1700);
+			  trigger_speed = 1000;
+				fric1_on(1000);
+				fric2_on(1000);
 				
 			}
 		 if(trigger_CH_width ==2)//1.5<trigger_CH_width & trigger_CH_width <2.5 )
 			{
-			  trigger_speed = 400;
-				fric1_on(1800);
-				fric2_on(1800);
+			  trigger_speed = 1000;
+				fric1_on(1500);
+				fric2_on(1500);
 			}
 			if(trigger_CH_width==3)//trigger_CH_width >1.5 &trigger_CH_width< 4)
 			{
@@ -123,11 +127,27 @@ static float caculate_gembal_pitch_angle(int width,int mid,int min,int max)
 {
 	float pwm_pulse=1500;
 		if(width>=(mid+2))
-		pwm_pulse=(1500 + 1.0*(width-(mid+2))/(max-(mid+2))*500);
+		pwm_pulse=(1500 - 1.0*(width-(mid+2))/(max-(mid+2))*210);
 	else if(width<=(mid-2))
-	  pwm_pulse=(1500 - 1.0*((mid-2)-width)/((mid-2)-min)*500);
+	  pwm_pulse=(1500 + 1.0*((mid-2)-width)/((mid-2)-min)*105);
 	else
 		pwm_pulse=1500;
 	return pwm_pulse;
 	
 }
+
+/*static float caculate_gembal_yaw_angle(int width,int mid,int min,int max)
+{
+	float pwm_pulse=1500;
+		if(width>=(mid+2))
+		pwm_pulse=(1500 - 1.0*(width-(mid+2))/(max-(mid+2))*420);
+	else if(width<=(mid-2))
+	  pwm_pulse=(1500 + 1.0*((mid-2)-width)/((mid-2)-min)*420);
+	else
+		pwm_pulse=1500;
+	return pwm_pulse;
+	
+}*/
+
+
+

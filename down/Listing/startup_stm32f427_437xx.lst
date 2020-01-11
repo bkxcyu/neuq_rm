@@ -889,9 +889,9 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=..\output\startup_stm32f427_437xx.d -o..\output\startup_stm32f4
-27_437xx.o -I.\RTE\_____ -ID:\Keil5\ARM\PACK\Keil\Jansson\1.0.0\src -ID:\Keil5\
+27_437xx.o -I.\RTE\_____ -IE:\keil5\ARM\PACK\Keil\Jansson\1.0.0\src -IE:\keil5\
 ARM\PACK\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I
-D:\Keil5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISI
+E:\keil5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISI
 ON_VERSION SETA 525" --predefine="_RTE_ SETA 1" --predefine="STM32F427xx SETA 1
 " --list=..\listing\startup_stm32f427_437xx.lst ..\Libraries\CMSIS\Device\ST\ST
 M32F4xx\Source\Templates\arm\startup_stm32f427_437xx.s

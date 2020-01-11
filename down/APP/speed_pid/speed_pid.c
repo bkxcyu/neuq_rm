@@ -78,7 +78,7 @@ void vpid_PI_realize(float kp,float ki)
 	motor2.vpid.actual_speed = motor2.actual_speed;
 	motor3.vpid.actual_speed = motor3.actual_speed;
 	motor4.vpid.actual_speed = motor4.actual_speed;
-	//motor5.vpid.actual_speed = motor5.actual_speed;
+	
 
 	
 	//计算输出值
@@ -86,7 +86,7 @@ void vpid_PI_realize(float kp,float ki)
 	vpid_realize(&motor2.vpid,kp,ki);
 	vpid_realize(&motor3.vpid,kp,ki);
 	vpid_realize(&motor4.vpid,kp,ki);
-	//vpid_realize(&motor5.vpid,kp,ki);
+	
 }
 
 // 函数: set_motor_speed()

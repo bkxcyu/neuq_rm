@@ -130,7 +130,9 @@ u8 mbox;
 
 
 }
-/*u8 CAN1_Send_GIMBAL_Msg(u8* msg)//********************新增
+
+
+/*u8 CAN1_Send_GIMBAL_Msg(u8* msg)新增
 {
 u8 mbox;
   u16 i=0;
@@ -159,6 +161,8 @@ u8 mbox;
 //buf:数据缓存区;	 
 //返回值:0,无数据被收到;
 //		 其他,接收的数据长度;
+
+
 u8 CAN1_Receive_Msg(u8 *buf)
 {		   		   
  	u32 i;

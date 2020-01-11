@@ -3,7 +3,7 @@
 ..\output\my_init.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h
 ..\output\my_init.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\my_init.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\my_init.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\my_init.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\my_init.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\my_init.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\my_init.o: ..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -56,5 +56,6 @@
 ..\output\my_init.o: ..\Hardware\FS_remote\FS_remote.h
 ..\output\my_init.o: ..\Hardware\remote_code\remote_code.h
 ..\output\my_init.o: ..\BSP\usart\bsp_debug_usart.h
-..\output\my_init.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\output\my_init.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\output\my_init.o: ..\BSP\usart\bsp_uart7.h
+..\output\my_init.o: ..\Hardware\gimbal\gimbal.h
