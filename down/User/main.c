@@ -17,15 +17,11 @@
 #include <string.h>
 #include "gimbal.h"
 
-<<<<<<< HEAD
-#define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336     qsy is sb
-#define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   qsy is sb,ljy is big boss
-#define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    ljy is  a big sb
-=======
+
 #define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336     测试 1111qsy
 #define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
->>>>>>> 5a3b04faab756f0e6d72054eb3695ee32dc97982
+
 
 
 extern char receiveBuffer[MAX_LENGTH];
@@ -33,7 +29,7 @@ extern char json_Buffer[MAX_LENGTH];
 int main()
 {
 	All_Init();												//机器人所有配置初始化
-	max_base_linear_speed = MAX_BASE_LINEAR_SPEED;							//底盘中心最大线速度
+	max_base_linear_speed = MAX_BASE_LINEAR_SPEED;							//底盘中心最大线速度            杜泽文你好骚啊
 	max_base_rotational_speed = MAX_BASE_ROTATIONAL_SPEED;			//地盘中心最大角速度
 	max_motor_speed = MAX_MOTOR_SPEED;		//电机最大转速，通过上面宏定义更改
 
