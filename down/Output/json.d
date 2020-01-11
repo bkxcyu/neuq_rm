@@ -1,9 +1,9 @@
 ..\output\json.o: ..\APP\json\json.c
-..\output\json.o: E:\keil5\ARM\ARMCC\Bin\..\include\string.h
-..\output\json.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\output\json.o: D:\Keil5\ARM\ARMCC\Bin\..\include\string.h
+..\output\json.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\output\json.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\json.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\json.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\json.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\json.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\json.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\json.o: ..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -38,10 +38,10 @@
 ..\output\json.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h
 ..\output\json.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h
 ..\output\json.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
-..\output\json.o: E:\keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson.h
-..\output\json.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-..\output\json.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdarg.h
-..\output\json.o: E:\keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson_config.h
+..\output\json.o: D:\Keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson.h
+..\output\json.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\output\json.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdarg.h
+..\output\json.o: D:\Keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson_config.h
 ..\output\json.o: ..\APP\json\json.h
 ..\output\json.o: ..\Hardware\motor\motor.h
 ..\output\json.o: ..\APP\kinematic\kinematic.h

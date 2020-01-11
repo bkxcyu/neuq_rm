@@ -2,7 +2,7 @@
 ..\output\stm32f4xx_i2c.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h
 ..\output\stm32f4xx_i2c.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\stm32f4xx_i2c.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\stm32f4xx_i2c.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\stm32f4xx_i2c.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\stm32f4xx_i2c.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\stm32f4xx_i2c.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\stm32f4xx_i2c.o: ..\Libraries\CMSIS\Include\core_cmSimd.h

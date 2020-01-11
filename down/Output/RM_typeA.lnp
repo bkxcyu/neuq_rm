@@ -54,7 +54,7 @@
 "..\output\tim3_events.o"
 "..\output\fric.o"
 "..\output\gimbal.o"
-"E:\keil5\ARM\PACK\Keil\Jansson\1.0.0\lib\jansson_CM3LE.lib"
+"D:\Keil5\ARM\PACK\Keil\Jansson\1.0.0\lib\jansson_CM3LE.lib"
 "..\output\jansson_config.o"
 --library_type=microlib --strict --scatter "..\Output\RM_typeA.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

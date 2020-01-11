@@ -2,7 +2,7 @@
 ..\output\fric.o: ..\Hardware\fric\fric.h
 ..\output\fric.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\fric.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\fric.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\fric.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\fric.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\fric.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\fric.o: ..\Libraries\CMSIS\Include\core_cmSimd.h

@@ -2,7 +2,7 @@
 ..\output\bsp_uart7.o: ..\BSP\usart\bsp_uart7.h
 ..\output\bsp_uart7.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\bsp_uart7.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\bsp_uart7.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\bsp_uart7.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\bsp_uart7.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\bsp_uart7.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\bsp_uart7.o: ..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -37,4 +37,4 @@
 ..\output\bsp_uart7.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h
 ..\output\bsp_uart7.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h
 ..\output\bsp_uart7.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
-..\output\bsp_uart7.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\output\bsp_uart7.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

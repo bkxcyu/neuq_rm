@@ -3820,42 +3820,42 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       518         76          0          4          0       4472   angle_pid.o
+       518         76          0          4          0       4456   angle_pid.o
        192         10          0          0          0        733   bsp_debug_usart.o
-       228         14          0          0          0       1328   bsp_uart7.o
-       480         22          0          0          0      11385   can.o
-       172         14          0          4          0       1904   delay.o
-       588         42          0          0         46       3414   dji_remote.o
-       348         26          0          0          0      29527   fric.o
-       596         60          0         13         32       3338   fs_remote.o
-       264          8          0          0          0        787   gimbal.o
-         6          0          0          0          0        922   jansson_config.o
-      1616        304          0         26        150      11117   json.o
-       116         18          0          2          0       1111   key.o
-      1304        132          0         16        120       5233   kinematic.o
+       228         14          0          0          0       1320   bsp_uart7.o
+       480         22          0          0          0      11373   can.o
+       172         14          0          4          0       1888   delay.o
+       588         42          0          0         46       3398   dji_remote.o
+       348         26          0          0          0      29515   fric.o
+       596         60          0         13         32       3318   fs_remote.o
+       264          8          0          0          0        783   gimbal.o
+         6          0          0          0          0        914   jansson_config.o
+      1616        304          0         26        150      11073   json.o
+       116         18          0          2          0       1107   key.o
+      1304        132          0         16        120       5213   kinematic.o
         64          4          0          0          0        531   led.o
-       380         58          0          4          0       7000   main.o
-       140         24          0          0          0       1747   misc.o
-       546         78          0          4        928       5710   motor.o
-       152         12          0          0         16       2027   my_init.o
-        76          8          0          0          0       1042   power.o
+       380         58          0          4          0       6988   main.o
+       140         24          0          0          0       1735   misc.o
+       546         78          0          4        928       5678   motor.o
+       152         12          0          0         16       2019   my_init.o
+        76          8          0          0          0       1034   power.o
          0          0          0         28          0        459   remote_code.o
-       416         70          0          0          0       4013   speed_pid.o
+       416         70          0          0          0       3993   speed_pid.o
         36          8        428          0       8192        972   startup_stm32f427_437xx.o
-      1252         28          0          0          0       5613   stm32f4xx_can.o
-       520         26          0          0          0       5374   stm32f4xx_dma.o
-       222          0          0          0          0       3203   stm32f4xx_gpio.o
-       912         84          0          5        150       6387   stm32f4xx_it.o
-       392         48          0         16          0       6269   stm32f4xx_rcc.o
-      1456         66          0          0          0      21970   stm32f4xx_tim.o
-       726         42          0          0          0       8101   stm32f4xx_usart.o
-       388         32          0          0          0       2068   sys.o
-       392         32          0          0          0     317353   system_stm32f4xx.o
-       324         54          0         40          0       2313   tim3_events.o
-        92          6          0          0          0       2440   timer.o
+      1252         28          0          0          0       5585   stm32f4xx_can.o
+       520         26          0          0          0       5358   stm32f4xx_dma.o
+       222          0          0          0          0       3191   stm32f4xx_gpio.o
+       912         84          0          5        150       6351   stm32f4xx_it.o
+       392         48          0         16          0       6245   stm32f4xx_rcc.o
+      1456         66          0          0          0      21882   stm32f4xx_tim.o
+       726         42          0          0          0       8065   stm32f4xx_usart.o
+       388         32          0          0          0       2056   sys.o
+       392         32          0          0          0     317317   system_stm32f4xx.o
+       324         54          0         40          0       2305   tim3_events.o
+        92          6          0          0          0       2432   timer.o
 
     ----------------------------------------------------------------------
-     14938       1406        460        172       9640     479863   Object Totals
+     14938       1406        460        172       9640     479287   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         24          0          0         10          6          0   (incl. Padding)
 
@@ -3951,8 +3951,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     30796       2970        628        224       9640     580902   Grand Totals
-     30796       2970        628        224       9640     580902   ELF Image Totals
+     30796       2970        628        224       9640     580326   Grand Totals
+     30796       2970        628        224       9640     580326   ELF Image Totals
      30796       2970        628        224          0          0   ROM Totals
 
 ==============================================================================
