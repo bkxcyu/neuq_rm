@@ -6,6 +6,7 @@
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
 #include <hkvs/square.h>
+#include <iostream>
 using namespace cv;
 
 #include<stdio.h>
@@ -57,52 +58,223 @@ public:
     /*
        这是图象处理的主要函数，一般会把图像处理的主要程序写在这个函数中。这里的例子只是一个彩色图象到灰度图象的转化
     */
+
+   enum
+{
+	WIDTH_GREATER_THAN_HEIGHT,
+	ANGLE_TO_UP
+};
+cv::RotatedRect& adjustRec(cv::RotatedRect& rec, const int mode)
+{
+	using std::swap;
+
+	float& width = rec.size.width;
+	float& height = rec.size.height;
+	float& angle = rec.angle;
+
+	if(mode == WIDTH_GREATER_THAN_HEIGHT)
+	{
+		if(width < height)
+		{
+			swap(width, height);
+			angle += 90.0;
+		}
+	}
+
+	while(angle >= 90.0) angle -= 180.0;
+	while(angle < -90.0) angle += 180.0;
+
+	if(mode == ANGLE_TO_UP)
+	{
+		if(angle >= 45.0)
+		{
+			swap(width, height);
+			angle -= 90.0;
+		}
+		else if(angle < -45.0)
+		{
+			swap(width, height);
+			angle += 90.0;
+		}
+	}
+
+	return rec;
+}
+
+class LightDescriptor
+{
+public:
+	LightDescriptor() {};
+	LightDescriptor(const cv::RotatedRect& light)
+	{
+		width = light.size.width;
+		length = light.size.height;
+		center = light.center;
+		angle = light.angle;
+		area = light.size.area();
+	}
+	const LightDescriptor& operator =(const LightDescriptor& ld)
+	{
+		this->width = ld.width;
+		this->length = ld.length;
+		this->center = ld.center;
+		this->angle = ld.angle;
+		this->area = ld.area;
+		return *this;
+	}
+
+	/*
+	*	@Brief: return the light as a cv::RotatedRect object
+	*/
+	cv::RotatedRect rec() const
+	{
+		return cv::RotatedRect(center, cv::Size2f(width, length), angle);
+	}
+
+public:
+	float width;
+	float length;
+	cv::Point2f center;
+	float angle;
+	float area;
+};
+
+class ArmorRect
+{
+public:
+    RotatedRect armors;
+};
+
+void drawall(vector<RotatedRect> rec,Mat img)
+{
+    for (int i = 0; i < rec.size(); i++)
+    {
+        Point2f p[4];
+        rec[i].points(p);
+        line(img, p[0], p[1], Scalar(0, 0, 255), 1, 8, 0);
+        line(img, p[1], p[2], Scalar(0, 0, 255), 1, 8, 0);
+        line(img, p[2], p[3], Scalar(0, 0, 255), 1, 8, 0);
+        line(img, p[3], p[0], Scalar(0, 0, 255), 1, 8, 0);
+        
+    }
+}
+
     void image_process(cv::Mat img) 
     {
-       cv::Mat img_out;
-       Mat binBrightImg;
-       Mat image;
-                    //Mat dstImage = Mat::zeros(src.rows, src.cols, CV_8UC3);
-                    cvtColor(img,image,COLOR_BGR2GRAY,1);
-                    cv::threshold(image, binBrightImg, 210, 255, cv::THRESH_BINARY);
-                    cv::Mat element = cv::getStructuringElement(2, cv::Size(3, 3));
-                    dilate(binBrightImg, binBrightImg, element);
-                    cv::imshow("b",binBrightImg);
+        cv::Mat img_out;
+        Mat binBrightImg;
+        Mat image;
+        /*
+        *    pre-treatment
+        */
+        cvtColor(img,image,COLOR_BGR2GRAY,1);
+        cv::threshold(image, binBrightImg, 210, 255, cv::THRESH_BINARY);
+        cv::Mat element = cv::getStructuringElement(2, cv::Size(3, 3));
+        dilate(binBrightImg, binBrightImg, element);
+        cv::imshow("pre-treatment",binBrightImg);
+        /*
+        *    find and filter light bars
+        */
+        vector<vector<Point> >lightcontours;
+        vector<RotatedRect> lightInfos;
+        vector<RotatedRect>rect;
+        findContours(binBrightImg.clone(), lightcontours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+        lightInfos.clear();
+        for(const auto& contour : lightcontours)
+        {
+            float lightContourArea = contourArea(contour);
+            if(contour.size() <= 5 ||
+            lightContourArea < 10) continue;
+            RotatedRect lightRec = fitEllipse(contour);
+            RotatedRect minAreaRec = minAreaRect(contour);
+            adjustRec(lightRec, ANGLE_TO_UP);
+            if(lightRec.size.width / lightRec.size.height > 1 ) continue;
+            lightRec.size.width *= 1.1;
+            lightRec.size.height *= 1.1;
+            Rect boundRect = lightRec.boundingRect();
+            lightInfos.push_back(lightRec);
+        }
+        /*
+        *	find and filter light bar pairs
+        */
+        vector<RotatedRect> armors;
+        vector<ArmorRect> armorRects;
+        ArmorRect armorRect;
 
-                    vector<vector<Point> >contours;
-                    vector<Vec4i> hierarchy;
-                    vector<RotatedRect>rect;
-                    findContours(binBrightImg, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
-                    for (int i = 0; i < contours.size(); i++)
-                    {
-                        rect.push_back(minAreaRect(contours[i]));
-                        Point2f vertices[4];      //定义矩形的4个顶点
-                        rect[i].points(vertices);   //计算矩形的4个顶点
-                        float ratio = float(rect[i].size.height) / float(rect[i].size.width); 
-                        
-                    
-                        for (int i = 0; i < 4; i++){
-                        line(img, vertices[i], vertices[(i + 1) % 4], Scalar(255, 0, 0),5);
-                        cout << "rect_center" << i << vertices[i] << endl;
-                        cout <<"width的值："<<rect[i].size.width << endl;
-                        cout << "height的值：" << rect[i].size.height << endl;//其实只有一个外接矩形     
-                        if(i=0){squared.zs_x=vertices[i].x;squared.zs_y=vertices[i].y;}
-                        if(i=1){squared.ys_x=vertices[i].x;squared.ys_y=vertices[i].y;}
-                        if(i=2){squared.yx_x=vertices[i].x;squared.yx_y=vertices[i].y;}
-                        if(i=3){squared.zx_x=vertices[i].x;squared.zx_y=vertices[i].y;}
-                        squarepub.publish(squared);
+        armors.clear();
+        armorRects.clear();
+        if (lightInfos.size()<=1)
+        {
+            cout << "There's no light contours in quality." << endl;
+        }
+        sort(lightInfos.begin(), lightInfos.end(), [](const RotatedRect& ld1, const RotatedRect& ld2)
+        {
+            return ld1.center.x < ld2.center.x;
+        });
+
+    for (int i = 0; i < lightInfos.size(); i++)
+        {
+            for (int j = i + 1; j < lightInfos.size(); j++)
+                {
+                    const RotatedRect& left = lightInfos[i];
+                    const RotatedRect& right = lightInfos[j];
+                    double yDiff = abs(left.center.y - right.center.y);
+                    double xDiff = abs(left.center.x - right.center.x);
+                    //灯条长度的差//
+                    double heightDiff = abs(left.size.height - right.size.height);
+                    //灯条宽度的差//
+                    double widthDiff = abs(left.size.width - right.size.width);
+                    double angleDiff = abs(left.angle - right.angle);
+                    //计算左右灯条长度的均值//
+                    double meanheight = (left.size.height + right.size.height)/2;
+                    //灯条y的比率//
+                    double yDiffRatio = yDiff / meanheight;
+                    //灯条x的比率//
+                    double xDiffRatio = xDiff / meanheight;
+                    //计算左右灯条中心距离//
+                    double dis= sqrt((left.center.x - right.center.x)*(left.center.x - right.center.x) + (left.center.y - right.center.y)*(left.center.y - right.center.y));
+                    //灯条的距离与长度的比值（也就是嫌疑装甲板长和宽的比值）//
+                    double ratio = dis / meanheight;
+                    float heightDiff_ratio = heightDiff / max(left.size.height, right.size.height);
+
+                    if (angleDiff > 10 || xDiffRatio < 0.5 || yDiffRatio>0.7||ratio>3||ratio<1)
+                    continue;
+                    armorRect.armors.center.x = (left.center.x + right.center.x) / 2;
+                    armorRect.armors.center.y = (left.center.y + right.center.y) / 2;
+                    armorRect.armors.angle= (left.angle + right.angle) / 2;
+                    if (180 - angleDiff < 3)
+                    armorRect.armors.angle += 90;
+                    armorRect.armors.size.height= (left.size.height + right.size.height) / 2;
+                    armorRect.armors.size.width = sqrt((left.center.x - right.center.x)*(left.center.x - right.center.x) + (left.center.y - right.center.y)*(left.center.y - right.center.y));
+                    double nL = armorRect.armors.size.height;
+                    double nW = armorRect.armors.size.width;
+                    if (nL < nW)
+                        {
+                            armorRect.armors.size.height = nL;
+                            armorRect.armors.size.width = nW;
                         }
-			
-                    }
-      cv::imshow("img", img);
+                    else
+                        {
+                            armorRect.armors.size.height = nW;
+                            armorRect.armors.size.width = nL;
+                        }
+                    //debug
+                    cout<<"armors_height"<<nW<<endl;
+                    cout<<"armors_width"<<nL<<endl;
+                    armorRects.emplace_back(armorRect);
+                    armors.push_back(armorRect.armors);
+                }
+        }
+    if (armorRects.empty())
+        cout << "There is no armor in quality!" << endl;
+    
+    drawall(armors, img);
+    cv::imshow("", img);
 
-       //cv::cvtColor(img, img_out, CV_RGB2GRAY);  //转换成灰度图象
-       if(frame_number<=1000) frame_number++;
-       else frame_number=0;
-       string Img_Name = "../rosimage/image"+to_string(frame_number)+".jpg";
-       imwrite(Img_Name,img);
-       cv::imshow("INPUT", img);
-       //cv::imshow("OUTPUT", img_out);
+                                
+
+
+
        cv::waitKey(5);
     }
 };
