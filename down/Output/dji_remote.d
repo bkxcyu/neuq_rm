@@ -1,6 +1,6 @@
 ..\output\dji_remote.o: ..\Hardware\DJi_remote\DJi_remote.c
 ..\output\dji_remote.o: ..\Hardware\DJi_remote\DJi_remote.h
-..\output\dji_remote.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\dji_remote.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\dji_remote.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h
 ..\output\dji_remote.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\dji_remote.o: ..\Libraries\CMSIS\Include\core_cm4.h

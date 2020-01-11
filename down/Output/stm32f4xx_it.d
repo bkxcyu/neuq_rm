@@ -2,7 +2,7 @@
 ..\output\stm32f4xx_it.o: ..\User\stm32f4xx_it.h
 ..\output\stm32f4xx_it.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\output\stm32f4xx_it.o: ..\Libraries\CMSIS\Include\core_cm4.h
-..\output\stm32f4xx_it.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\stm32f4xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\output\stm32f4xx_it.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\output\stm32f4xx_it.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\output\stm32f4xx_it.o: ..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -37,12 +37,12 @@
 ..\output\stm32f4xx_it.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma2d.h
 ..\output\stm32f4xx_it.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fmc.h
 ..\output\stm32f4xx_it.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
-..\output\stm32f4xx_it.o: E:\keil5\ARM\ARMCC\Bin\..\include\string.h
-..\output\stm32f4xx_it.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
-..\output\stm32f4xx_it.o: E:\keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson.h
-..\output\stm32f4xx_it.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-..\output\stm32f4xx_it.o: E:\keil5\ARM\ARMCC\Bin\..\include\stdarg.h
-..\output\stm32f4xx_it.o: E:\keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson_config.h
+..\output\stm32f4xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\string.h
+..\output\stm32f4xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\output\stm32f4xx_it.o: D:\Keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson.h
+..\output\stm32f4xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\output\stm32f4xx_it.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdarg.h
+..\output\stm32f4xx_it.o: D:\Keil5\ARM\PACK\Keil\Jansson\1.0.0\src\jansson_config.h
 ..\output\stm32f4xx_it.o: ..\APP\json\json.h
 ..\output\stm32f4xx_it.o: ..\BSP\usart\bsp_debug_usart.h
 ..\output\stm32f4xx_it.o: ..\BSP\usart\bsp_uart7.h
