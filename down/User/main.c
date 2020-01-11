@@ -17,9 +17,15 @@
 #include <string.h>
 #include "gimbal.h"
 
+<<<<<<< HEAD
 #define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336     qsy is sb
 #define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   qsy is sb,ljy is big boss
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    ljy is  a big sb
+=======
+#define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336     测试 1111qsy
+#define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
+#define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
+>>>>>>> 5a3b04faab756f0e6d72054eb3695ee32dc97982
 
 
 extern char receiveBuffer[MAX_LENGTH];
