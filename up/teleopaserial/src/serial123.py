@@ -43,6 +43,20 @@ def send_translation(translation):
     data ={"translation":[translation]}
     data_string = json.dumps(data)
     ser.write('*'+ data_string +'!')
+    
+def send_fric(fric):
+    data ={"fric":[fric]}
+    data_string = json.dumps(data)
+    ser.write('*'+ data_string +'>')
+
+def send_trigger(trigger):
+    data ={"trigger":[trigger]}
+    data_string = json.dumps(data)
+    ser.write('*'+ data_string +'>')
+def send_gimbal_hand_angle(hand_pitch,hand_yaw):
+    data = {"hand_angle":[hand_pitch,hand_yaw]}
+    data_string = json.dumps(data)
+    ser.write('*' + data_string + '<')
 class CHASSIS_NORMAL(smach.State):
     def send_translation(translation):
         data ={"translation":[translation]}
@@ -110,6 +124,7 @@ class CHASSIS_FOLLOW(smach.State):
             return 'keep_follow'
 #/////////////////////////////////////////////////////////////////////////////////////////////////
 #/////////////////////////////////////////////////////////////////////////////////////////////////
+# end of chassis smatch
 class GIMBAL_AUTO_AIM(smach.State):
     
     def send_translation(translation):
@@ -133,7 +148,7 @@ class GIMBAL_AUTO_AIM(smach.State):
         elif getformkey==7:
             return 'TRANSLATE_HALF'
         elif getformkey ==8:
-            return 'TRANSLATE_NINE'
+            return 'TRANSLATE_ NINE'
         elif getformkey ==9:
             return 'TRANSLATE_HAND_FIRE'
         elif AUTO_AIM_FINISH==1 and FAXIANDIJUN==1:
@@ -141,7 +156,7 @@ class GIMBAL_AUTO_AIM(smach.State):
         else:
             return'keep_auto_aim'
 
-# define state Bar
+# define state auto_fire
 class GIMBAL_AUTO_FIRE(smach.State):
     def send_translation(translation):
         data ={"translation":[translation]}
@@ -312,7 +327,14 @@ def main():
         rospy.loginfo("translation is:%s",translate)
         rospy.loginfo("translation is:11111111111111111111111111111111111111111111111")
         transform=transform.strip()
-   
+        if transform=="fire":
+            send_trigger(400)
+            send_fric(1)
+           
+        if transform=="stop_fire":
+            send_fric(0)
+            send_trigger(0)
+             
         if transform=="chassis_motion":   #爬坡
              translation=3
              send_translation(translation)
@@ -334,6 +356,16 @@ def main():
         if transform=="gimbal_shand": #手动3连
              translation=10
              send_translation(translation)
+
+        #gimbal angle set
+        if transform=="up": 
+             send_gimbal_hand_angle(1,0)
+        if transform=="down": 
+             send_gimbal_hand_angle(-1,0)
+        if transform=="left": 
+             send_gimbal_hand_angle(0,1)
+        if transform=="right": 
+             send_gimbal_hand_angle(0,-1)
         getformkey = translation
     def callback3(twist):
         speed_x = twist.linear.x

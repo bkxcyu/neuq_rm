@@ -52,6 +52,9 @@ moveBindings = {
         'M':(-1,1,0,0),
         't':(0,0,1,0),
         'b':(0,0,-1,0),
+ 	
+
+
     }
 
 speedBindings={
@@ -62,6 +65,8 @@ speedBindings={
         'e':(1,1.1),
         'c':(1,.9),
     }
+
+
 
 schemaTranslation={
         #'1':"chassis_normal",
@@ -75,7 +80,12 @@ schemaTranslation={
         '9':"gimbal_hand",
         #'0':"gimbal_shand",
         #'-':"gimbal_auto_fire",
-
+        'f':"fire",
+	'g':"stop_fire",
+	'up':"up",
+        'down':"down",
+	'left':"left",
+	'right':"right",
       
 }
 
@@ -85,6 +95,14 @@ def getKey():
     select.select([sys.stdin], [], [], 0)
     key = sys.stdin.read(1)
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    if key == chr(58):
+        key = 'up'
+    if key == chr(62):
+        key = 'down'
+    if key == chr(60):
+        key = 'left'
+    if key == chr(63):
+        key = 'right'
     return key
 
 
@@ -119,49 +137,42 @@ if __name__=="__main__":
                 y = moveBindings[key][1]
                 z = moveBindings[key][2]
                 th = moveBindings[key][3]
-		print(vels(speed,turn))
-		twist = Twist()
-		twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
-		twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
-		twistpub.publish(twist)
+                print(vels(speed,turn))
+                twist = Twist()
+                twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
+                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                twistpub.publish(twist)
             elif key in speedBindings.keys():
-                  speed = speed * speedBindings[key][0]
-                  turn = turn * speedBindings[key][1]
-		  print(vels(speed,turn))		  
-		  twist = Twist()
-		  twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
-		  twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
-		  twistpub.publish(twist)
+                speed = speed * speedBindings[key][0]
+                turn = turn * speedBindings[key][1]
+                print(vels(speed,turn))		  
+                twist = Twist()
+                twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
+                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                twistpub.publish(twist)
 
-	    if key in schemaTranslation.keys():
-		translation = schemaTranslation[key]
-		string = String()
-		string =translation
-		rospy.loginfo("%s",translation)
-		translationpub.publish(string)
-	    
-            if key not in schemaTranslation.keys(): 
-                if key not in speedBindings.keys():
-                    if key not in moveBindings.keys():
-		          x=0
-		          y=0
-		          z=0
-		          th =0
-			  twist = Twist()
-			  twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
-		          twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
-		          twistpub.publish(twist)
+            elif key in schemaTranslation.keys():
+                translation = schemaTranslation[key]
+                string = String()
+                string =translation
+                rospy.loginfo("%s",translation)
+                translationpub.publish(string)
+                
+            else:
+                        x=0
+                        y=0
+                        z=0
+                        th =0
+                        twist = Twist()
+                        twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
+                        twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                        twistpub.publish(twist)
+                        
 
             if (key == '\x03'):
-		break
+                break
 
-	    
-
-                
-            
-	    		
-            
- 
+	  
             
 
     except Exception as e:
