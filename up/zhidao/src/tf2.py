@@ -39,9 +39,10 @@ def positioncallback(position):
 	global position_x
 	global position_y
 	global position_z
-	position_x = point.x
-	position_y = point.y
-	position_z = point.z
+	rospy.loginfo("%f  %f  %f",position.x,position.y,position.z)
+	position_x = position.x
+	position_y = position.y
+	position_z = position.z
 def linecallback(square):
 	global zs_x
 	global zs_y
@@ -70,7 +71,7 @@ if __name__=="__main__":
 	topic2 = 'visualization_marker_line'
 	publisher = rospy.Publisher(topic, MarkerArray,queue_size = 100)
 	markerArray = MarkerArray()
-	publisherline = rospy.Publisher(topic2, Marker,queue_size = 100)
+	#publisherline = rospy.Publisher(topic2, Marker,queue_size = 100)
 	#count = 0
 	#MARKERS_MAX = 100
 	rospy.Subscriber("point3d", Point, positioncallback)
@@ -107,46 +108,46 @@ if __name__=="__main__":
 
 		
 		#draw square lines hpljy
-		line_list = Marker()
-		line_list.header.frame_id = "/world"
-		line_list.type = marker.LINE_LIST
-		line_list.action = marker.ADD
-		line_list.scale.x = 0.02
-		line_list.scale.y = 0.02
-		line_list.scale.z = 0.02
-		line_list.color.a = 5.0
-		line_list.color.r = 15.0
-		line_list.color.g = 15.0
-		line_list.color.b = 5.0
-		line_list.pose.orientation.w = 1.0
-		line_list.id=1
+		#line_list = Marker()
+		#line_list.header.frame_id = "/world"
+		#line_list.type = marker.LINE_LIST
+		#line_list.action = marker.ADD
+		#line_list.scale.x = 0.02
+		#line_list.scale.y = 0.02
+		#line_list.scale.z = 0.02
+		#line_list.color.a = 5.0
+		#line_list.color.r = 15.0
+		#line_list.color.g = 15.0
+		#line_list.color.b = 5.0
+		#line_list.pose.orientation.w = 1.0
+		#line_list.id=1
 		# marker position
 		# marker line points
-		line_list.points = []
+		#line_list.points = []
 		# first point
-		first_line_point = Point()
-		first_line_point.x = zs_x
-		first_line_point.y = zx_y
-		first_line_point.z = 3
-		line_list.points.append(first_line_point)
+		#first_line_point = Point()
+		#first_line_point.x = zs_x
+		#first_line_point.y = zx_y
+		#first_line_point.z = 3
+		#line_list.points.append(first_line_point)
 		# second point
-		second_line_point = Point()
-		second_line_point.x = ys_x
-		second_line_point.y = ys_y
-		second_line_point.z = 6
-		line_list.points.append(second_line_point)
-		third_line_point = Point()
-		third_line_point.x = yx_x
-		third_line_point.y = yx_y
-		third_line_point.z = 3
-		line_list.points.append(third_line_point)
-		forth_line_point = Point()
-		forth_line_point.x = 2
-		forth_line_point.y = 4
-		forth_line_point.z = 5
-		line_list.points.append(forth_line_point)
+		#second_line_point = Point()
+		#second_line_point.x = ys_x
+		#second_line_point.y = ys_y
+		#second_line_point.z = 6
+		#line_list.points.append(second_line_point)
+		#third_line_point = Point()
+		#third_line_point.x = yx_x
+		#third_line_point.y = yx_y
+		#third_line_point.z = 3
+		#line_list.points.append(third_line_point)
+		#forth_line_point = Point()
+		#forth_line_point.x = 2
+		#forth_line_point.y = 4
+		#forth_line_point.z = 5
+		#line_list.points.append(forth_line_point)
     # Publish the Marker
-		publisherline.publish(line_list)
+		#publisherline.publish(line_list)
 		#rospy.loginfo("%f",twist_x)
 		#rospy.loginfo("%f",angular_z)
 
@@ -164,7 +165,7 @@ if __name__=="__main__":
 		y=y+delta_time*twist_x*math.sin(thetachassis)
 		ninea_y=position_y-y
 		ninea_x=position_x-x
-		ninea_z=position_z
+		ninea_z=position_z-1
 		rospy.loginfo("nine_y%f",ninea_y)
 		theta=math.atan((ninea_y)/(ninea_x))
 		if ninea_x<0 and ninea_y>0:
@@ -173,8 +174,18 @@ if __name__=="__main__":
 			theta = 3.1415926 + math.atan((ninea_y)/(ninea_x))
 		if ninea_x>0 and ninea_y<0:
 			theta =  math.atan((ninea_y)/(ninea_x))
-		pitch = -3.1415926/2.0 + math.atan((ninea_z)/(ninea_y))
-		rospy.loginfo("%f",theta)
+		pitch =-math.atan((ninea_z)/math.sqrt(ninea_x*ninea_x+ninea_y*ninea_y))
+		#if ninea_y<0 and ninea_z>0 and ninea_x>0:
+			#pitch =  -math.atan((ninea_z)/(math.sqrt((ninea_x*ninea_x)+(ninea_y*ninea_y))))
+		#if ninea_x<0 and ninea_y>0:
+			#pitch =  3.1415926/2.0+math.atan((ninea_z)/(math.sqrt((ninea_x*ninea_x)+(ninea_y*ninea_y))))
+		#if ninea_x<0 and ninea_y<0 and ninea_z>0:
+			#pitch =  3.1415926+math.atan((ninea_z)/(math.sqrt((ninea_x*ninea_x)+(ninea_y*ninea_y))))
+			#rospy.loginfo("%f",pitch)
+			#rospy.loginfo("ninea_zsa%f",ninea_z)
+			#rospy.loginfo("ninea_yas%f",ninea_y)
+			#rospy.loginfo("ninea_xas%f",ninea_x)
+		rospy.loginfo("sasdasd%f",theta)
 			#rospy.loginfo("%f",delta_time)
 			#rospy.loginfo("%f",theta)
 			#rospy.loginfo("X%f",x)
