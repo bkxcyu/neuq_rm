@@ -174,6 +174,26 @@ void resolve_json_gimbal_command()
 	json_decref(root);
 
 }
+
+
+
+void resolve_json_handgimbal_command(void)
+{ 
+	json_t *root;
+	json_t *gimbal_obj;
+	json_t *item_obj;
+	json_error_t error;
+	root = json_loads(json_Buffer,0,&error);
+	gimbal_obj = json_object_get( root, "hand_angle" );
+	item_obj = json_array_get( gimbal_obj, 0 );
+	Kinematics.target_angular.gimbal_angular.yaw_angular=1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( gimbal_obj, 1 );
+	Kinematics.target_angular.gimbal_angular.pitch_angular=1.0f*json_integer_value(item_obj);
+	json_decref(item_obj);
+	json_decref(gimbal_obj);
+	json_decref(root);
+}
+
 //解析收到的摩擦轮控制指令
 void resolve_json_fric_command()
 	{ 
@@ -382,6 +402,50 @@ void caclulate_pwm_pulse()
 	
 	pwm_pulse2 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.yaw_angular)*1.0f;
 	
+}
+void caclulate_handpwm_pulse()
+{
+ static double  yaw_pwm_pulse=1500;
+ static double  pitch_pwm_pulse=1500;
+	
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==1)
+	{
+		yaw_pwm_pulse=yaw_pwm_pulse-1;
+		pwm_pulse1=yaw_pwm_pulse;
+		
+	}
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==)
+	{
+		yaw_pwm_pulse=yaw_pwm_pulse+1;
+		pwm_pulse1=yaw_pwm_pulse;
+		
+	}
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==0)
+	{
+		
+		pwm_pulse1=yaw_pwm_pulse;
+		
+	}
+	
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular==1)
+	{
+		pitch_pwm_pulse=pitch_pwm_pulse+1;
+		pwm_pulse2=pitch_pwm_pulse;
+		
+	}
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular==-1)
+	{
+		pitch_pwm_pulse=pitch_pwm_pulse-1;
+		pwm_pulse2=pitch_pwm_pulse;
+		
+	}
+	
+		if(Kinematics.target_angular.gimbal_angular.pitch_angular==0)
+	{
+		 pwm_pulse2=pitch_pwm_pulse;
+		
+	}
+
 }
 
 
