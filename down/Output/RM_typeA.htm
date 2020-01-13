@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\Output\RM_typeA.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\Output\RM_typeA.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Sat Jan 11 15:58:00 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Mon Jan 13 09:46:35 2020
 <BR><P>
 <H3>Maximum Stack Usage =       1024 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1038,6 +1038,7 @@ Global Symbols
 
 <P><STRONG><a name="[138]"></a>GPIO_SetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(i.GPIO_SetBits))
 <BR><BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;power_open_all
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;power_init
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_init
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fric_PWM_configuration
 </UL>
@@ -2158,10 +2159,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;All_Init
 </UL>
 
-<P><STRONG><a name="[a1]"></a>power_init</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, power.o(i.power_init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = power_init &rArr; GPIO_Init
+<P><STRONG><a name="[a1]"></a>power_init</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, power.o(i.power_init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = power_init &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<BR>[Calls]<UL><LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
 </UL>

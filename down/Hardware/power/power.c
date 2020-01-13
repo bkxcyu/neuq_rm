@@ -9,7 +9,7 @@
 void power_init()
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
-	
+	GPIO_InitTypeDef GPIO_InitStruct;
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOH,ENABLE);
 	
 	GPIO_InitStructure.GPIO_Pin=POWER_PIN;
@@ -21,6 +21,16 @@ void power_init()
 	
 	GPIO_Init(POWER_PORT,&GPIO_InitStructure);
 	GPIO_ResetBits(POWER_PORT,POWER_PIN);
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG,ENABLE);
+  GPIO_InitStruct.GPIO_Pin=GPIO_Pin_13;
+	GPIO_InitStruct.GPIO_Mode=POWER_MODE;
+	GPIO_InitStruct.GPIO_OType=POWER_OTYPE;
+
+	GPIO_InitStruct.GPIO_PuPd=POWER_PuPd;
+	GPIO_InitStruct.GPIO_Speed=POWER_SPEED;
+	GPIO_Init(GPIOG,&GPIO_InitStruct);
+	GPIO_SetBits(GPIOG,GPIO_Pin_13);
 
 }
 
@@ -50,7 +60,7 @@ void power_close_motor(int motor_num)
 		default:power_close_all();break;
 	}
 }
-
+								 
 //开启指定电机电源
 void power_open_motor(int motor_num)
 {
