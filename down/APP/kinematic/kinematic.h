@@ -10,6 +10,8 @@
 #define RPM2VEL 0.523599f										//转速转线速度		vel = rpn*pi*D/60  cm/s
 #define VEL2RPM 1.909859f										//线速度转转度
 #define M2006_REDUCTION_RATIO 36.000000f		//齿轮箱减速比
+#define M3508_REDUCTION_RATIO 19.000000f		//齿轮箱减速比
+
 typedef struct
 {
 	float linear_vel;			//线速度
