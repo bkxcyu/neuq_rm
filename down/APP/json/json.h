@@ -19,11 +19,14 @@ void send_cgf_info_by_json(void);
 void jansson_pack_test(void);
 void resolve_json_chassis_command(void);
 void resolve_json_gimbal_command(void);       //新增  解析云台控制指令
+void resolve_json_handgimbal_command(void); 
 void resolve_json_fric_command(void);  //新增  解析云台控制指令
 void resolve_json_trigger_command(void);
 void resolve_json_mode_command(void);
 void resolve_chassis_mode_command(void);
 void resolve_gimbal_mode_command(void);
+
 void resolve_fric_mode_command(void);
 void caclulate_pwm_pulse(void);
+void caclulate_handpwm_pulse(void);
 #endif

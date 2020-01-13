@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\Output\RM_typeA.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\Output\RM_typeA.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Sat Jan 11 11:19:07 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Sun Jan 12 22:09:31 2020
 <BR><P>
 <H3>Maximum Stack Usage =       1024 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -558,19 +558,26 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lex_scan_number
 </UL>
 
-<P><STRONG><a name="[7d]"></a>__aeabi_dadd</STRONG> (Thumb, 322 bytes, Stack size 48 bytes, dadd.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_lasr
+<P><STRONG><a name="[7d]"></a>__aeabi_dadd</STRONG> (Thumb, 322 bytes, Stack size 48 bytes, dadd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_lasr
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
+<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;caclulate_handpwm_pulse
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
 
-<P><STRONG><a name="[82]"></a>__aeabi_dsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dadd.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<P><STRONG><a name="[82]"></a>__aeabi_dsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dadd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+</UL>
+<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;caclulate_handpwm_pulse
 </UL>
 
 <P><STRONG><a name="[83]"></a>__aeabi_drsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dadd.o(.text), UNUSED)
@@ -602,8 +609,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_gimbal_command
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
+<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_handgimbal_command
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_chassis_command
 </UL>
 
@@ -637,10 +644,13 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
 
-<P><STRONG><a name="[8b]"></a>__aeabi_d2f</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, d2f.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
+<P><STRONG><a name="[8b]"></a>__aeabi_d2f</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, d2f.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_d2f
 </UL>
-<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_scanf_really_real
+<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
+</UL>
+<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;caclulate_handpwm_pulse
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_scanf_really_real
 </UL>
 
 <P><STRONG><a name="[8d]"></a>__aeabi_uldivmod</STRONG> (Thumb, 98 bytes, Stack size 40 bytes, uldiv.o(.text), UNUSED)
@@ -669,7 +679,7 @@ Global Symbols
 
 <P><STRONG><a name="[1b4]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
 
-<P><STRONG><a name="[7f]"></a>__aeabi_lasr</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, llsshr.o(.text), UNUSED)
+<P><STRONG><a name="[7f]"></a>__aeabi_lasr</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, llsshr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 
@@ -695,7 +705,7 @@ Global Symbols
 
 <P><STRONG><a name="[1b6]"></a>__I$use$fp</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, iusefp.o(.text), UNUSED)
 
-<P><STRONG><a name="[8c]"></a>_float_round</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, fepilogue.o(.text), UNUSED)
+<P><STRONG><a name="[8c]"></a>_float_round</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, fepilogue.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 </UL>
 
@@ -1202,17 +1212,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;All_Init
 </UL>
 
-<P><STRONG><a name="[2a]"></a>TIM3_IRQHandler</STRONG> (Thumb, 262 bytes, Stack size 8 bytes, main.o(i.TIM3_IRQHandler))
+<P><STRONG><a name="[2a]"></a>TIM3_IRQHandler</STRONG> (Thumb, 276 bytes, Stack size 8 bytes, main.o(i.TIM3_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1024<LI>Call Chain = TIM3_IRQHandler &rArr; resolve_json_mode_command &rArr; resolve_gimbal_mode_command &rArr; json_loads &rArr; parse_json &rArr; parse_value &rArr; parse_object &rArr;  parse_value (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetITStatus
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cgf_info_by_json
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_mode_command
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_gimbal_command
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_handgimbal_command
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_chassis_command
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;caclulate_pwm_pulse
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;caclulate_handpwm_pulse
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Robo_Move
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Get_Base_Velocities
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Debug_Key
@@ -1602,8 +1612,14 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;apid_PID_realize
 </UL>
 
-<P><STRONG><a name="[e9]"></a>caclulate_pwm_pulse</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, json.o(i.caclulate_pwm_pulse))
-<BR><BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
+<P><STRONG><a name="[ea]"></a>caclulate_handpwm_pulse</STRONG> (Thumb, 328 bytes, Stack size 8 bytes, json.o(i.caclulate_handpwm_pulse))
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = caclulate_handpwm_pulse &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+</UL>
+<BR>[Calls]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 </UL>
 
 <P><STRONG><a name="[a0]"></a>delay_init</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, delay.o(i.delay_init))
@@ -1766,8 +1782,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[11e]"></a>json_array_get</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, value.o(i.json_array_get))
-<BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_gimbal_command
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
+<BR><BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_handgimbal_command
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_chassis_command
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_gimbal_mode_command
 <LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_fric_mode_command
@@ -1828,8 +1844,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[115]"></a>json_integer_value</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, value.o(i.json_integer_value))
-<BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_gimbal_command
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
+<BR><BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_handgimbal_command
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_chassis_command
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_gimbal_mode_command
 <LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_fric_mode_command
@@ -1846,8 +1862,8 @@ Global Symbols
 <LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lex_close
 <LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;error_set
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_gimbal_command
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
+<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_handgimbal_command
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_chassis_command
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_gimbal_mode_command
 <LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_fric_mode_command
@@ -1876,8 +1892,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[142]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hashtable_get
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_gimbal_command
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
+<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_handgimbal_command
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_chassis_command
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_gimbal_mode_command
 <LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_fric_mode_command
@@ -2231,7 +2247,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[ea]"></a>resolve_json_fric_command</STRONG> (Thumb, 92 bytes, Stack size 280 bytes, json.o(i.resolve_json_fric_command))
+<P><STRONG><a name="[e8]"></a>resolve_json_fric_command</STRONG> (Thumb, 92 bytes, Stack size 280 bytes, json.o(i.resolve_json_fric_command))
 <BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = resolve_json_fric_command &rArr; json_loads &rArr; parse_json &rArr; parse_value &rArr; parse_object &rArr;  parse_value (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;json_decref
@@ -2244,8 +2260,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[e8]"></a>resolve_json_gimbal_command</STRONG> (Thumb, 132 bytes, Stack size 280 bytes, json.o(i.resolve_json_gimbal_command))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = resolve_json_gimbal_command &rArr; json_loads &rArr; parse_json &rArr; parse_value &rArr; parse_object &rArr;  parse_value (Cycle)
+<P><STRONG><a name="[e9]"></a>resolve_json_handgimbal_command</STRONG> (Thumb, 132 bytes, Stack size 280 bytes, json.o(i.resolve_json_handgimbal_command))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1016<LI>Call Chain = resolve_json_handgimbal_command &rArr; json_loads &rArr; parse_json &rArr; parse_value &rArr; parse_object &rArr;  parse_value (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;json_decref
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;json_object_get
@@ -2529,8 +2545,8 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;json_delete
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_cgf_info_by_json
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_gimbal_command
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_handgimbal_command
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_fric_command
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_json_chassis_command
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_gimbal_mode_command
 <LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;resolve_fric_mode_command
@@ -3071,8 +3087,8 @@ Local Symbols
 <P><STRONG><a name="[108]"></a>_fp_digits</STRONG> (Thumb, 334 bytes, Stack size 56 bytes, printfa.o(i._fp_digits), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2ulz
 </UL>
@@ -3101,8 +3117,8 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[6d]"></a>_snputc</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, printfa.o(i._snputc))
-<BR>[Address Reference Count : 2]<UL><LI> printfa.o(i.__0vsnprintf)
-<LI> printfa.o(i.__0snprintf)
+<BR>[Address Reference Count : 2]<UL><LI> printfa.o(i.__0snprintf)
+<LI> printfa.o(i.__0vsnprintf)
 </UL>
 <P><STRONG><a name="[6e]"></a>_sputc</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, printfa.o(i._sputc))
 <BR><BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__0sprintf

@@ -99,8 +99,8 @@ void TIM3_IRQHandler(void)
 		if(flag_command_recieved3 == 1)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
-			resolve_json_gimbal_command();
-		  caclulate_pwm_pulse();		
+			//resolve_json_gimbal_command();
+		  //caclulate_pwm_pulse();		
 			
 			flag_command_recieved3 = 0;	//命令接收标志位清零
 		}
@@ -112,14 +112,15 @@ void TIM3_IRQHandler(void)
 		
 			flag_command_recieved4 = 0;	//命令接收标志位清零
 		}
-		/*	if(flag_command_recieved5 == 1)	//每一毫秒检查一次是否收到控制指令
+			if(flag_command_recieved5 == 1)	//每一毫秒检查一次是否收到控制指令
 		{
 			//如果自动控制才可以给命令的目标速度赋值
 			if(1)//(Control_Mode & auto_control) == auto_control
-			resolve_json_chassis_command();
+			resolve_json_handgimbal_command();
+			caclulate_handpwm_pulse();
 		
 			flag_command_recieved5 = 0;	//命令接收标志位清零
-		}*/
+		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
 			Robo_Move();
