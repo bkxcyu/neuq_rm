@@ -118,8 +118,8 @@ void TIM3_IRQHandler(void)
 		{
 			//如果自动控制才可以给命令的目标速度赋值
 			if(1)//(Control_Mode & auto_control) == auto_control
-			resolve_json_handgimbal_command();
-			caclulate_handpwm_pulse();
+			//resolve_json_handgimbal_command();
+			//caclulate_handpwm_pulse();
 		
 			flag_command_recieved5 = 0;	//命令接收标志位清零
 		}
