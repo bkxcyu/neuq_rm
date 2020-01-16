@@ -23,12 +23,11 @@
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
 
 
-
 extern char receiveBuffer[MAX_LENGTH];
 extern char json_Buffer[MAX_LENGTH];
 int main()
 {
-	All_Init();												//机器人所有配置初始化
+ 	All_Init();												//机器人所有配置初始化
 	max_base_linear_speed = MAX_BASE_LINEAR_SPEED;							//底盘中心最大线速度            杜泽文你好骚啊
 	max_base_rotational_speed = MAX_BASE_ROTATIONAL_SPEED;			//地盘中心最大角速度
 	max_motor_speed = MAX_MOTOR_SPEED;		//电机最大转速，通过上面宏定义更改
@@ -71,7 +70,7 @@ void TIM3_IRQHandler(void)
 		time_count++;
 		
 		/*****   遥控器控制    ******/
-		Remote_Control();				//遥控器控制代码
+		//Remote_Control();				//遥控器控制代码
 		
 		/****  ROS上位机控制  *****/
 		if(flag_command_recieved == 1)	//每一毫秒检查一次是否收到控制指令
@@ -101,8 +100,8 @@ void TIM3_IRQHandler(void)
 		if(flag_command_recieved3 == 1)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
-			//resolve_json_gimbal_command();
-		  //caclulate_pwm_pulse();		
+			resolve_json_gimbal_command();
+		  caclulate_pwm_pulse();		
 			
 			flag_command_recieved3 = 0;	//命令接收标志位清零
 		}
@@ -118,9 +117,8 @@ void TIM3_IRQHandler(void)
 		{
 			//如果自动控制才可以给命令的目标速度赋值
 			if(1)//(Control_Mode & auto_control) == auto_control
-			//resolve_json_handgimbal_command();
-			//caclulate_handpwm_pulse();
-		
+			resolve_json_handgimbal_command();
+			caclulate_handpwm_pulse();	
 			flag_command_recieved5 = 0;	//命令接收标志位清零
 		}
 		/****  机器人运动控制  *****/

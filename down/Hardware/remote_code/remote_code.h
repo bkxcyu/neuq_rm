@@ -15,8 +15,7 @@
 #define control_mode     (auto_control | DJi_Remote_Control)			//×Ô¶¯+´ó½®Ò£¿ØÆ÷
 
 extern u8 Control_Mode;
-extern float pwm_pulse1;
-extern float pwm_pulse2;
+
 /*
 ¸»Ë¹Ò£¿ØÆ÷Âö¿í·¶Î§				     				 ´ó½®Ò£¿ØÆ÷²ÎÊý·¶Î§
 CH1£º1197-2200-3198									 ch0:364-1024-1684

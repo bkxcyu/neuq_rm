@@ -8,13 +8,15 @@
 #include "mode.h"
 #include "bsp_debug_usart.h"
 #include "remote_code.h"
-
+#include "gimbal.h"
+#include "delay.h"
   extern char receiveBuffer[MAX_LENGTH];
   enum chassis_mode_t chassis_modes;
   enum gimbal_mode_t gimbal_modes;
   enum fric_mode_t fric_modes;
 
-
+float pwm_pulse1=1500;
+float pwm_pulse2=1500;
 void send_cgf_info_by_json(void)
 {
 	/*Kinematics.actual_velocities.linear_x=1;
@@ -147,11 +149,11 @@ void resolve_json_chassis_command(void)
 	root = json_loads(json_Buffer,0,&error); //解码Json字符串 返回它包含的数组or  object
 	chassis_obj = json_object_get( root, "chassis" );  //Get a value corresponding to key from object
 	item_obj = json_array_get( chassis_obj, 0 );//Returns the element in array at position index
-	Kinematics.target_velocities.linear_x =1.0f*json_integer_value(item_obj);	//real
+	Kinematics.target_velocities.linear_x =5.0f*json_integer_value(item_obj);	//real
 	item_obj = json_array_get( chassis_obj, 1 );
-	Kinematics.target_velocities.linear_y = 1.0f*json_integer_value(item_obj);
+	Kinematics.target_velocities.linear_y = 5.0f*json_integer_value(item_obj);
 	item_obj = json_array_get( chassis_obj, 2 );
-	Kinematics.target_velocities.angular_z = 5;//1.0f*json_integer_value(item_obj)/100;///100;
+	Kinematics.target_velocities.angular_z = 0.8f*json_integer_value(item_obj);//100;///100;
 	json_decref(item_obj); //Decrement the reference count of json. As soon as a call to json_decref() drops the reference count to zero, the value is destroyed and it can no longer be used.
 	json_decref(chassis_obj);
 	json_decref(root);
@@ -398,52 +400,71 @@ void caclulate_pwm_pulse()
 {
 	float unit_pwm_pulse= (840.0f/360.0f);
 	
-	pwm_pulse1 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.pitch_angular)*1.0f;
+	Kinematics.target_angular.gimbal_angular.yaw_angular=180+Kinematics.target_angular.gimbal_angular.yaw_angular;
+	Kinematics.target_angular.gimbal_angular.pitch_angular=180-Kinematics.target_angular.gimbal_angular.pitch_angular;
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular<225 && Kinematics.target_angular.gimbal_angular.pitch_angular>135)
 	
-	pwm_pulse2 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.yaw_angular)*1.0f;
+	   pwm_pulse1 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.pitch_angular)*1.0f;
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular<270 && Kinematics.target_angular.gimbal_angular.yaw_angular>90)
+		
+	   pwm_pulse2 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.yaw_angular)*1.0f;
 	
 }
 void caclulate_handpwm_pulse()
 {
- static double  yaw_pwm_pulse=1500;
- static double  pitch_pwm_pulse=1500;
-	
-	if(Kinematics.target_angular.gimbal_angular.yaw_angular==1)
+  static double  yaw_pwm_pulse=1500;
+  static double  pitch_pwm_pulse=1500;
+
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==1 && pwm_pulse2>=1395)
 	{
-		yaw_pwm_pulse=yaw_pwm_pulse-1;
-		pwm_pulse1=yaw_pwm_pulse;
-		
+    yaw_pwm_pulse=yaw_pwm_pulse-1;
+		pwm_pulse2=yaw_pwm_pulse;
+		delay_ms(2);
 	}
-	if(Kinematics.target_angular.gimbal_angular.yaw_angular==-1)
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==-1 && pwm_pulse2<=1605)
 	{
-		yaw_pwm_pulse=yaw_pwm_pulse+1;
-		pwm_pulse1=yaw_pwm_pulse;
+		yaw_pwm_pulse++;
+		pwm_pulse2=yaw_pwm_pulse;
+		delay_ms(2);
 		
 	}
 	if(Kinematics.target_angular.gimbal_angular.yaw_angular==0)
 	{
-		
-		pwm_pulse1=yaw_pwm_pulse;
-		
+		if(yaw_pwm_pulse>1500)
+			 yaw_pwm_pulse=yaw_pwm_pulse-1;
+		   pwm_pulse2=yaw_pwm_pulse;
+		   delay_ms(2);
+		if(yaw_pwm_pulse<1500)
+		  yaw_pwm_pulse++;
+		  pwm_pulse2=yaw_pwm_pulse;
+		  delay_ms(2);
 	}
 	
-	if(Kinematics.target_angular.gimbal_angular.pitch_angular==1)
+	
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular==1 && pwm_pulse1<=1605)
 	{
-		pitch_pwm_pulse=pitch_pwm_pulse+1;
-		pwm_pulse2=pitch_pwm_pulse;
+		pitch_pwm_pulse++;
+		pwm_pulse1=pitch_pwm_pulse;
+		delay_ms(2);
 		
 	}
-	if(Kinematics.target_angular.gimbal_angular.pitch_angular==-1)
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular==-1 && pwm_pulse1>=1395)
 	{
 		pitch_pwm_pulse=pitch_pwm_pulse-1;
-		pwm_pulse2=pitch_pwm_pulse;
-		
+		pwm_pulse1=pitch_pwm_pulse;
+		delay_ms(2);
 	}
 	
 		if(Kinematics.target_angular.gimbal_angular.pitch_angular==0)
 	{
-		 pwm_pulse2=pitch_pwm_pulse;
-		
+			if(pitch_pwm_pulse>1500)
+			 pitch_pwm_pulse=pitch_pwm_pulse-1;
+		   pwm_pulse1=pitch_pwm_pulse;
+		   delay_ms(2);
+		  if(pitch_pwm_pulse<1500)
+		  pitch_pwm_pulse++;
+		  pwm_pulse1=pitch_pwm_pulse;
+		  delay_ms(2);
 	}
 
 }

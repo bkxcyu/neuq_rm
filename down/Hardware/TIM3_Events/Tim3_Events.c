@@ -16,8 +16,8 @@
 #include "angle_pid.h"
 #include "speed_pid.h"
 #include "stm32f4xx_tim.h"
-
-
+#include "gimbal.h"
+#include "json.h"
 //无线要发送的数据
 u8 send_data[32]={" nihaoya"};
 
@@ -55,7 +55,9 @@ void Robo_Move()
 		vpid_PI_realize(2,0.05);			//速度闭环2  0.05
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
-		TIM_SetCompare1(TIM1,pwm_pulse1);
+	
+
+	  TIM_SetCompare1(TIM1,pwm_pulse1);
 		TIM_SetCompare2(TIM1,pwm_pulse2);
 
 	  
