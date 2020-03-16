@@ -44,10 +44,10 @@ void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z)
 	Kinematics.wheel3.target_speed.rpm = Kinematics.wheel3.target_speed.linear_vel * VEL2RPM;
 	Kinematics.wheel4.target_speed.rpm = Kinematics.wheel4.target_speed.linear_vel * VEL2RPM;
 	
-	motor1.target_speed = - (int)(Kinematics.wheel1.target_speed.rpm * M2006_REDUCTION_RATIO);
-	motor2.target_speed =   (int)(Kinematics.wheel2.target_speed.rpm * M2006_REDUCTION_RATIO);
-	motor3.target_speed =   (int)(Kinematics.wheel3.target_speed.rpm * M2006_REDUCTION_RATIO);
-	motor4.target_speed = - (int)(Kinematics.wheel4.target_speed.rpm * M2006_REDUCTION_RATIO);
+	motor1.target_speed = - (int)(Kinematics.wheel1.target_speed.rpm * M3508_REDUCTION_RATIO);
+	motor2.target_speed =   (int)(Kinematics.wheel2.target_speed.rpm * M3508_REDUCTION_RATIO);
+	motor3.target_speed =   (int)(Kinematics.wheel3.target_speed.rpm * M3508_REDUCTION_RATIO);
+	motor4.target_speed = - (int)(Kinematics.wheel4.target_speed.rpm * M3508_REDUCTION_RATIO);
 	
 }
 
@@ -65,10 +65,10 @@ void trigger_to_motor(float trigger_angular)
 void Get_Base_Velocities(void)
 {
 	//根据电机转速测算轮子转速
-	Kinematics.wheel1.actual_speed.rpm = - motor1.actual_speed / M2006_REDUCTION_RATIO;
-	Kinematics.wheel2.actual_speed.rpm =   motor2.actual_speed / M2006_REDUCTION_RATIO;
-	Kinematics.wheel3.actual_speed.rpm =   motor3.actual_speed / M2006_REDUCTION_RATIO;
-	Kinematics.wheel4.actual_speed.rpm = - motor4.actual_speed / M2006_REDUCTION_RATIO;
+	Kinematics.wheel1.actual_speed.rpm = - motor1.actual_speed / M3508_REDUCTION_RATIO;
+	Kinematics.wheel2.actual_speed.rpm =   motor2.actual_speed / M3508_REDUCTION_RATIO;
+	Kinematics.wheel3.actual_speed.rpm =   motor3.actual_speed / M3508_REDUCTION_RATIO;
+	Kinematics.wheel4.actual_speed.rpm = - motor4.actual_speed / M3508_REDUCTION_RATIO;
 	//轮子转速转换为轮子线速度
 	Kinematics.wheel1.actual_speed.linear_vel = Kinematics.wheel1.actual_speed.rpm * RPM2VEL;
 	Kinematics.wheel2.actual_speed.linear_vel = Kinematics.wheel2.actual_speed.rpm * RPM2VEL;

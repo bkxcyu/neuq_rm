@@ -686,6 +686,11 @@
               <FileType>1</FileType>
               <FilePath>..\Hardware\gimbal\gimbal.c</FilePath>
             </File>
+            <File>
+              <FileName>power_limitation.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hardware\power_limitation\power_limitation.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
