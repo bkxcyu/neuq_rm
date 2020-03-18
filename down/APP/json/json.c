@@ -414,7 +414,7 @@ void caclulate_handpwm_pulse()
 		pwm_pulse1=yaw_pwm_pulse;
 		
 	}
-	if(Kinematics.target_angular.gimbal_angular.yaw_angular==)
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==1)
 	{
 		yaw_pwm_pulse=yaw_pwm_pulse+1;
 		pwm_pulse1=yaw_pwm_pulse;
