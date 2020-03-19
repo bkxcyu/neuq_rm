@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+<robot
+  name="rm_single_1402">
+  <link
+    name="base">
+    <inertial>
+      <origin
+        xyz="1.69768142160387 -1.49443220987757 -0.93314784684007"
+        rpy="0 0 0" />
+      <mass
+        value="11153.1820111464" />
+      <inertia
+        ixx="35962.8200484059"
+        ixy="1127.84693730381"
+        ixz="-719.35370223672"
+        iyy="122455.4492655"
+        iyz="-564.025490833449"
+        izz="156537.110302068" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link_signal">
+    <inertial>
+      <origin
+        xyz="-2.22044604925031E-14 2.22044604925031E-16 -0.0455713186518478"
+        rpy="0 0 0" />
+      <mass
+        value="19.2147463351888" />
+      <inertia
+        ixx="2.08021703253746"
+        ixy="-1.82164396414497E-14"
+        ixz="7.18670924108434E-15"
+        iyy="2.08021703253746"
+        iyz="9.85955451184544E-17"
+        izz="4.15471520793878" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_signal.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.203921568627451 0.203921568627451 0.203921568627451 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_signal.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_signal"
+    type="continuous">
+    <origin
+      xyz="-4.0140042731625 0.0842326060566304 1.04093127295638"
+      rpy="1.5707963267949 0 1.5707963267949" />
+    <parent
+      link="base" />
+    <child
+      link="link_signal" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+    <mimic
+      joint=""
+      multiplier="1"
+      offset="0" />
+  </joint>
+  <link
+    name="link_switch">
+    <inertial>
+      <origin
+        xyz="1.1518563880486E-15 -7.7715611723761E-16 0.0500000000000003"
+        rpy="0 0 0" />
+      <mass
+        value="38.5177479484889" />
+      <inertia
+        ixx="1.99654922440112"
+        ixy="-1.464009783345E-14"
+        ixz="6.72531700924902E-15"
+        iyy="1.9965492244011"
+        iyz="-3.26097232076993E-17"
+        izz="3.9289022022214" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_switch.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_switch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_switch"
+    type="continuous">
+    <origin
+      xyz="-3.98514364602291 0.0810884823986275 0.257434780133105"
+      rpy="1.5707963267949 0 1.5707963267949" />
+    <parent
+      link="base" />
+    <child
+      link="link_switch" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link_base">
+    <inertial>
+      <origin
+        xyz="-0.0023807583856445 0.0215000000000001 -0.0102225862231369"
+        rpy="0 0 0" />
+      <mass
+        value="0.182527932057222" />
+      <inertia
+        ixx="0.000123317680196391"
+        ixy="1.16059567634364E-36"
+        ixz="6.49391926228295E-22"
+        iyy="0.000230542481049738"
+        iyz="-3.80499950034488E-35"
+        izz="0.000123317680196391" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_spinning"
+    type="continuous">
+    <origin
+      xyz="0.483323113018873 3.74234040848561 -1.20688480910035"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="link_base" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link_body">
+    <inertial>
+      <origin
+        xyz="-0.00241356244610735 0.237061515063746 -0.0102365151994417"
+        rpy="0 0 0" />
+      <mass
+        value="15.2980499588233" />
+      <inertia
+        ixx="0.166467270003727"
+        ixy="2.09114415628004E-19"
+        ixz="1.47744797159628E-17"
+        iyy="0.246115637222411"
+        iyz="1.8493369569499E-17"
+        izz="0.166467270003727" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_body.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_body.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_body"
+    type="continuous">
+    <origin
+      xyz="0.48332 3.7423 -1.2069"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="link_body" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link_shield">
+    <inertial>
+      <origin
+        xyz="-0.00241356132983872 0.248522520680821 -0.0102365149630823"
+        rpy="0 0 0" />
+      <mass
+        value="0.423842683922865" />
+      <inertia
+        ixx="0.000822120476236911"
+        ixy="3.69872546547594E-13"
+        ixz="1.76765850221083E-12"
+        iyy="0.000583837522496483"
+        iyz="2.02544470737216E-12"
+        izz="0.000822120472245529" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_shield.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_shield.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_shield"
+    type="continuous">
+    <origin
+      xyz="0.48332 3.7423 -1.2069"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="link_shield" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+  <link
+    name="link_twinkle">
+    <inertial>
+      <origin
+        xyz="-0.159314064229135 0.45704934609755 -0.0767359498773184"
+        rpy="0 0 0" />
+      <mass
+        value="0.246053272409585" />
+      <inertia
+        ixx="0.000545998274476034"
+        ixy="6.12051331163738E-06"
+        ixz="0.000129001127329237"
+        iyy="0.000458101383803603"
+        iyz="2.62193367790035E-06"
+        izz="0.000287827485665181" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_twinkle.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rm_single_1402/meshes/link_twinkle.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_twinkle"
+    type="continuous">
+    <origin
+      xyz="0.483323113018873 3.74234040848561 -1.20688480910035"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base" />
+    <child
+      link="link_twinkle" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
+      velocity="1" />
+  </joint>
+
+  <gazebo reference="base">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="link_signal">
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="link_switch">
+    <material>Gazebo/SkyBlue</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="link_base">
+    <material>Gazebo/Black</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="link_body">
+    <material>Gazebo/White</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="shield">
+    <material>Gazebo/Black</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="link_twinkle">
+    <material>Gazebo/BlueLaser</material>
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+</robot>
