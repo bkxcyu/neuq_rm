@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 #include "Tim3_Events.h"
-
 #include "key.h"
 #include "led.h"
 #include "bsp_debug_usart.h"
@@ -16,8 +15,8 @@
 #include "angle_pid.h"
 #include "speed_pid.h"
 #include "stm32f4xx_tim.h"
-
-
+#include "gimbal.h"
+#include "json.h"
 //无线要发送的数据
 u8 send_data[32]={" nihaoya"};
 
@@ -34,8 +33,15 @@ void Robo_Move()
 {
 	/*****    pid运算   ******///三个pid，一定要把速度pid放最后
 	if(stop_flag_1 && ap_pid_flag == ang_pid)			//如果此时速度为0（停止）或者自动控制时没有在运行位置闭环   那么角度闭环
+	{	
+		break_jugement();
+		if(stop_flag_3 && 1 )
+		{
+			stop_chassis_motor();
+		}
 		apid_PID_realize(0.2,0.05,0);			//角度闭环，角度和位置取其一，不能一起使用
 	//自动模式下，计算控制指令给的速度，所对应的电机速度
+	}
   if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
@@ -55,7 +61,9 @@ void Robo_Move()
 		vpid_PI_realize(2,0.05);			//速度闭环2  0.05
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
-		TIM_SetCompare1(TIM1,pwm_pulse1);
+	
+
+	  TIM_SetCompare1(TIM1,pwm_pulse1);
 		TIM_SetCompare2(TIM1,pwm_pulse2);
 
 	  

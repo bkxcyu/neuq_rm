@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "speed_pid.h": "c",
+        "motor.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}

@@ -6,12 +6,11 @@
 #include "kinematic.h"
 #include "fric.h"
 #include "stm32f4xx_tim.h"
+#include "gimbal.h"
 u8 Control_Mode = control_mode;
 
 //内部全局变量，方便调试
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0;
-float pwm_pulse1;
-float pwm_pulse2=1500;
 //内部函数声明
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);

@@ -8,13 +8,15 @@
 #include "mode.h"
 #include "bsp_debug_usart.h"
 #include "remote_code.h"
-
+#include "gimbal.h"
+#include "delay.h"
   extern char receiveBuffer[MAX_LENGTH];
   enum chassis_mode_t chassis_modes;
   enum gimbal_mode_t gimbal_modes;
   enum fric_mode_t fric_modes;
 
-
+float pwm_pulse1=1500;
+float pwm_pulse2=1500;
 void send_cgf_info_by_json(void)
 {
 	/*Kinematics.actual_velocities.linear_x=1;
@@ -48,14 +50,14 @@ void send_cgf_info_by_json(void)
           	(Kinematics.actual_angular.fric_angular),\
           	(Kinematics.actual_angular.fric_angular));
 	
-	out = json_dumps(root, JSON_ENCODE_ANY);//  ±äÎª×Ö·û´®
+	out = json_dumps(root, JSON_ENCODE_ANY);//  ï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½
 	printf("%s\r\n", out);
 	json_decref(root);
 	//free(root);
 	free(out);
 }
 
-//·¢ËÍµ×ÅÌÊµ¼ÊËÙ¶ÈÐÅÏ¢
+//ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½Ï¢
 
 void send_chassis_info_by_json(void)
 {
@@ -72,16 +74,16 @@ void send_chassis_info_by_json(void)
 						(Kinematics.actual_velocities.linear_y),\
 						(Kinematics.actual_velocities.angular_z));   //(int),
 						
-	out = json_dumps(root, JSON_ENCODE_ANY);//  ±äÎª×Ö·û´®
+	out = json_dumps(root, JSON_ENCODE_ANY);//  ï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½
 	printf("%s\r\n", out);
-	json_decref(root);//¼õÐ¡ÒýÓÃ¼ÆÊý µ¼ÖÂ×ÊÔ´»ØÊÕ
+	json_decref(root);//ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½
 	//free(root);
 	free(out);
 }
 
-void send_gimbal_info_by_json(void)   ///ÐÂÔö·¢ËÍÔÆÌ¨ÐÅÏ¢ ´ýÍêÉÆ*********************************
+void send_gimbal_info_by_json(void)   ///ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½Ï¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*********************************
 {
-//²âÊÔ
+//ï¿½ï¿½ï¿½ï¿½
 	//Kinematics.target_angular.gimbal_angular.yaw_angular=5;
 	//Kinematics.target_angular.gimbal_angular.yaw_angular=10;
   json_t *root;
@@ -100,9 +102,9 @@ void send_gimbal_info_by_json(void)   ///ÐÂÔö·¢ËÍÔÆÌ¨ÐÅÏ¢ ´ýÍêÉÆ****************
 	free(out);
 
 }
-void send_fric_info_by_json()     //·¢ËÍÄ¦²ÁÂÖÐÅÏ¢
+void send_fric_info_by_json()     //ï¿½ï¿½ï¿½ï¿½Ä¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 {
-//²âÊÔ   
+//ï¿½ï¿½ï¿½ï¿½   
 Kinematics.actual_angular.fric_angular=7;
 json_t *root;
 	char *out;           //
@@ -126,10 +128,10 @@ json_t *root;
 
   float pitch_angle;
 	float yaw_angle;
-//jsonÊý¾Ý»º³åÇø
+//jsonï¿½ï¿½ï¿½Ý»ï¿½ï¿½ï¿½ï¿½ï¿½
 char json_Buffer[MAX_LENGTH];
 extern char receiveBuffer[MAX_LENGTH];
-//±êÖ¾Î»£¬±êÖ¾ÒÑ¾­ÊÕµ½Ò»¸ö¿ØÖÆÖ¸Áî£¬ÔÚ¶¨Ê±Æ÷ÖÐ¶ÏÖÐµ÷ÓÃÏÂÁÐ½âÎöº¯Êý
+//ï¿½ï¿½Ö¾Î»ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½Ñ¾ï¿½ï¿½Õµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½î£¬ï¿½Ú¶ï¿½Ê±ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 uint8_t flag_command_recieved = 0;
 uint8_t flag_command_recieved1 = 0;
 uint8_t flag_command_recieved2 = 0;
@@ -137,26 +139,26 @@ uint8_t flag_command_recieved3 = 0;
 uint8_t flag_command_recieved4 = 0;
 uint8_t flag_command_recieved5 = 0;
 
-//½âÎö½ÓÊÕµ½µÄµ×ÅÌËÙ¶È¿ØÖÆÖ¸Áî
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½Ù¶È¿ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 void resolve_json_chassis_command(void)
 {
 	json_t *root;
 	json_t *chassis_obj;
 	json_t *item_obj;
 	json_error_t error;
-	root = json_loads(json_Buffer,0,&error); //½âÂëJson×Ö·û´® ·µ»ØËü°üº¬µÄÊý×éor  object
+	root = json_loads(json_Buffer,0,&error); //ï¿½ï¿½ï¿½ï¿½Jsonï¿½Ö·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½or  object
 	chassis_obj = json_object_get( root, "chassis" );  //Get a value corresponding to key from object
 	item_obj = json_array_get( chassis_obj, 0 );//Returns the element in array at position index
-	Kinematics.target_velocities.linear_x =1.0f*json_integer_value(item_obj);	//real
+	Kinematics.target_velocities.linear_x =5.0f*json_integer_value(item_obj);	//real
 	item_obj = json_array_get( chassis_obj, 1 );
-	Kinematics.target_velocities.linear_y = 1.0f*json_integer_value(item_obj);
+	Kinematics.target_velocities.linear_y = 5.0f*json_integer_value(item_obj);
 	item_obj = json_array_get( chassis_obj, 2 );
-	Kinematics.target_velocities.angular_z = 5;//1.0f*json_integer_value(item_obj)/100;///100;
+	Kinematics.target_velocities.angular_z = 0.8f*json_integer_value(item_obj);//100;///100;
 	json_decref(item_obj); //Decrement the reference count of json. As soon as a call to json_decref() drops the reference count to zero, the value is destroyed and it can no longer be used.
 	json_decref(chassis_obj);
 	json_decref(root);
 }
-//½âÎöÊÕµ½µÄÔÆÌ¨¿ØÖÆÖ¸Áî
+//ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 void resolve_json_gimbal_command()
 { 
 	json_t *root;
@@ -194,7 +196,7 @@ void resolve_json_handgimbal_command(void)
 	json_decref(root);
 }
 
-//½âÎöÊÕµ½µÄÄ¦²ÁÂÖ¿ØÖÆÖ¸Áî
+//ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ä¦ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 void resolve_json_fric_command()
 	{ 
 	json_t *root;
@@ -226,7 +228,7 @@ void resolve_json_trigger_command()
 
 }
 	
-	//½âÎöÄ£Ê½¿ØÖÆÖ¸Áî
+	//ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 void resolve_json_mode_command()
 {
   resolve_chassis_mode_command();
@@ -282,11 +284,11 @@ void resolve_fric_mode_command()
 
 void resolve_json(void)
 {
-	//´´½¨json¿Õ¶ÔÏó
+	//ï¿½ï¿½ï¿½ï¿½jsonï¿½Õ¶ï¿½ï¿½ï¿½
 	json_t *Chassis_obj;
 	json_t *item1_obj;
 	json_error_t error;
-	//½«»º³åÇøµÄÊý¾Ý×ª»»Îªjson¶ÔÏó
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªjsonï¿½ï¿½ï¿½ï¿½
 	Chassis_obj = json_loads(json_Buffer,0,&error);
 	
 	if(!Chassis_obj)
@@ -297,8 +299,8 @@ void resolve_json(void)
 	{
 		
 //		json_t *x, *y, *z;
-		//json_object_get:ÌáÈ¡¸¸¶ÔÏó/Êý×éÖÐµÄ¶ÔÏó/Êý×é/¼üÖµ
-		//½«Ö÷¶ÔÏóÀïµÄÄÚÈÝÌáÈ¡³öÀ´
+		//json_object_get:ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ¶ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½Öµ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 //		x = json_object_get( Chassis_obj, "linear_x" );
 //		y = json_object_get( Chassis_obj, "linear_y" );
 //		z = json_object_get( Chassis_obj, "angular_z" );
@@ -316,7 +318,7 @@ void resolve_json(void)
 		
 		
 	}
-	//json_array_get:ÌáÈ¡¸¸Êý×éÖÐµÄÔªËØ
+	//json_array_get:ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ôªï¿½ï¿½
 	//json_array_get(Arry_obj,0);
 	//
 	//sprintf(json_Buffer, "item1_obj value is %f",json_real_value(item1_obj));
@@ -398,52 +400,71 @@ void caclulate_pwm_pulse()
 {
 	float unit_pwm_pulse= (840.0f/360.0f);
 	
-	pwm_pulse1 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.pitch_angular)*1.0f;
+	Kinematics.target_angular.gimbal_angular.yaw_angular=180+Kinematics.target_angular.gimbal_angular.yaw_angular;
+	Kinematics.target_angular.gimbal_angular.pitch_angular=180-Kinematics.target_angular.gimbal_angular.pitch_angular;
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular<225 && Kinematics.target_angular.gimbal_angular.pitch_angular>135)
 	
-	pwm_pulse2 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.yaw_angular)*1.0f;
+	   pwm_pulse1 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.pitch_angular)*1.0f;
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular<270 && Kinematics.target_angular.gimbal_angular.yaw_angular>90)
+	   pwm_pulse2 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.yaw_angular)*1.0f;
 	
 }
 void caclulate_handpwm_pulse()
 {
- static double  yaw_pwm_pulse=1500;
- static double  pitch_pwm_pulse=1500;
-	
-	if(Kinematics.target_angular.gimbal_angular.yaw_angular==1)
+  static double  yaw_pwm_pulse=1500;
+  static double  pitch_pwm_pulse=1500;
+
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==1 && pwm_pulse2>=1395)
 	{
-		yaw_pwm_pulse=yaw_pwm_pulse-1;
-		pwm_pulse1=yaw_pwm_pulse;
-		
+    yaw_pwm_pulse=yaw_pwm_pulse-1;
+		pwm_pulse2=yaw_pwm_pulse;
+		delay_ms(2);
 	}
-	if(Kinematics.target_angular.gimbal_angular.yaw_angular==1)
+	
+	if(Kinematics.target_angular.gimbal_angular.yaw_angular==-1 && pwm_pulse2<=1605)
 	{
-		yaw_pwm_pulse=yaw_pwm_pulse+1;
-		pwm_pulse1=yaw_pwm_pulse;
+		yaw_pwm_pulse++;
+		pwm_pulse2=yaw_pwm_pulse;
+		delay_ms(2);
 		
 	}
 	if(Kinematics.target_angular.gimbal_angular.yaw_angular==0)
 	{
-		
-		pwm_pulse1=yaw_pwm_pulse;
-		
+		if(yaw_pwm_pulse>1500)
+			 yaw_pwm_pulse=yaw_pwm_pulse-1;
+		   pwm_pulse2=yaw_pwm_pulse;
+		   delay_ms(2);
+		if(yaw_pwm_pulse<1500)
+		  yaw_pwm_pulse++;
+		  pwm_pulse2=yaw_pwm_pulse;
+		  delay_ms(2);
 	}
 	
-	if(Kinematics.target_angular.gimbal_angular.pitch_angular==1)
+	
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular==1 && pwm_pulse1<=1605)
 	{
-		pitch_pwm_pulse=pitch_pwm_pulse+1;
-		pwm_pulse2=pitch_pwm_pulse;
+		pitch_pwm_pulse++;
+		pwm_pulse1=pitch_pwm_pulse;
+		delay_ms(2);
 		
 	}
-	if(Kinematics.target_angular.gimbal_angular.pitch_angular==-1)
+	if(Kinematics.target_angular.gimbal_angular.pitch_angular==-1 && pwm_pulse1>=1395)
 	{
 		pitch_pwm_pulse=pitch_pwm_pulse-1;
-		pwm_pulse2=pitch_pwm_pulse;
-		
+		pwm_pulse1=pitch_pwm_pulse;
+		delay_ms(2);
 	}
 	
 		if(Kinematics.target_angular.gimbal_angular.pitch_angular==0)
 	{
-		 pwm_pulse2=pitch_pwm_pulse;
-		
+			if(pitch_pwm_pulse>1500)
+			 pitch_pwm_pulse=pitch_pwm_pulse-1;
+		   pwm_pulse1=pitch_pwm_pulse;
+		   delay_ms(2);
+		  if(pitch_pwm_pulse<1500)
+		  pitch_pwm_pulse++;
+		  pwm_pulse1=pitch_pwm_pulse;
+		  delay_ms(2);
 	}
 
 }
@@ -455,12 +476,12 @@ void caclulate_handpwm_pulse()
 // printf("receive_buffer:%s\r\n", receive_buffer);
 // if(receive_buffer[0]=='{')
 // {  
-//    root=json_loads(receive_buffer,0,&j_error);//½«×Ö·û´®×ª»»³Éjson£¬¶¼ÊÇASCII
+//    root=json_loads(receive_buffer,0,&j_error);//ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ASCII
 //  json_unpack(root, "{s:i, s:i}","cx", &data1,"cy", &data2);
 //    //char * output_buffer = json_dumps(root,JSON_ENCODE_ANY);
 //    //printf("output_buffer:%s\r\n", output_buffer);
-//  printf("data:%d£¬%d\r\n",(int)data1,(int)data2);    
-//  json_delete(root);//²»ÒªÓÃfree£¬ÓÃfree£¨£©»áµ¼ÖÂHeapÒç³ö
+//  printf("data:%dï¿½ï¿½%d\r\n",(int)data1,(int)data2);    
+//  json_delete(root);//ï¿½ï¿½Òªï¿½ï¿½freeï¿½ï¿½ï¿½ï¿½freeï¿½ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½ï¿½Heapï¿½ï¿½ï¿½
 //  //free(root);
 // }
 // else

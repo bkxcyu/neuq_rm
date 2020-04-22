@@ -10,6 +10,8 @@
 #define RPM2VEL 0.523599f										//转速转线速度		vel = rpn*pi*D/60  cm/s
 #define VEL2RPM 1.909859f										//线速度转转度
 #define M2006_REDUCTION_RATIO 36.000000f		//齿轮箱减速比
+#define M3508_REDUCTION_RATIO 19.000000f		//齿轮箱减速比
+
 typedef struct
 {
 	float linear_vel;			//线速度
@@ -76,7 +78,7 @@ extern float max_base_rotational_speed;
 
 extern int stop_flag_1;
 extern int stop_flag_2;
-
+extern int stop_flag_3; //新加入的，防止刹车过硬过载by LUO
 
 void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z);
 void trigger_to_motor(float trigger_angular);
@@ -84,4 +86,8 @@ void Get_Base_Velocities(void);
 void speed_control(float speed_x,float speed_y,float speed_r);		//将三个方向速度转换为电机转速
 void trigger_control(float trigger_angular);
 
+void break_jugement(void);  // by luo
+
 #endif
+
+
