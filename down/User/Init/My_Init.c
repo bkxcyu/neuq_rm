@@ -21,6 +21,7 @@
 #include "bsp_debug_usart.h"
 #include "bsp_uart7.h"
 #include "gimbal.h"
+#include "power_limitation.h"
 
 RCC_ClocksTypeDef get_rcc_clock;		//系统时钟结构体
 
@@ -67,5 +68,5 @@ void All_Init()
 
 	RCC_GetClocksFreq(&get_rcc_clock); 			//查看系统时钟(watch中)
 	
-	
+	power_limitation_init();       //自己加的功率限制初始化
 }

@@ -3,7 +3,7 @@
 #include "delay.h"
 #include "speed_pid.h"
 #include "angle_pid.h"
-#include "stm32f4xx_can.h"
+
 #include "stm32f4xx.h"
 #include "kinematic.h"
 

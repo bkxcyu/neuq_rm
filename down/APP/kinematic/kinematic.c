@@ -144,7 +144,14 @@ else if(trigger_angular!=0)
 }
 	}
 
+int stop_flag_3=0;
 	
+void break_jugement(void)
+{
+    if(motor1.actual_speed <=0.05)
+		 stop_flag_3=1;
+    
+}
 // 函数: find_max()
 // 描述: 找到计算得到的电机速度最大值
 // 参数：无

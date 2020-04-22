@@ -2,7 +2,7 @@
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_tim.h"
 #include "sys.h"
-#include "stm32f4xx_tim.h"
+
 
 void TIM1_GIMBAL_Init(void)
 {  

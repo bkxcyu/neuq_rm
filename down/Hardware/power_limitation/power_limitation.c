@@ -1,8 +1,8 @@
-#include power_limitation.h
-#include motor.h
+#include "power_limitation.h"
+#include "motor.h"
 
 
-MOTOR_POWER power
+MOTOR_POWER power;
 
 void power_limitation_init()
 {
@@ -16,17 +16,17 @@ void power_limitation_init()
   power.all_motor_current = 0;
 }
 
-void power_limitation_caculation()
+void power_limitation_caculation() //这个函数可以近似计算小车启动时的瞬时功率，可用作测试实验验证
 {
-  power.motor1_p = motor1.vpid.PID_OUT
-  power.motor2_p = motor2.vpid.PID_OUT
-  power.motor3_p = motor3.vpid.PID_OUT
-  power.motor4_p = motor4.vpid.PID_OUT
+  power.motor1_p = motor1.vpid.PID_OUT;
+  power.motor2_p = motor2.vpid.PID_OUT;
+  power.motor3_p = motor3.vpid.PID_OUT;
+  power.motor4_p = motor4.vpid.PID_OUT;
 
-  power.all_motor_current = (power.motor1_p + power.motor2_p + power.motor3_p + power.motor4_p)/819.2
-  power.all_motor_current = abs(power.all_motor_current);
+  power.all_motor_current = (power.motor1_p + power.motor2_p + power.motor3_p + power.motor4_p)/819.2;
+  power.all_motor_current = abs1(power.all_motor_current);
 
-  power.P_now = 24 *  power.all_motor_current
+  power.P_now = 24 *  power.all_motor_current;
 }
 
 void power_limitation_jugement()
@@ -35,8 +35,8 @@ void power_limitation_jugement()
   {
     if(power.buffer < power.Wd)
     power.P_max_feasible = power.P_max;
-    else if(buffer >= Wd)
-    power.P_max_feasible = (power.buffer - power.Wd)/0.1;
+    else if(power.buffer >= power.Wd)
+    power.P_max_feasible = (power.buffer - power.Wd)/0.1f;
   }
   else
   {
@@ -48,10 +48,10 @@ void power_limitation_jugement()
 void power_limitation_coefficient()
 {
    if(power.P_now >= power.P_max_feasible)
-     power.motor1_p = power.motor1_p * (power.P_max_feasible/power.P_now);
-     power.motor2_p = power.motor2_p * (power.P_max_feasible/power.P_now);
-     power.motor3_p = power.motor3_p * (power.P_max_feasible/power.P_now);
-     power.motor4_p = power.motor4_p * (power.P_max_feasible/power.P_now);
+     motor1.vpid.PID_OUT = motor1.vpid.PID_OUT * (power.P_max_feasible/power.P_now);
+     motor2.vpid.PID_OUT = motor2.vpid.PID_OUT * (power.P_max_feasible/power.P_now);
+     motor3.vpid.PID_OUT = motor3.vpid.PID_OUT * (power.P_max_feasible/power.P_now);
+     motor4.vpid.PID_OUT = motor4.vpid.PID_OUT * (power.P_max_feasible/power.P_now);
   
 }
 
@@ -67,10 +67,10 @@ void power_limitation_scale()
 
 void power_limitation_out()
 {
-  motor1.vpid.PID_OUT = power.motor1_p
-  motor2.vpid.PID_OUT = power.motor2_p 
-  motor3.vpid.PID_OUT = power.motor3_p
-  motor4.vpid.PID_OUT = power.motor4_p
+  motor1.vpid.PID_OUT = power.motor1_p;
+  motor2.vpid.PID_OUT = power.motor2_p;
+  motor3.vpid.PID_OUT = power.motor3_p;
+  motor4.vpid.PID_OUT = power.motor4_p;
 
 }
 void read_power()  //This function is to get information from the referee system.
@@ -79,13 +79,10 @@ void read_power()  //This function is to get information from the referee system
 
 }
 
-float abs(float temp)
+float abs1(float temp)
 {
-    if(temp > 0)
-      temp = temp;
-    else if(temp <= 0)
+    if(temp <= 0)
       temp = -temp;
-
     return temp;  
-    
 }
+

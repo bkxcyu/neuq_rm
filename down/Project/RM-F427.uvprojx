@@ -337,7 +337,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F427_437xx,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\User\sys;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\DJi_remote;..\Hardware\FS_remote;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal</IncludePath>
+              <IncludePath>..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\Libraries\CMSIS\Include;..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\User;..\User\delay;..\Hardware\LED;..\User\sys;..\Hardware\motor;..\Hardware\STMFLASH;..\Hardware\flash;..\Hardware\power;..\Hardware\key;..\Hardware\BUZZER;..\Hardware\DJi_remote;..\Hardware\FS_remote;..\Hardware\remote_code;..\Hardware\TIM3_Events;..\APP\kinematic;..\APP\angle_pid;..\APP\speed_pid;..\APP\json;..\BSP\usart;..\BSP\timer;..\BSP\can;..\User\Init;..\Hardware\fric;..\APP\mode;..\Hardware\gimbal;..\Hardware\power_limitation</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

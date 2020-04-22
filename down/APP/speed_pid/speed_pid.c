@@ -1,5 +1,6 @@
 #include "speed_pid.h"
 #include "motor.h"
+#include "power_limitation.h"
 
 #define IntegralUpperLimit    5000
 #define IntegralSeparation    300
@@ -80,12 +81,16 @@ void vpid_PI_realize(float kp,float ki)
 	motor4.vpid.actual_speed = motor4.actual_speed;
 	
 
-	
 	//计算输出值
 	vpid_realize(&motor1.vpid,kp,ki);
 	vpid_realize(&motor2.vpid,kp,ki);
 	vpid_realize(&motor3.vpid,kp,ki);
 	vpid_realize(&motor4.vpid,kp,ki);
+	
+	/******************功率控制方案*************************/
+
+	power_limitation_jugement();
+	power_limitation_coefficient();
 	
 }
 
