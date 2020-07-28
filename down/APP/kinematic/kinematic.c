@@ -54,7 +54,7 @@ void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z)
 void trigger_to_motor(float trigger_angular)
 {
      
-	motor5.target_speed =(int)(trigger_angular);//
+	motor5.target_speed =(int)(trigger_angular*M2006_REDUCTION_RATIO);
 	
 }
 
@@ -139,10 +139,10 @@ else if(trigger_angular!=0)
 		
 		trigger_to_motor(trigger_angular);
 		
-		set_trigger_motor_speed(motor5.target_speed);//set_trigger_motor_speed(motor8.target_speed);
-		
+		set_trigger_motor_speed(motor5.target_speed);		
 }
 	}
+
 
 int stop_flag_3=0;
 	

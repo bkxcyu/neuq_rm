@@ -48,14 +48,14 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 			  r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);
 			if(trigger_CH_width == 1 )
 			{
-			  trigger_speed = 1000;
+			  trigger_speed = 150;
 				fric1_on(1000);
 				fric2_on(1000);
 				
 			}
 		 if(trigger_CH_width ==2)//1.5<trigger_CH_width & trigger_CH_width <2.5 )
 			{
-			  trigger_speed = 1000;
+			  trigger_speed = 150;
 				fric1_on(1500);
 				fric2_on(1500);
 			}

@@ -127,7 +127,7 @@ void set_trigger_current()
 	u8 current_msg[8];
 	
 	//电机目标电流为速度pid输出
-	motor5.target_current = motor5.target_speed;;//测试
+	motor5.target_current = motor5.vpid.PID_OUT;//
 	motor6.target_current = motor6.vpid.PID_OUT;
 
 	

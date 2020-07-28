@@ -4,9 +4,10 @@
 
 #define IntegralUpperLimit    5000
 #define IntegralSeparation    300
-#define vPID_OUT_MAX          8000		//即最大电流
+#define vPID_OUT_MAX          15000//8000		//即最大电流
 #define gimbal_angel_upperlimit  2000  //云台位置环上限
 #define gimbal_angel_downlimit   200  //云台位置环下下限
+#define tvPID_OUT_MAX         9000    //拨弹轮
 
 int find_max(void);
 
@@ -96,6 +97,43 @@ void vpid_PI_realize(float kp,float ki)
 	
 }
 
+void tvpid_realize(VPID_t *vpid,float kp,float ki)
+{
+	vpid->err = vpid->target_speed - vpid->actual_speed;
+	
+	if(abs(vpid->err) <= IntegralSeparation)		//积分分离
+		vpid->err_integration += vpid->err;
+	if(vpid->err_integration > IntegralUpperLimit)		//抗积分饱和
+		vpid->err_integration = IntegralUpperLimit;
+	else if(vpid->err_integration < -IntegralUpperLimit)
+		vpid->err_integration = -IntegralUpperLimit;
+	
+	vpid->P_OUT = kp * vpid->err;								//P项
+	vpid->I_OUT = ki * vpid->err_integration;		//I项
+	
+	//输出限幅
+	if((vpid->P_OUT + vpid->I_OUT) > tvPID_OUT_MAX) 
+		vpid->PID_OUT = tvPID_OUT_MAX;
+	else if((vpid->P_OUT + vpid->I_OUT) < -tvPID_OUT_MAX) 
+		vpid->PID_OUT = -tvPID_OUT_MAX;
+	else
+		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
+}
+void tvpid_PI_realize(float kp,float ki)
+{
+	//读取电机当前转速
+	
+	motor5.vpid.actual_speed = motor5.actual_speed;
+	
+
+	//计算输出值
+	vpid_realize(&motor5.vpid,kp,ki);
+
+	
+	
+	
+}
+
 // 函数: set_motor_speed()
 // 描述: 设置目标速度
 // 参数：4个电机的目标速度
@@ -117,14 +155,17 @@ void set_chassis_motor_speed(int motor1_speed,int motor2_speed,int motor3_speed,
 
 	
 }
+
 void set_trigger_motor_speed(int motor5_speed)
 {
-	//motor5.vpid.target_speed = motor5_speed;
+	motor5.vpid.target_speed = motor5_speed;
 	
 	motor5.target_speed = motor5_speed;	
 	
 
 }
+
+
 /*********************************************云台pid部分*******************************************************/
 /*void apid_GIMBAL_realize(VPID_t *vpid,float kpa,float kia,float kpv,float,kiv)
 {

@@ -49,7 +49,7 @@ void Robo_Move()
 		if(Kinematics.target_angular.fric_angular==1)
 		{   fric1_on(1800);
 				fric2_on(1800);
-			  trigger_control(400);
+			  trigger_control(150);
 		}
 		else if(Kinematics.target_angular.fric_angular==0)
 		{   
@@ -59,6 +59,7 @@ void Robo_Move()
 		}
 	}
 		vpid_PI_realize(2,0.05);			//速度闭环2  0.05
+	  tvpid_PI_realize(2,0.05);      //拨弹轮速度闭环  参数未确定
 	  //apid_GIMBAL_PI_realize(1,0.05,1,0.05);
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
