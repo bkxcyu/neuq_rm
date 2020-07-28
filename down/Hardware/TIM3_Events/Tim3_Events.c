@@ -59,9 +59,10 @@ void Robo_Move()
 		}
 	}
 		vpid_PI_realize(2,0.05);			//速度闭环2  0.05
+	  //apid_GIMBAL_PI_realize(1,0.05,1,0.05);
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
-	
+	  set_gimbal_current();
 
 	  TIM_SetCompare1(TIM1,pwm_pulse1);
 		TIM_SetCompare2(TIM1,pwm_pulse2);

@@ -49,6 +49,8 @@ void All_Init()
 	key_init();											//按键初始化
 
 	CAN1_Mode_Init(CAN_SJW_1tq,CAN_BS2_4tq,CAN_BS1_4tq,5,CAN_Mode_Normal);				//can初始化（电机初始化） 45M/(4+4+1)/5
+	CAN2_Mode_Init(CAN_SJW_1tq,CAN_BS2_4tq,CAN_BS1_4tq,5,CAN_Mode_Normal);				//can初始化（电机初始化） 45M/(4+4+1)/5
+
 	Debug_USART_Config();           //通信串口初始化（USART2）
 	JSON_USART_Config();           	//主从控通信串口初始化（UART7）
 	
