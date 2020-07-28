@@ -1,0 +1,16 @@
+..\output\fs_remote.o: ..\Hardware\FS_remote\FS_remote.c
+..\output\fs_remote.o: ..\Hardware\FS_remote\FS_remote.h
+..\output\fs_remote.o: ..\User\sys\sys.h
+..\output\fs_remote.o: ..\User\sys\stm32f4xx.h
+..\output\fs_remote.o: F:\keil\ARM\PACK\Keil\STM32F4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f427xx.h
+..\output\fs_remote.o: ..\Libraries\CMSIS\Include\core_cm4.h
+..\output\fs_remote.o: F:\keil\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\fs_remote.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
+..\output\fs_remote.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
+..\output\fs_remote.o: ..\Libraries\CMSIS\Include\core_cmSimd.h
+..\output\fs_remote.o: F:\keil\ARM\PACK\Keil\STM32F4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\output\fs_remote.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h
+..\output\fs_remote.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
+..\output\fs_remote.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h
+..\output\fs_remote.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h
+..\output\fs_remote.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\misc.h

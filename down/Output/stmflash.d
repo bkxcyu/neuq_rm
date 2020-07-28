@@ -1,0 +1,14 @@
+..\output\stmflash.o: ..\Hardware\STMFLASH\stmflash.c
+..\output\stmflash.o: ..\Hardware\STMFLASH\stmflash.h
+..\output\stmflash.o: ..\User\sys\sys.h
+..\output\stmflash.o: ..\User\sys\stm32f4xx.h
+..\output\stmflash.o: F:\keil\ARM\PACK\Keil\STM32F4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f427xx.h
+..\output\stmflash.o: ..\Libraries\CMSIS\Include\core_cm4.h
+..\output\stmflash.o: F:\keil\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\stmflash.o: ..\Libraries\CMSIS\Include\core_cmInstr.h
+..\output\stmflash.o: ..\Libraries\CMSIS\Include\core_cmFunc.h
+..\output\stmflash.o: ..\Libraries\CMSIS\Include\core_cmSimd.h
+..\output\stmflash.o: F:\keil\ARM\PACK\Keil\STM32F4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\output\stmflash.o: ..\User\delay\delay.h
+..\output\stmflash.o: ..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_flash.h
+..\output\stmflash.o: ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
