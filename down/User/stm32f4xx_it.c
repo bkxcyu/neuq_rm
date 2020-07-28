@@ -287,6 +287,10 @@ void CAN1_RX0_IRQHandler(void)	//解析传回数据*****需增加
 		case(CAN_TRIGGER_ID):
 			record_motor_callback(&motor5, angle, speed, current);
 		break;
+		case(CAN_GIMBAL1_ID):
+		record_motor_callback(&gimbal1, angle, speed, current);
+		case(CAN_GIMBAL2_ID):
+		record_motor_callback(&gimbal1, angle, speed, current);
 		case(CAN_LoopBack_ID):
 		{
 			loopback.motor1_current= RxMessage.Data[0]<<8 | RxMessage.Data[1]<<0;

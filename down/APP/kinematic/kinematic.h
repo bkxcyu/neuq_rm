@@ -85,6 +85,7 @@ void trigger_to_motor(float trigger_angular);
 void Get_Base_Velocities(void);
 void speed_control(float speed_x,float speed_y,float speed_r);		//将三个方向速度转换为电机转速
 void trigger_control(float trigger_angular);
+void gimbal_control(float gimbal1_angle,float gimbal2_angel);
 
 void break_jugement(void);  // by luo
 

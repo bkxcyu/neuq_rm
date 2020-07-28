@@ -114,8 +114,13 @@ void set_chassis_motor_speed(int motor1_speed,int motor2_speed,int motor3_speed,
 	motor3.target_speed = motor3_speed;
 	motor4.target_speed = motor4_speed;
 	
+}
 
-	
+void set_GIMBAL_angle(int gimbal1_angle,int gimbal2_angle)
+{
+	gimbal1.apid.target_angle = gimbal1_angle;
+	gimbal2.apid.target_angle = gimbal2_angle;
+
 }
 void set_trigger_motor_speed(int motor5_speed)
 {
@@ -126,9 +131,9 @@ void set_trigger_motor_speed(int motor5_speed)
 
 }
 /*********************************************云台pid部分*******************************************************/
-/*void apid_GIMBAL_realize(VPID_t *vpid,float kpa,float kia,float kpv,float,kiv)
+void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kpv,float kiv)
 {
-	vpid->err = vpid->target_angel - vpid->actual_angel;
+	vpid->err = vpid->target_angle - vpid->actual_angle;
 	
 	if(abs(vpid->err) <= gimbal_angel_downlimit)		//积分分离
 		vpid->err_integration += vpid->err;
@@ -174,10 +179,10 @@ void apid_GIMBAL_PI_realize(float kpa,float kia,float kpv,float kiv)
 	gimbal1.vpid.actual_speed = gimbal1.actual_speed;
 	gimbal2.vpid.actual_speed = gimbal2.actual_speed;
 	//计算输出值
-	apid_GIMBAL_realize(&gimbal1.vpid,kpa,kia,kpv,kiv);
-	apid_GIMBAL_realize(&gimbal2.vpid,kpa,kia,kpv,kiv);
+	apid_GIMBAL_realize(&gimbal1.apid,kpa,kia,kpv,kiv);
+	apid_GIMBAL_realize(&gimbal2.apid,kpa,kia,kpv,kiv);
 }
-*/
+
 /*************************************************云台pid部分******************************************************/
 
 // 函数: abs()

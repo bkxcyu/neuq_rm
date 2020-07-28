@@ -144,6 +144,13 @@ else if(trigger_angular!=0)
 }
 	}
 
+void gimbal_control(float gimbal1_angle,float gimbal2_angle)
+  {
+		//先对上位机传入的角度进行换算
+		gimbal1_angle=gimbal1_angle*8191/360;
+		gimbal2_angle=gimbal2_angle*8191/360;
+    set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);
+  }
 int stop_flag_3=0;
 	
 void break_jugement(void)
