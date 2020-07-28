@@ -21,6 +21,10 @@
 #include "bsp_debug_usart.h"
 #include "bsp_uart7.h"
 #include "gimbal.h"
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 RCC_ClocksTypeDef get_rcc_clock;		//系统时钟结构体
 
