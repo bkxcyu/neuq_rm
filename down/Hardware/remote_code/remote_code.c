@@ -14,15 +14,15 @@ float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0;
 //ÄÚ²¿º¯ÊýÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
-float caculate_gembal_pitch_angle(int width,int mid,int min,int max);
-float caculate_gembal_yaw_angle(int width,int mid,int min,int max);
+float caculate_gimbal_pitch_angle(int width,int mid,int min,int max);
+float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
 // º¯Êý: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
 // ²ÎÊý£ºÎÞ
 // Êä³ö£ºÎÞ
 void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏàÓ¦¶¯×÷
 {	
-	if(remote_CH_width>remote_min_value && remote_CH_width<remote_max_value)		//Èç¹ûÂú×ãÒ£¿ØÌõ¼þ
+	if(chassis_CH_width>remote_min_value && chassis_CH_width<remote_max_value)		//Èç¹ûÂú×ãÒ£¿ØÌõ¼þ
 	{
 		//±êÖ¾Î»¸ÄÎªÒ£¿ØÄ£Ê½
 		Control_Mode &= remote_control;											//ÐÞ¸ÄControl_ModeµÚ¶þÎ»Îª0
@@ -38,33 +38,47 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 	{
 		if(stop_CH_width>stop_max_value || stop_CH_width<stop_min_value)		//Èç¹ûµ±Ç°²»ÊÇÍ£Ö¹ÃüÁî
 		{
-			//½«Ò£¿ØÆ÷Êä³öÓ³Éäµ½»úÆ÷ÈËÈýÖáËÙ¶ÈÉÏ
+			if(chassis_CH_width==3)
+			{
 				x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
 			  y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
-			  pwm_pulse1=caculate_gembal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
-			if((i_CH_width-1024)>60 || (i_CH_width-1024)<-60)   //Ïû³ý²Ù¿ØÔÆÌ¨µÄÎó´¥
-			  r_speed=0;
-			else
-			  r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);
-			if(trigger_CH_width == 1 )
+			  r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
+				if(trigger_CH_width == 1 )
 			{
 			  trigger_speed = 150;
 				fric1_on(1000);
 				fric2_on(1000);
 				
 			}
-		 if(trigger_CH_width ==2)//1.5<trigger_CH_width & trigger_CH_width <2.5 )
+			 if(trigger_CH_width ==2)
 			{
 			  trigger_speed = 150;
 				fric1_on(1500);
 				fric2_on(1500);
-			}
-			if(trigger_CH_width==3)//trigger_CH_width >1.5 &trigger_CH_width< 4)
+			                       }
+			if(trigger_CH_width==3)
 			{
 			trigger_speed = 0;
 				fric1_on(1000);
 				fric2_on(1000);
+		 	                    }
+			
+			                      }
+			if(gimbal_CH_width==1)
+			{
+				
+				 pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+				 pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+				 
+			    
+				
+			
 			}
+			
+			 
+			
+			  
+		
 			
 		}
 		else			//Èç¹ûÍ£Ö¹ÃüÁî
@@ -122,7 +136,7 @@ static float caculate_rotational_speed(int width,int mid,int min,int max)
   return speed;                
 }
 
-static float caculate_gembal_pitch_angle(int width,int mid,int min,int max)
+static float caculate_gimbal_pitch_angle(int width,int mid,int min,int max)
 {
 	float pwm_pulse=1500;
 		if(width>=(mid+2))
@@ -135,7 +149,7 @@ static float caculate_gembal_pitch_angle(int width,int mid,int min,int max)
 	
 }
 
-/*static float caculate_gembal_yaw_angle(int width,int mid,int min,int max)
+static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
 {
 	float pwm_pulse=1500;
 		if(width>=(mid+2))
@@ -146,7 +160,7 @@ static float caculate_gembal_pitch_angle(int width,int mid,int min,int max)
 		pwm_pulse=1500;
 	return pwm_pulse;
 	
-}*/
+}
 
 
 

@@ -69,7 +69,8 @@ SWB|SWC:  1198-2198-3198
 	#define r_CH_width            rc.ch2         //r方向通道脉宽   左摇杆左右
 	#define i_CH_width            rc.ch3         //云台俯仰通道脉宽 左摇杆上下
 	#define stop_CH_width         rc.s1					 //急停脉宽				s1拨到最下
-	#define remote_CH_width       rc.s1  				 //遥控模式脉宽    s1拨到中间
+	#define chassis_CH_width       rc.s1  				 //遥控底盘    s1拨到中间   1 3  2
+	#define gimbal_CH_width         rc.s1            //遥控云台    s1最上  1
 	#define trigger_CH_width      rc.s2          //拨弹轮控制
 	
 	/*以下定义中的数值均通过watch中观察各通道值所得*/
@@ -92,7 +93,7 @@ SWB|SWC:  1198-2198-3198
 	#define stop_max_value				2.5
 	#define stop_min_value				1.5
 	#define remote_max_value      4
-	#define remote_min_value      1.5			//remote范围应包含stop
+	#define remote_min_value     0.5		//remote范围应包含stop
 
 #endif
 

@@ -982,7 +982,7 @@ I (..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x5E70DB42)
 I (..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x5E70DB42)
 I (..\BSP\usart\bsp_debug_usart.h)(0x5E70DB42)
 I (F:\keil\ARM\ARMCC\include\stdio.h)(0x569DEA3A)
-I (..\Hardware\remote_code\remote_code.h)(0x5F1F7B4E)
+I (..\Hardware\remote_code\remote_code.h)(0x5F203440)
 I (..\Hardware\motor\motor.h)(0x5F2011DE)
 I (..\APP\kinematic\kinematic.h)(0x5F1F7B4E)
 I (..\Hardware\fric\fric.h)(0x5E70DB42)
@@ -1121,7 +1121,7 @@ I (..\APP\speed_pid\speed_pid.h)(0x5F201514)
 I (..\APP\angle_pid\angle_pid.h)(0x5E70DB41)
 I (..\Hardware\DJi_remote\DJi_remote.h)(0x5E70DB42)
 I (..\Hardware\FS_remote\FS_remote.h)(0x5E70DB42)
-I (..\Hardware\remote_code\remote_code.h)(0x5F1F7B4E)
+I (..\Hardware\remote_code\remote_code.h)(0x5F203440)
 I (..\BSP\usart\bsp_debug_usart.h)(0x5E70DB42)
 I (F:\keil\ARM\ARMCC\include\stdio.h)(0x569DEA3A)
 I (..\BSP\usart\bsp_uart7.h)(0x5E70DB42)
@@ -1187,7 +1187,7 @@ I (..\Hardware\motor\motor.h)(0x5F2011DE)
 I (..\APP\kinematic\kinematic.h)(0x5F1F7B4E)
 I (..\APP\mode\mode.h)(0x5E70DB42)
 I (..\BSP\usart\bsp_debug_usart.h)(0x5E70DB42)
-I (..\Hardware\remote_code\remote_code.h)(0x5F1F7B4E)
+I (..\Hardware\remote_code\remote_code.h)(0x5F203440)
 I (..\User\sys\sys.h)(0x5F1E3128)
 I (..\User\sys\stm32f4xx.h)(0x5E70DB42)
 I (..\Hardware\gimbal\gimbal.h)(0x5F1F7B4E)
@@ -1541,8 +1541,8 @@ I (..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x5E70DB42)
 I (..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x5E70DB42)
 I (..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x5E70DB42)
 I (..\Libraries\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x5E70DB42)
-F (..\Hardware\remote_code\remote_code.c)(0x5F201514)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\Libraries\CMSIS\Include -I ..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\User -I ..\User\delay -I ..\Hardware\LED -I ..\User\sys -I ..\Hardware\motor -I ..\Hardware\STMFLASH -I ..\Hardware\flash -I ..\Hardware\power -I ..\Hardware\key -I ..\Hardware\BUZZER -I ..\Hardware\DJi_remote -I ..\Hardware\FS_remote -I ..\Hardware\remote_code -I ..\Hardware\TIM3_Events -I ..\APP\kinematic -I ..\APP\angle_pid -I ..\APP\speed_pid -I ..\APP\json -I ..\BSP\usart -I ..\BSP\timer -I ..\BSP\can -I ..\User\Init -I ..\Hardware\fric -I ..\APP\mode -I ..\Hardware\gimbal -I ..\APP\judge --c99-I.\RTE\_____-IF:\keil\ARM\PACK\Keil\Jansson\1.0.0\src-IF:\keil\ARM\PACK\Keil\STM32F4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\keil\ARM\CMSIS\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F427xx -DUSE_STDPERIPH_DRIVER -DSTM32F427_437xx-o ..\output\remote_code.o --omf_browse ..\output\remote_code.crf --depend ..\output\remote_code.d)
-I (..\Hardware\remote_code\remote_code.h)(0x5F1F7B4E)
+F (..\Hardware\remote_code\remote_code.c)(0x5F20352A)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I ..\Libraries\CMSIS\Include -I ..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I ..\User -I ..\User\delay -I ..\Hardware\LED -I ..\User\sys -I ..\Hardware\motor -I ..\Hardware\STMFLASH -I ..\Hardware\flash -I ..\Hardware\power -I ..\Hardware\key -I ..\Hardware\BUZZER -I ..\Hardware\DJi_remote -I ..\Hardware\FS_remote -I ..\Hardware\remote_code -I ..\Hardware\TIM3_Events -I ..\APP\kinematic -I ..\APP\angle_pid -I ..\APP\speed_pid -I ..\APP\json -I ..\BSP\usart -I ..\BSP\timer -I ..\BSP\can -I ..\User\Init -I ..\Hardware\fric -I ..\APP\mode -I ..\Hardware\gimbal -I ..\APP\judge --c99-I.\RTE\_____-IF:\keil\ARM\PACK\Keil\Jansson\1.0.0\src-IF:\keil\ARM\PACK\Keil\STM32F4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-IF:\keil\ARM\CMSIS\Include-D__UVISION_VERSION="525" -D_RTE_ -DSTM32F427xx -DUSE_STDPERIPH_DRIVER -DSTM32F427_437xx-o ..\output\remote_code.o --omf_browse ..\output\remote_code.crf --depend ..\output\remote_code.d)
+I (..\Hardware\remote_code\remote_code.h)(0x5F203440)
 I (..\User\sys\sys.h)(0x5F1E3128)
 I (..\User\sys\stm32f4xx.h)(0x5E70DB42)
 I (F:\keil\ARM\PACK\Keil\STM32F4xx_DFP\2.3.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f427xx.h)(0x53ABA05A)
@@ -1582,7 +1582,7 @@ I (..\BSP\usart\bsp_uart7.h)(0x5E70DB42)
 I (..\Hardware\fric\fric.h)(0x5E70DB42)
 I (..\Hardware\motor\motor.h)(0x5F2011DE)
 I (..\APP\kinematic\kinematic.h)(0x5F1F7B4E)
-I (..\Hardware\remote_code\remote_code.h)(0x5F1F7B4E)
+I (..\Hardware\remote_code\remote_code.h)(0x5F203440)
 I (..\APP\angle_pid\angle_pid.h)(0x5E70DB41)
 I (..\APP\speed_pid\speed_pid.h)(0x5F201514)
 I (..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x5E70DB42)
