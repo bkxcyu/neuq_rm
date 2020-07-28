@@ -203,7 +203,7 @@ u8 CAN2_Send_GIMBAL_Msg(u8* msg)
 u8 mbox;
   u16 i=0;
   CanTxMsg TxMessage;
-  TxMessage.StdId=0x1FF;	 
+  TxMessage.StdId=0x2FF;	 
   TxMessage.ExtId=0;	 // 设置扩展标示符（29位） 
   TxMessage.IDE=0;		  // 使用扩展标识符
   TxMessage.RTR=0;		  // 消息类型为数据帧，一帧8位
