@@ -120,7 +120,7 @@ void UART5_IRQHandler( void )
 		
 		Usart5_Clean_IDLE_Flag = JUDGE_BUFFER_LEN - DMA_GetCurrDataCounter(DMA1_Stream0);
 
-		Judge_Read_Data(Judge_Buffer);		//读取裁判系统数据
+		/*Judge_Read_Data(Judge_Buffer);		//读取裁判系统数据*/
 		memset(Judge_Buffer, 0, 200);
 		DMA_Cmd(DMA1_Stream0,ENABLE);
 	}

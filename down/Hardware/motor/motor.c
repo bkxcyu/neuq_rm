@@ -7,7 +7,7 @@
 #include "stm32f4xx.h"
 #include "kinematic.h"
 
-MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,motor7,motor8;
+MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal1,gimbal2;
 LOOPBACK loopback;
 
 int max_motor_speed=0;		//电机最大线速度
@@ -75,6 +75,21 @@ void motor_init()
 	motor4.actual_current = 0;
 	motor4.target_current = 0;
 	//motor4.temp = 0;
+	
+	gimbal1.start_angle = 0;
+	gimbal1.actual_angle = 0;
+	gimbal1.start_angle_flag = 0;
+	gimbal1.actual_speed = 0;
+	gimbal1.actual_current = 0;
+	gimbal1.target_current = 0;
+
+	gimbal2.start_angle = 0;
+	gimbal2.actual_angle = 0;
+	gimbal2.start_angle_flag = 0;
+	gimbal2.actual_speed = 0;
+	gimbal2.actual_current = 0;
+	gimbal2.target_current = 0;
+
 }
 
 
@@ -114,8 +129,6 @@ void set_trigger_current()
 	//电机目标电流为速度pid输出
 	motor5.target_current = motor5.target_speed;;//测试
 	motor6.target_current = motor6.vpid.PID_OUT;
-	motor7.target_current = motor7.vpid.PID_OUT;
-	motor8.target_current = motor8.vpid.PID_OUT;
 
 	
 	//can总线通信协议，参照电调说明书
@@ -123,13 +136,33 @@ void set_trigger_current()
 	current_msg[1] = motor5.target_current & 0xff;		//1号电机电流低8位
 	current_msg[2] = motor6.target_current >> 8;			//2号电机电流高8位
 	current_msg[3] = motor6.target_current & 0xff;		//2号电机电流低8位
-	current_msg[4] = motor7.target_current >> 8;			//3号电机电流高8位
-	current_msg[5] = motor7.target_current & 0xff;		//3号电机电流低8位*/
+	/*current_msg[4] = motor7.target_current >> 8;			//3号电机电流高8位
+	current_msg[5] = motor7.target_current & 0xff;		//3号电机电流低8位
 	current_msg[6] = motor8.target_current >> 8;			//4号电机电流高8位
 	current_msg[7] = motor8.target_current & 0xff;		//4号电机电流低8位
-	
+	*/
 	//can发送数据帧
 	CAN1_Send_Trigger_Msg(current_msg);
+}
+
+
+void set_gimbal_current()
+	{
+		u8 current_msg[8];
+	
+	//电机目标电流为速度pid输出
+	gimbal1.target_current =motor1.vpid.PID_OUT;
+	gimbal2.target_current = gimbal2.vpid.PID_OUT;
+
+	
+	//can总线通信协议，参照电调说明书
+	current_msg[0] =gimbal1.target_current >> 8;			//1号电机电流高8位
+	current_msg[1] =gimbal1.target_current & 0xff;		//1号电机电流低8位
+	current_msg[2] =gimbal2.target_current >> 8;			//2号电机电流高8位
+	current_msg[3] =gimbal2.target_current & 0xff;		//2号电机电流低8位
+	
+	CAN2_Send_GIMBAL_Msg(current_msg);
+
 }
 /*void set_gimbal_current()
 {

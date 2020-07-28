@@ -3,7 +3,8 @@
 #define _JUDGE_H
 
 
-#include "sys.h"#include <stdio.h>
+#include "sys.h"
+#include <stdio.h>
 #include "stdbool.h"
 #include "string.h"
 #include "stm32f4xx_can.h"
@@ -606,3 +607,5 @@ bool Judge_If_Death(void);
 /*-------------------------------------------------------------*/
 
 #endif //м╥нд╪Ч
+
+

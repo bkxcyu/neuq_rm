@@ -6,7 +6,6 @@
 #define IntegralUpperLimit    2000		//积分上限
 #define IntegralSeparation    200			//积分分离阈值 
 #define aPID_OUT_MAX          1000		//即最大速度
-
 int ap_pid_flag = ang_pid;	//角度和位置pid标志
 
 // 函数: APID_Init()
@@ -96,7 +95,6 @@ void apid_PID_realize(float kp,float ki,float kd)
 	motor2.apid.actual_angle = motor2.total_angle;
 	motor3.apid.actual_angle = motor3.total_angle;
 	motor4.apid.actual_angle = motor4.total_angle;
-	
 	motor5.apid.actual_angle = motor5.total_angle;
 	
 	//计算电机机械角度pid
@@ -110,8 +108,6 @@ void apid_PID_realize(float kp,float ki,float kd)
 	//设置电机目标速度
 	set_chassis_motor_speed(motor1.apid.PID_OUT,motor2.apid.PID_OUT,motor3.apid.PID_OUT,motor4.apid.PID_OUT);
 }
-
-
 //设置电机目标机械角度
 void set_chassis_motor_angle(int motor1_angle,int motor2_angle,int motor3_angle,int motor4_angle)
 {

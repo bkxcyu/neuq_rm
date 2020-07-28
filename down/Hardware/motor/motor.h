@@ -9,7 +9,8 @@
 #define	CAN_2006Motor3_ID      0x203
 #define	CAN_2006Motor4_ID      0x204
 #define CAN_TRIGGER_ID         0x205
-
+#define CAN_GIMBAL1_ID         0x20A
+#define CAN_GIMBAL2_ID         0x20B
 
 
 //电机转速pid参数结构体
@@ -60,7 +61,7 @@ typedef struct{
 	APID_t apid;
 }MOTOR_t;
 
-extern MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,motor7,motor8;//**********************************
+extern MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal1,gimbal2;//**********************************
 
 extern int max_motor_speed;
 
@@ -73,8 +74,8 @@ typedef struct{
 	int motor4_current;
 	int motor5_current;
 	int motor6_current;
-	int motor7_current;
-	int motor8_current;
+	int gimbal1_current;
+	int gimbal2_current;
 	
 }LOOPBACK;
 
@@ -88,7 +89,7 @@ void set_trigger_current(void);
 void set_gimbal_current(void);
 void stop_chassis_motor(void);	//将电机角度固定在当前值
 void stop_trigger_motor(void);
-
+void set_gimbal_current(void); //设置云台电流 2020.7.24
 
 #endif
 
