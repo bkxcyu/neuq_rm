@@ -7,7 +7,7 @@
 #include "stm32f4xx.h"
 #include "kinematic.h"
 
-MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal1,gimbal2;
+MOTOR_t motor1,motor2,motor3,motor4,motor5,gimbal1,gimbal2;
 LOOPBACK loopback;
 
 int max_motor_speed=0;		//电机最大线速度
@@ -128,14 +128,14 @@ void set_trigger_current()
 	
 	//电机目标电流为速度pid输出
 	motor5.target_current = motor5.vpid.PID_OUT;//
-	motor6.target_current = motor6.vpid.PID_OUT;
+	/*motor6.target_current = motor6.vpid.PID_OUT;*/
 
 	
 	//can总线通信协议，参照电调说明书
 	current_msg[0] =motor5.target_current >> 8;			//1号电机电流高8位
 	current_msg[1] = motor5.target_current & 0xff;		//1号电机电流低8位
-	current_msg[2] = motor6.target_current >> 8;			//2号电机电流高8位
-	current_msg[3] = motor6.target_current & 0xff;		//2号电机电流低8位
+	//current_msg[2] = motor6.target_current >> 8;			//2号电机电流高8位
+	//current_msg[3] = motor6.target_current & 0xff;		//2号电机电流低8位
 	/*current_msg[4] = motor7.target_current >> 8;			//3号电机电流高8位
 	current_msg[5] = motor7.target_current & 0xff;		//3号电机电流低8位
 	current_msg[6] = motor8.target_current >> 8;			//4号电机电流高8位

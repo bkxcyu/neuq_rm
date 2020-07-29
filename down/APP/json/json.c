@@ -400,8 +400,7 @@ void caclulate_pwm_pulse()
 {
 	float unit_pwm_pulse= (840.0f/360.0f);
 	
-	Kinematics.target_angular.gimbal_angular.yaw_angular=180+Kinematics.target_angular.gimbal_angular.yaw_angular;
-	Kinematics.target_angular.gimbal_angular.pitch_angular=180-Kinematics.target_angular.gimbal_angular.pitch_angular;
+	
 	if(Kinematics.target_angular.gimbal_angular.pitch_angular<225 && Kinematics.target_angular.gimbal_angular.pitch_angular>135)
 	
 	   pwm_pulse1 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.pitch_angular)*1.0f;
