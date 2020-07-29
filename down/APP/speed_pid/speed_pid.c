@@ -193,7 +193,7 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kpv,float kiv)
 		vpid->PID_OUT = -vPID_OUT_MAX;
 	else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
-	
+	/*
 		vpid->err = vpid->P_OUT + vpid->I_OUT-vpid->actual_speed;
 	if(abs(vpid->err) <= gimbal_angel_downlimit)		//»ý·Ö·ÖÀë
 		vpid->err_integration += vpid->err;
@@ -211,7 +211,7 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kpv,float kiv)
 	else if((vpid->P_OUT + vpid->I_OUT) < -vPID_OUT_MAX) 
 		vpid->PID_OUT = -vPID_OUT_MAX;
 	else
-		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
+		vpid->PID_OUT =vpid->P_OUT + vpid->I_OUT;*/
 }
 
 void apid_GIMBAL_PI_realize(float kpa,float kia,float kpv,float kiv)
