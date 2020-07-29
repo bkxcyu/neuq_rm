@@ -54,7 +54,7 @@ void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z)
 void trigger_to_motor(float trigger_angular)
 {
      
-	motor5.target_speed =(int)(trigger_angular);//
+	motor5.target_speed =(int)(trigger_angular*M2006_REDUCTION_RATIO);
 	
 }
 
@@ -139,18 +139,11 @@ else if(trigger_angular!=0)
 		
 		trigger_to_motor(trigger_angular);
 		
-		set_trigger_motor_speed(motor5.target_speed);//set_trigger_motor_speed(motor8.target_speed);
-		
+		set_trigger_motor_speed(motor5.target_speed);		
 }
 	}
 
-void gimbal_control(float gimbal1_angle,float gimbal2_angle)
-  {
-		//先对上位机传入的角度进行换算
-		gimbal1_angle=gimbal1_angle*8191/360;
-		gimbal2_angle=gimbal2_angle*8191/360;
-    set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);
-  }
+
 int stop_flag_3=0;
 	
 void break_jugement(void)
