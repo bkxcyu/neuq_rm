@@ -46,7 +46,8 @@ void Robo_Move()
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
 		//trigger_control(Kinematics.target_angular.trigger_angular);
-		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
+		//gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
+		gimbal_control(360,180);
 		if(Kinematics.target_angular.fric_angular==1)
 		{   fric1_on(1800);
 				fric2_on(1800);

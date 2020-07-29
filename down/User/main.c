@@ -84,7 +84,8 @@ void TIM3_IRQHandler(void)
 	 if(flag_command_recieved1 == 1)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
-				 
+			resolve_json_gimbal_command();
+		  caclulate_pwm_pulse();		
 			flag_command_recieved1 = 0;	//命令接收标志位清零
 		}
 	 
@@ -96,11 +97,12 @@ void TIM3_IRQHandler(void)
 	
 			flag_command_recieved2 = 0;	//命令接收标志位清零
 		}
-		if(flag_command_recieved3 == 1)
+		if(flag_command_recieved3 == 1)  //1代表接受上位机命令，0代表不接受上位机命令
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
 			resolve_json_gimbal_command();
 		  caclulate_pwm_pulse();		
+
 			
 			flag_command_recieved3 = 0;	//命令接收标志位清零
 		}

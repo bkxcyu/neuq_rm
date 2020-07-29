@@ -7,7 +7,7 @@
 #include "stm32f4xx.h"
 #include "kinematic.h"
 
-MOTOR_t motor1,motor2,motor3,motor4,motor5,gimbal1,gimbal2;
+MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal1,gimbal2;
 LOOPBACK loopback;
 
 int max_motor_speed=0;		//电机最大线速度
@@ -128,7 +128,7 @@ void set_trigger_current()
 	
 	//电机目标电流为速度pid输出
 	motor5.target_current = motor5.vpid.PID_OUT;//
-	/*motor6.target_current = motor6.vpid.PID_OUT;*/
+	//motor6.target_current = motor6.vpid.PID_OUT;
 
 	
 	//can总线通信协议，参照电调说明书
@@ -151,15 +151,15 @@ void set_gimbal_current()
 		u8 current_msg[8];
 	
 	//电机目标电流为速度pid输出
-	gimbal1.target_current = gimbal1.vpid.PID_OUT;
-	gimbal2.target_current = gimbal2.vpid.PID_OUT;
+	gimbal1.target_current = gimbal1.apid.PID_OUT; //gimbal1.vpid.PID_OUT;
+	gimbal2.target_current = gimbal2.apid.PID_OUT;
 
 	
 	//can总线通信协议，参照电调说明书
 	current_msg[2] =gimbal1.target_current >> 8;			//1号电机电流高8位
 	current_msg[3] =gimbal1.target_current & 0xff;		//1号电机电流低8位
-	//current_msg[2] =gimbal2.target_current >> 8;			//2号电机电流高8位
-	//current_msg[3] =gimbal2.target_current & 0xff;		//2号电机电流低8位
+	current_msg[4] =gimbal2.target_current >> 8;			//2号电机电流高8位
+	current_msg[5] =gimbal2.target_current & 0xff;		//2号电机电流低8位
 	
 	CAN2_Send_GIMBAL_Msg(current_msg);
 

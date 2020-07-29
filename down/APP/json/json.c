@@ -84,7 +84,7 @@ void send_chassis_info_by_json(void)
 void send_gimbal_info_by_json(void)   ///����������̨��Ϣ ������*********************************
 {
 //����
-	//Kinematics.target_angular.gimbal_angular.yaw_angular=5;
+//	Kinematics.target_angular.gimbal_angular.yaw_angular=170;
 	//Kinematics.target_angular.gimbal_angular.yaw_angular=10;
   json_t *root;
 	char *out;           //
@@ -168,9 +168,9 @@ void resolve_json_gimbal_command()
 	root = json_loads(json_Buffer,0,&error);
 	gimbal_obj = json_object_get( root, "gimbal" );
 	item_obj = json_array_get( gimbal_obj, 0 );
-	Kinematics.target_angular.gimbal_angular.yaw_angular=1.0f*json_integer_value(item_obj);
-	item_obj = json_array_get( gimbal_obj, 1 );
 	Kinematics.target_angular.gimbal_angular.pitch_angular=1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( gimbal_obj, 1 );
+	Kinematics.target_angular.gimbal_angular.yaw_angular=1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);
 	json_decref(gimbal_obj);
 	json_decref(root);
@@ -400,7 +400,8 @@ void caclulate_pwm_pulse()
 {
 	float unit_pwm_pulse= (840.0f/360.0f);
 	
-	
+	//Kinematics.target_angular.gimbal_angular.yaw_angular=180+Kinematics.target_angular.gimbal_angular.yaw_angular;
+	//Kinematics.target_angular.gimbal_angular.pitch_angular=180-Kinematics.target_angular.gimbal_angular.pitch_angular;
 	if(Kinematics.target_angular.gimbal_angular.pitch_angular<225 && Kinematics.target_angular.gimbal_angular.pitch_angular>135)
 	
 	   pwm_pulse1 = (1080+unit_pwm_pulse * Kinematics.target_angular.gimbal_angular.pitch_angular)*1.0f;
