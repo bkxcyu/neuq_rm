@@ -146,6 +146,14 @@ else if(trigger_angular!=0)
 
 int stop_flag_3=0;
 	
+void gimbal_control(float gimbal1_angle,float gimbal2_angle)
+{
+	//×ª»»ÃüÁî
+	gimbal1_angle=gimbal1_angle*8191/360;
+  gimbal2_angle=gimbal2_angle*8191/360;
+	set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);
+}	
+	
 void break_jugement(void)
 {
     if(motor1.actual_speed <=0.05)

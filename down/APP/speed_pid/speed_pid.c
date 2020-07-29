@@ -194,7 +194,7 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kpv,float kiv)
 	else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
 	
-		vpid->err = vpid->P_OUT + vpid->I_OUT;
+		vpid->err = vpid->P_OUT + vpid->I_OUT-vpid->actual_speed;
 	if(abs(vpid->err) <= gimbal_angel_downlimit)		//积分分离
 		vpid->err_integration += vpid->err;
 	if(vpid->err_integration > gimbal_angel_upperlimit)		//抗积分饱和
@@ -217,8 +217,11 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kpv,float kiv)
 void apid_GIMBAL_PI_realize(float kpa,float kia,float kpv,float kiv)
 {
 	//读取电机当前转速
-	gimbal1.vpid.actual_speed = gimbal1.actual_speed;
-	gimbal2.vpid.actual_speed = gimbal2.actual_speed;
+	gimbal1.apid.actual_speed = gimbal1.actual_speed;
+	gimbal2.apid.actual_speed = gimbal2.actual_speed;
+	gimbal1.apid.actual_angle = gimbal1.actual_angle;
+	gimbal2.apid.actual_angle = gimbal2.actual_angle;
+
 	//计算输出值
 	apid_GIMBAL_realize(&gimbal1.apid,kpa,kia,kpv,kiv);
 	apid_GIMBAL_realize(&gimbal2.apid,kpa,kia,kpv,kiv);

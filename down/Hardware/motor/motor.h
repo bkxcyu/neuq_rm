@@ -38,6 +38,8 @@ typedef struct{
 	int I_OUT;
 	int D_OUT;
 	int PID_OUT;
+	int actual_speed;
+	int target_speed;
 }APID_t;
 //电机参数结构体
 typedef struct{
