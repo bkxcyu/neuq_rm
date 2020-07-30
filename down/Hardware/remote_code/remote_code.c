@@ -165,7 +165,12 @@ static float caculate_gimbal_pitch_angle(int width,int mid,int min,int max)
 	else
 		pwm_pulse=1500;
 	return pwm_pulse;
-	
+	/*
+	float pwm_pulse=1500;
+	if(width>=(mid+2))
+  pwm_pulse=pwm_pulse-1;
+	else if(width<=(mid-2))
+*/
 }
 
 static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
