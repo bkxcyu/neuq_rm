@@ -43,7 +43,31 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 				x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
 			  y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
 			  r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
-				if(trigger_CH_width == 1 )
+				
+				switch(trigger_CH_width)
+				{
+					case  1:
+					trigger_speed = 150;
+			   	fric1_on(1000);
+			  	fric2_on(1000);
+					break;
+					
+					case 2:
+					 trigger_speed = 150;
+				   fric1_on(1500);
+				   fric2_on(1500);
+					break;
+					
+					case 3:
+						trigger_speed = 0;
+				    fric1_on(1000);
+				    fric2_on(1000);
+					break;
+					
+					default:
+	      	break;
+				}
+				/*if(trigger_CH_width == 1 )
 			{
 			  trigger_speed = 150;
 				fric1_on(1000);
@@ -61,13 +85,34 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 			trigger_speed = 0;
 				fric1_on(1000);
 				fric2_on(1000);
-		 	                    }
+		 	                    }*/
 			
 			                      }
 			if(gimbal_CH_width==1)
 			{
-				
-					if(trigger_CH_width == 1 )
+				switch (trigger_CH_width)
+				{
+					case 1:
+					trigger_speed = 150;
+				  fric1_on(1000);
+				  fric2_on(1000);
+					break;
+					case 2:
+					trigger_speed = 150;
+				  fric1_on(1500);
+				  fric2_on(1500);
+					break;
+					case 3:
+					trigger_speed = 0;
+				  fric1_on(1000);
+				  fric2_on(1000);
+					break;
+					
+					default:
+	      	break;
+				                  }
+						
+					/*if(trigger_CH_width == 1 )
 			{
 			  trigger_speed = 150;
 				fric1_on(1000);
@@ -82,22 +127,14 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 			                       }
 			if(trigger_CH_width==3)
 			{
-			trigger_speed = 0;
+			  trigger_speed = 0;
 				fric1_on(1000);
-				fric2_on(1000);
-		 	                    }
-				 pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
-				 pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
-				 
-			    
-				
+				fric2_on(1000);	 	   
+			                   }*/
+				pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+				pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+				       		}
 			
-			}
-			
-			 
-			
-			  
-		
 			
 		}
 		else			//Èç¹ûÍ£Ö¹ÃüÁî
