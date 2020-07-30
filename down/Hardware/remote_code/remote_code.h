@@ -68,7 +68,7 @@ SWB|SWC:  1198-2198-3198
 	#define y_CH_width            rc.ch1         //y方向通道脉宽   右摇杆上下
 	#define r_CH_width            rc.ch2         //r方向通道脉宽   左摇杆左右
 	#define i_CH_width            rc.ch3         //云台俯仰通道脉宽 左摇杆上下
-	#define stop_CH_width         rc.s1					 //急停脉宽				s1拨到最下
+	#define dance_CH_width         rc.s1					 //跳舞脉宽				s1拨到最下
 	#define chassis_CH_width       rc.s1  				 //遥控底盘    s1拨到中间   1 3  2
 	#define gimbal_CH_width         rc.s1            //遥控云台    s1最上  1
 	#define trigger_CH_width      rc.s2          //拨弹轮控制

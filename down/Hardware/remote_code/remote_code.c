@@ -7,10 +7,12 @@
 #include "fric.h"
 #include "stm32f4xx_tim.h"
 #include "gimbal.h"
+#include "imuReader.h"
+#include <math.h>
 u8 Control_Mode = control_mode;
 
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
-float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0;
+float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
 //ÄÚ²¿º¯ÊýÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
@@ -36,8 +38,7 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 	
 	if((Control_Mode & auto_control) != auto_control)			//Èç¹û¿ØÖÆÄ£Ê½²»µÈÓÚ×Ô¶¯¿ØÖÆ£¬¼´Ò£¿Ø¿ØÖÆ
 	{
-		if(stop_CH_width>stop_max_value || stop_CH_width<stop_min_value)		//Èç¹ûµ±Ç°²»ÊÇÍ£Ö¹ÃüÁî
-		{
+		
 			if(chassis_CH_width==3)
 			{
 				x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
@@ -136,12 +137,17 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 				       		}
 			
 			
-		}
-		else			//Èç¹ûÍ£Ö¹ÃüÁî
+		
+		if(dance_CH_width==2)	//Èç¹ûÍ£Ö¹ÃüÁî
 		{
-			x_speed = 0;
-			y_speed = 0;
-			r_speed = 0;
+		x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+		y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
+		r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
+		theta = Kinematics.actual_velocities.angular_z * 0.004f + theta; 
+	  theta = yawRead();
+	  float cx_speed = x_speed*cos(theta) + y_speed*sin(theta);
+  	float cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
+
 		}
 		if((Control_Mode&DJi_Remote_Control) == DJi_Remote_Control)
 		{

@@ -61,7 +61,7 @@ void Robo_Move()
 		}
 	}
 		vpid_PI_realize(2,0.05);			//速度闭环2  0.05
-	  tvpid_PI_realize(2,0.05);      //拨弹轮速度闭环  参数未确定
+	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定
 	  apid_GIMBAL_PI_realize(2,0.05,2,0.05);
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
