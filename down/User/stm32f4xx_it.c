@@ -42,7 +42,8 @@
 
 #include "speed_pid.h"
 #include "kinematic.h"
-
+#include "imuReader.h"
+#include "bsp_imu_usart.h"
 /** @addtogroup STM32F429I_DISCOVERY_Examples
   * @{
   */
@@ -385,6 +386,36 @@ void UsageFault_Handler(void)
   */
 void DebugMon_Handler(void)
 {}
+extern IMU_DATA imu_data;
+void IMU_USART_IRQHandler(void){
+	
+	static unsigned char ucRxBuffer[250];
+	static unsigned char ucRxCnt = 0;	
+
+		unsigned char ucData = USART_ReceiveData(USART6);
+		ucRxBuffer[ucRxCnt++]=ucData;	//将收到的数据存入缓冲区中
+		if (ucRxBuffer[0]!=0x55) //数据头不对，则重新开始寻找0x55数据头
+		{
+			ucRxCnt=0;
+			return;
+		}
+		if (ucRxCnt<11) {return;}//数据不满11个，则返回
+		else
+		{
+			switch(ucRxBuffer[1])//判断数据是哪种数据，然后将其拷贝到对应的结构体中，有些数据包需要通过上位机打开对应的输出后，才能接收到这个数据包的数据
+			{
+				case 0x50:	
+					
+				break;//time
+				case 0x53:	
+					imu_data.yaw = ((ucRxBuffer[YAWH]<<8)|ucRxBuffer[YAWL])*0.0000958737992428;
+				break;//angle
+			}
+			ucRxCnt=0;//清空缓存区
+		}
+	
+
+}
 
 ///**
 //  * @brief  This function handles SVCall exception.

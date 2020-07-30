@@ -13,6 +13,9 @@ u8 Control_Mode = control_mode;
 
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
+float cx_speed=0,cy_speed=0;
+
+
 //ÄÚ²¿º¯ÊıÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
@@ -145,9 +148,10 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
 		theta = Kinematics.actual_velocities.angular_z * 0.004f + theta; 
 	  theta = yawRead();
-	  float cx_speed = x_speed*cos(theta) + y_speed*sin(theta);
-  	float cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
-
+		cx_speed = x_speed*cos(theta) + y_speed*sin(theta);
+		cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
+    x_speed=cx_speed;
+		y_speed=cy_speed;
 		}
 		if((Control_Mode&DJi_Remote_Control) == DJi_Remote_Control)
 		{
