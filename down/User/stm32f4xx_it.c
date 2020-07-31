@@ -410,6 +410,12 @@ void IMU_USART_IRQHandler(void){
 				case 0x53:	
 					imu_data.yaw = ((ucRxBuffer[YAWH]<<8)|ucRxBuffer[YAWL])*0.0000958737992428;
 				break;//angle
+				case 0x52:
+					imu_data.yaw_angular=(short)((ucRxBuffer[YAWH_angular]<<8)|ucRxBuffer[YAWL_angular])*0.000030517578125*2000;
+				  imu_data.pitch_angular=(short)((ucRxBuffer[PITCHH_angular]<<8)|ucRxBuffer[PITCHL_angular])*0.000030517578125*2000;
+				break;
+				
+				default:break;			
 			}
 			ucRxCnt=0;//Çå¿Õ»º´æÇø
 		}
