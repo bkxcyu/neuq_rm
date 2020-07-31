@@ -169,6 +169,12 @@ void set_trigger_motor_speed(int motor5_speed)
 	
 
 }
+void set_gimbal1_motor_speed(int gimbal1_speed)
+  {
+	gimbal1.vpid.target_speed = gimbal1_speed;
+	gimbal1.target_speed = gimbal1_speed;		
+	
+	}
 
 
 /*********************************************ÔÆÌ¨pid²¿·Ö*******************************************************/

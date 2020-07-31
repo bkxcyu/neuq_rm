@@ -71,25 +71,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					default:
 	      	break;
 				}
-				/*if(trigger_CH_width == 1 )
-			{
-			  trigger_speed = 150;
-				fric1_on(1000);
-				fric2_on(1000);
 				
-			}
-			 if(trigger_CH_width ==2)
-			{
-			  trigger_speed = 150;
-				fric1_on(1500);
-				fric2_on(1500);
-			                       }
-			if(trigger_CH_width==3)
-			{
-			trigger_speed = 0;
-				fric1_on(1000);
-				fric2_on(1000);
-		 	                    }*/
 			
 			                      }
 			if(gimbal_CH_width==1)
@@ -116,25 +98,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 	      	break;
 				                  }
 						
-					/*if(trigger_CH_width == 1 )
-			{
-			  trigger_speed = 150;
-				fric1_on(1000);
-				fric2_on(1000);
-				
-			}
-			 if(trigger_CH_width ==2)
-			{
-			  trigger_speed = 150;
-				fric1_on(1500);
-				fric2_on(1500);
-			                       }
-			if(trigger_CH_width==3)
-			{
-			  trigger_speed = 0;
-				fric1_on(1000);
-				fric2_on(1000);	 	   
-			                   }*/
+					
 				pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
 				pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
 				       		}
@@ -152,6 +116,9 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
     x_speed=cx_speed;
 		y_speed=cy_speed;
+		Gimbal_control(Kinematics.actual_velocities.angular_z);
+		set_gimbal_current();
+	
 		}
 		if((Control_Mode&DJi_Remote_Control) == DJi_Remote_Control)
 		{

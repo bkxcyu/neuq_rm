@@ -151,7 +151,7 @@ void set_gimbal_current()
 		u8 current_msg[8];
 	
 	//电机目标电流为速度pid输出
-	gimbal1.target_current = gimbal1.apid.PID_OUT; //gimbal1.vpid.PID_OUT;
+	gimbal1.target_current = gimbal1.target_speed;//gimbal1.apid.PID_OUT; //gimbal1.vpid.PID_OUT;
 	gimbal2.target_current = gimbal2.apid.PID_OUT;
 
 	
@@ -161,7 +161,7 @@ void set_gimbal_current()
 	current_msg[4] =gimbal2.target_current >> 8;			//2号电机电流高8位
 	current_msg[5] =gimbal2.target_current & 0xff;		//2号电机电流低8位
 	
-	CAN2_Send_GIMBAL_Msg(current_msg);
+	CAN1_Send_GIMBAL_Msg(current_msg);
 
 }
 /*void set_gimbal_current()
