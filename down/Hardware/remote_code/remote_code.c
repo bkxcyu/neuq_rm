@@ -116,7 +116,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		cy_speed = y_speed*cos(theta) - x_speed*sin(theta);
     x_speed=cx_speed;
 		y_speed=cy_speed;
-		Gimbal_control(Kinematics.actual_velocities.angular_z);
+		Gimbal_control(yaw_angularRead());
 		set_gimbal_current();
 	
 		}

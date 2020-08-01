@@ -149,16 +149,16 @@ int stop_flag_3=0;
 void gimbal_control(float gimbal1_angle,float gimbal2_angle)    //
 {
 	//转换命令
-	gimbal1_angle=gimbal1_angle*8191/360;
-  gimbal2_angle=gimbal2_angle*8191/360;
-	set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);
+	//gimbal1_angle=gimbal1_angle*8191/360;
+  //gimbal2_angle=gimbal2_angle*8191/360;
+	set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);//(gimbal1_angle,gimbal2_angle);
 }
 
 
 void Gimbal_control(float gimbal1_speed)     //小陀螺模式使用
   {
   
-		gimbal1.target_speed=gimbal1_speed;
+		gimbal1.target_speed= -5000*gimbal1_speed;
 		
 		set_gimbal1_motor_speed(gimbal1.target_speed);
 		
