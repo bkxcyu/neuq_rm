@@ -80,13 +80,29 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 				{
 					case 1:
 					trigger_speed = 150;
-				  fric1_on(1000);
-				  fric2_on(1000);
+				  fric1_on(1500);
+				  fric2_on(1500);
+					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
+					{ 
+						static int count_=1;
+					  count_++;
+						trigger_speed =pow(-1,count_)*50;
+						if(count_>100)
+							count_=1;
+					}
 					break;
 					case 2:
 					trigger_speed = 150;
-				  fric1_on(1500);
-				  fric2_on(1500);
+				  fric1_on(1000);
+				  fric2_on(1000);
+					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
+					{ 
+						static int count_=1;
+					  count_++;
+						trigger_speed =pow(-1,count_)*50;
+						if(count_>100)
+							count_=1;
+					}
 					break;
 					case 3:
 					trigger_speed = 0;
