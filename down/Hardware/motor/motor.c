@@ -214,4 +214,7 @@ trigger_to_motor(0);
 set_trigger_motor_speed(motor5.target_speed);
 
 }
-
+void stop_gimbal_motor()
+{
+gimbal1.apid.target_speed = gimbal1.actual_speed;		
+}

@@ -87,7 +87,7 @@ void speed_control(float speed_x,float speed_y,float speed_r);		//将三个方向速度
 void trigger_control(float trigger_angular);
 void gimbal_control(float gimbal1_angle,float gimbal2_angle);
 void Gimbal_control(float gimbal1_speed);
-
+float KalmanFilter(const float ResrcData,float ProcessNiose_Q,float MeasureNoise_R);
 void break_jugement(void);  // by luo
 
 #endif

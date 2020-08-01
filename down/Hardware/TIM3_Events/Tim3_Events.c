@@ -49,8 +49,8 @@ void Robo_Move()
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//gimbal_control(360,180);
 		if(Kinematics.target_angular.fric_angular==1)//自动射击使用
-		{   fric1_on(1800);
-				fric2_on(1800);
+		{   fric1_on(1500);
+				fric2_on(1500);
 			  trigger_control(150);
 		}
 		else if(Kinematics.target_angular.fric_angular==0)

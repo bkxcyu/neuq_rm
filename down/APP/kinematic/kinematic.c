@@ -156,13 +156,12 @@ void gimbal_control(float gimbal1_angle,float gimbal2_angle)    //
 	 	if(stop_flag_4 == 0 && gimbal1_angle == 0)
 	{
 		stop_flag_4 = 1;			//停止   此标志为了避免多次进入
-		stop_chassis_motor();			//停下来  并角度闭环
+		stop_gimbal_motor();			//停下来  并角度闭环
 	}
     else
-
-	set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);//(gimbal1_angle,gimbal2_angle);
+    gimbal1_angle = KalmanFilter(gimbal1_angle,1,200);
+	  set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);//(gimbal1_angle,gimbal2_angle);
 }
-
 
 void Gimbal_control(float gimbal1_speed)     //小陀螺模式使用
   {
@@ -198,7 +197,43 @@ int find_max()
   return temp;
 }
 
+/*-------------------------------------------------------------------------------------------------------------*/
+/*       
+        Q:过程噪声，Q增大，动态响应变快，收敛稳定性变坏
+        R:测量噪声，R增大，动态响应变慢，收敛稳定性变好       
+*/
 
+float KalmanFilter(const float ResrcData,float ProcessNiose_Q,float MeasureNoise_R)
+                                        
+{
+        float R = MeasureNoise_R;
+        float Q = ProcessNiose_Q;
+
+        static        float x_last = 0;
+
+        float x_mid = x_last;
+        float x_now;
+
+        static        float p_last = 0;
+
+        float p_mid ;
+        float p_now;
+        float kg;       
+
+        x_mid=x_last; //x_last=x(k-1|k-1),x_mid=x(k|k-1)
+        p_mid=p_last+Q; //p_mid=p(k|k-1),p_last=p(k-1|k-1),Q=噪声
+        kg=p_mid/(p_mid+R); //kg为kalman filter，R为噪声
+        x_now=x_mid+kg*(ResrcData-x_mid);//估计出的最优值
+               
+        p_now=(1-kg)*p_mid;//最优值对应的covariance       
+
+        p_last = p_now; //更新covariance值
+        x_last = x_now; //更新系统状态值
+
+        return x_now;               
+}
+
+/*-------------------------------------------------------------------------------------------------------------*/
 
 
 

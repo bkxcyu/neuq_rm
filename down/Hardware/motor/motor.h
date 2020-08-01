@@ -92,6 +92,7 @@ void set_gimbal_current(void);
 void stop_chassis_motor(void);	//将电机角度固定在当前值
 void stop_trigger_motor(void);
 void set_gimbal_current(void); //设置云台电流 2020.7.24
+void stop_gimbal_motor(void);
 
 #endif
 
