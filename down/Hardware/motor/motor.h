@@ -48,7 +48,7 @@ typedef struct{
 	int start_angle_flag;	//记录电机初始角度值的flag
 	int stop_angle;				//发送停止命令时候的角度值
 	
-	int actual_angle;			//当前真实角度值
+	float actual_angle;			//当前真实角度值
 	int last_angle;				//上一次返回的角度值
 	int round_cnt;				//相对开机时转过的圈数
 	int total_angle;			//总共转过的计数
