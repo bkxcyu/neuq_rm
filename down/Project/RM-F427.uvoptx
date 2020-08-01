@@ -135,7 +135,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name></Name>
+          <Name>d</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -234,6 +234,16 @@
           <count>15</count>
           <WinNumber>1</WinNumber>
           <ItemText>kpa</ItemText>
+        </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>kp</ItemText>
+        </Ww>
+        <Ww>
+          <count>17</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ki</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
