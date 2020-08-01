@@ -141,17 +141,15 @@ void TIM3_IRQHandler(void)
 			Get_Base_Velocities();		//计算底盘中心实际速度
 		
 		
-		if(time_count%20 == 0)		//20ms，50Hz 
-		
+		if(time_count%20 == 0)		//20ms，50Hz 		
 {   
-
-	//send_chassis_info_by_json();
-	//send_gimbal_info_by_json();
-		  send_cgf_info_by_json();
+     //send_chassis_info_by_json();
+	   //send_gimbal_info_by_json();
+		  send_infantry_info_by_json();
   
-			                      } 		    //发送摩擦轮信息给上位机*****************************新增
+			                      } 		   
+
 		                              
-//			send_chassis_info_by_hex();		//发送实时速度十六进制形式给
 		
 		if(time_count>=1000)			//清除计数标志    1s
 			time_count=1;

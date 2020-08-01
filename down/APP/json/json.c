@@ -17,84 +17,92 @@
 
 float pwm_pulse1=1500;
 float pwm_pulse2=1500;
-void send_cgf_info_by_json(void)
+
+
+
+void send_infantry_info_by_json(void)
 {
-	/*Kinematics.actual_velocities.linear_x=1;
-	Kinematics.actual_velocities.linear_y=2;
-	Kinematics.actual_angular.gimbal_angular.yaw_angular=4;
-	Kinematics.actual_velocities.angular_z=3;
-	Kinematics.actual_angular.gimbal_angular.pitch_angular=5;
-	Kinematics.actual_angular.fric_angular=6;*/
-	
+	Kinematics.wheel1.actual_speed.rpm=1;
+	Kinematics.wheel2.actual_speed.rpm=2;
+	Kinematics.wheel3.actual_speed.rpm=3;
+	Kinematics.wheel4.actual_speed.rpm=4;
+	Kinematics.actual_velocities.linear_x=5;
+	Kinematics.actual_velocities.linear_y=6;
+	Kinematics.actual_velocities.angular_z=7;
+	gimbal2.actual_angle=8;
+	gimbal1.actual_angle=9;
+  	
 	json_t *root;
 	char *out;           
-	root = json_pack("[{sfsfsfsfsfsfsfsfsfsf}[ffffffffff]]",\
+	root = json_pack("[{sfsfsfsfsfsfsfsfsf}[fffffffff]]",\
+						"wheel1.rpm", (Kinematics.wheel1.actual_speed.rpm),\
+						"wheel2.rpm", (Kinematics.wheel2.actual_speed.rpm ),\
+					  "wheel3.rpm", (Kinematics.wheel3.actual_speed.rpm),\
+	          "wheel4.rpm", (Kinematics.wheel4.actual_speed.rpm),\
 						"linear_x", (Kinematics.actual_velocities.linear_x),\
-						"linear_y", (Kinematics.actual_velocities.linear_y),\
-					  "yaw_angular", (Kinematics.actual_angular.gimbal_angular.yaw_angular),\
+	          "linear_y", (Kinematics.actual_velocities.linear_y),\
 	          "angular_z", (Kinematics.actual_velocities.angular_z),\
-						"pitch_angular", (Kinematics.actual_angular.gimbal_angular.pitch_angular),\
-	          "fric_angular", (Kinematics.actual_angular.fric_angular),\
-	          "ceshi1", (Kinematics.actual_angular.fric_angular),\
-	          "ceshi2", (Kinematics.actual_angular.fric_angular),\
-	          "ceshi3", (Kinematics.actual_angular.fric_angular),\
-	          "ceshi4", (Kinematics.actual_angular.fric_angular),\
-					  (Kinematics.actual_velocities.linear_x),\
-						(Kinematics.actual_velocities.linear_y),\
-	          (Kinematics.actual_velocities.angular_z),\
-						(Kinematics.actual_angular.gimbal_angular.yaw_angular),\
-            (Kinematics.actual_angular.gimbal_angular.pitch_angular),\
-	          (Kinematics.actual_angular.fric_angular),\
-          	(Kinematics.actual_angular.fric_angular),\
-          	(Kinematics.actual_angular.fric_angular),\
-          	(Kinematics.actual_angular.fric_angular),\
-          	(Kinematics.actual_angular.fric_angular));
-	
-	out = json_dumps(root, JSON_ENCODE_ANY);//  ��Ϊ�ַ���
+	          "pitch_angle", (gimbal2.actual_angle),\
+	          "yaw_angle", (gimbal1.actual_angle),\
+	          (Kinematics.wheel1.actual_speed.rpm),\
+						(Kinematics.wheel2.actual_speed.rpm),\
+	          (Kinematics.wheel3.actual_speed.rpm),\
+						(Kinematics.wheel4.actual_speed.rpm),\
+            (Kinematics.actual_velocities.linear_x),\
+	          (Kinematics.actual_velocities.linear_y),\
+          	(Kinematics.actual_velocities.angular_z),\
+          	(gimbal2.actual_angle),\
+          	(gimbal1.actual_angle));
+					
+ 	out = json_dumps(root, JSON_ENCODE_ANY);
 	printf("%s\r\n", out);
 	json_decref(root);
 	//free(root);
 	free(out);
 }
 
-//���͵���ʵ���ٶ���Ϣ
+
+
 
 void send_chassis_info_by_json(void)
 {
-	Kinematics.actual_velocities.linear_x=1;
-	Kinematics.actual_velocities.linear_y=2;
-	Kinematics.actual_velocities.angular_z=3;
+	Kinematics.actual_velocities.linear_x=5;
+	Kinematics.actual_velocities.linear_y=6;
+	Kinematics.actual_velocities.angular_z=7;
+	gimbal2.actual_angle=8;
+	gimbal1.actual_angle=9;	
 	json_t *root;
 	char *out;           //
-	root = json_pack("[{sfsfsf}[fff]]",\
+	root = json_pack("[{sfsfsfsfsf}[fffff]]",\
 						"linear_x", (Kinematics.actual_velocities.linear_x),\
 						"linear_y", (Kinematics.actual_velocities.linear_y),\
 						"angular_z", (Kinematics.actual_velocities.angular_z),\
+	          "pitch_angle", (gimbal2.actual_angle),\
+	          "yaw_angle", (gimbal1.actual_angle),\
 						(Kinematics.actual_velocities.linear_x),\
 						(Kinematics.actual_velocities.linear_y),\
-						(Kinematics.actual_velocities.angular_z));   //(int),
-						
-	out = json_dumps(root, JSON_ENCODE_ANY);//  ��Ϊ�ַ���
+						(Kinematics.actual_velocities.angular_z),\
+	          (gimbal2.actual_angle),\
+          	(gimbal1.actual_angle));
+	out = json_dumps(root, JSON_ENCODE_ANY);
 	printf("%s\r\n", out);
-	json_decref(root);//��С���ü��� ������Դ����
+	json_decref(root);
 	//free(root);
 	free(out);
 }
 
-void send_gimbal_info_by_json(void)   ///����������̨��Ϣ ������*********************************
+void send_gimbal_info_by_json(void)   
 {
-//����
+
 //	Kinematics.target_angular.gimbal_angular.yaw_angular=170;
 	//Kinematics.target_angular.gimbal_angular.yaw_angular=10;
   json_t *root;
-	char *out;           //
+	char *out;           
 	root = json_pack("[{sfsf}[ff]]",\
-						
 					  "yaw_angular", (Kinematics.actual_angular.gimbal_angular.yaw_angular),\
 						"pitch_angular", (Kinematics.actual_angular.gimbal_angular.pitch_angular),\
 						(Kinematics.actual_angular.gimbal_angular.yaw_angular),\
 						(Kinematics.actual_angular.gimbal_angular.pitch_angular));   //(int),
-						
 	out = json_dumps(root, JSON_ENCODE_ANY);
 	printf("%s\r\n", out);
 	json_decref(root);

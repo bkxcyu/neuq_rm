@@ -13,7 +13,7 @@
 void send_chassis_info_by_json(void);
 void send_gimbal_info_by_json(void);          //新增 发送云台信息给上位机
 void send_fric_info_by_json(void);            //新增 发送摩擦轮信息给上位机
-void send_cgf_info_by_json(void);      
+void send_infantry_info_by_json(void);      
 
 
 void jansson_pack_test(void);
