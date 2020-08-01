@@ -4,9 +4,10 @@
 
 #define IntegralUpperLimit    5000
 #define IntegralSeparation    300
-#define vPID_OUT_MAX          15000//8000		//即最大电流
-#define gimbal_angel_upperlimit  2000  //云台位置环上限
-#define gimbal_angel_downlimit   200  //云台位置环下下限
+#define vPID_OUT_MAX          8000		//即最大电流
+#define gPID_OUT_MAX          10000
+#define gimbal_angel_upperlimit  1000  //云台速度环上限
+#define gimbal_angel_downlimit   20  //云台速度环下限
 #define tvPID_OUT_MAX         9000    //拨弹轮
 
 int find_max(void);
@@ -156,9 +157,8 @@ void set_chassis_motor_speed(int motor1_speed,int motor2_speed,int motor3_speed,
 
 void set_GIMBAL_angle(int gimbal1_angle,int gimbal2_angle)
 {
-	gimbal1.apid.target_angle = gimbal1_angle;
-	gimbal2.apid.target_angle = gimbal2_angle;
-
+	gimbal1.apid.target_speed = gimbal1_angle;  //angel是速度
+	//gimbal2.apid.target_angle = gimbal2_angle;
 }
 
 void set_trigger_motor_speed(int motor5_speed)
@@ -178,9 +178,9 @@ void set_gimbal1_motor_speed(int gimbal1_speed)
 
 
 /*********************************************云台pid部分*******************************************************/
-void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kpv,float kiv)
+void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia)
 {
-	vpid->err = vpid->target_angle - vpid->actual_angle;
+	vpid->err = vpid->target_speed - vpid->actual_speed;
 	
 	if(abs(vpid->err) <= gimbal_angel_downlimit)		//积分分离
 		vpid->err_integration += vpid->err;
@@ -193,44 +193,20 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kpv,float kiv)
 	vpid->I_OUT = kia * vpid->err_integration;		//I项
 	
 	//输出限幅
-	if((vpid->P_OUT + vpid->I_OUT) > vPID_OUT_MAX) 
-		vpid->PID_OUT = vPID_OUT_MAX;
-	else if((vpid->P_OUT + vpid->I_OUT) < -vPID_OUT_MAX) 
-		vpid->PID_OUT = -vPID_OUT_MAX;
+	if((vpid->P_OUT + vpid->I_OUT) > gPID_OUT_MAX) 
+		vpid->PID_OUT = gPID_OUT_MAX;
+	else if((vpid->P_OUT + vpid->I_OUT) < -gPID_OUT_MAX) 
+		vpid->PID_OUT = -gPID_OUT_MAX;
 	else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
-	/*
-		vpid->err = vpid->P_OUT + vpid->I_OUT-vpid->actual_speed;
-	if(abs(vpid->err) <= gimbal_angel_downlimit)		//积分分离
-		vpid->err_integration += vpid->err;
-	if(vpid->err_integration > gimbal_angel_upperlimit)		//抗积分饱和
-		vpid->err_integration = IntegralUpperLimit;
-	else if(vpid->err_integration < -gimbal_angel_upperlimit)
-		vpid->err_integration = -gimbal_angel_upperlimit;
-	
-	vpid->P_OUT = kpv * vpid->err;								//P项
-	vpid->I_OUT = kiv * vpid->err_integration;		//I项
-	
-	//输出限幅
-	if((vpid->P_OUT + vpid->I_OUT) > vPID_OUT_MAX) 
-		vpid->PID_OUT = vPID_OUT_MAX;
-	else if((vpid->P_OUT + vpid->I_OUT) < -vPID_OUT_MAX) 
-		vpid->PID_OUT = -vPID_OUT_MAX;
-	else
-		vpid->PID_OUT =vpid->P_OUT + vpid->I_OUT;*/
 }
 
-void apid_GIMBAL_PI_realize(float kpa,float kia,float kpv,float kiv)
+void apid_GIMBAL_PI_realize(float kpa,float kia)
 {
 	//读取电机当前转速
 	gimbal1.apid.actual_speed = gimbal1.actual_speed;
-	gimbal2.apid.actual_speed = gimbal2.actual_speed;
-	gimbal1.apid.actual_angle = gimbal1.actual_angle;
-	gimbal2.apid.actual_angle = gimbal2.actual_angle;
-
 	//计算输出值
-	apid_GIMBAL_realize(&gimbal1.apid,kpa,kia,kpv,kiv);
-	apid_GIMBAL_realize(&gimbal2.apid,kpa,kia,kpv,kiv);
+	apid_GIMBAL_realize(&gimbal1.apid,kpa,kia);
 }
 
 /*************************************************云台pid部分******************************************************/

@@ -11,12 +11,15 @@
 /**@brief The structrue records some of the specific data detected by imu
   *
 */
+
 typedef struct{
 	float yaw;
 	float time;
 	float yaw_angular;
 	float pitch_angular;
 }IMU_DATA;
+
+
 
 /** @brief Read value of yaw from imu and transfer it to arc
   * @return float Value of yaw(rad) 
