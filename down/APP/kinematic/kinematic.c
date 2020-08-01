@@ -92,6 +92,7 @@ void Get_Base_Velocities(void)
 // 注：电机1、4的默认旋转方向和车轮实际正方向相反，需要取反
 int find_max(void);
 int stop_flag_1=0;
+int stop_flag_4=0;
 
 void speed_control(float speed_x, float speed_y, float speed_r)
 {
@@ -151,15 +152,21 @@ void gimbal_control(float gimbal1_angle,float gimbal2_angle)    //
 	//转换命令
 	//gimbal1_angle=gimbal1_angle*8191/360;
   //gimbal2_angle=gimbal2_angle*8191/360;
+	
+	 	if(stop_flag_4 == 0 && gimbal1_angle == 0)
+	{
+		stop_flag_4 = 1;			//停止   此标志为了避免多次进入
+		stop_chassis_motor();			//停下来  并角度闭环
+	}
+    else
+
 	set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);//(gimbal1_angle,gimbal2_angle);
 }
 
 
 void Gimbal_control(float gimbal1_speed)     //小陀螺模式使用
   {
-  
 		gimbal1.target_speed= -5000*gimbal1_speed;
-		
 		set_gimbal1_motor_speed(gimbal1.target_speed);
 		
    }
