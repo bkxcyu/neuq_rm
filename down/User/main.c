@@ -145,7 +145,7 @@ void TIM3_IRQHandler(void)
 {   
      //send_chassis_info_by_json();
 	   //send_gimbal_info_by_json();
-		  send_infantry_info_by_json();
+		 //send_infantry_info_by_json();
   
 			                      } 		   
 
