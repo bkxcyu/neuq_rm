@@ -96,10 +96,13 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 				switch (trigger_CH_width)
 				{
 					case 1:
-				  fric1_on(1500);
-				  fric2_on(1500);
-					delay_ms(500);
-					trigger_speed = 150;
+				  fric1_on(1800);
+				  fric2_on(1800);
+         static int count_1=1;	
+					count_1++;
+					if(count_1>100)
+					{trigger_speed = 200;
+					    count_1=1;                       }
 					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
 					{ 
 						static int count_=1;
@@ -110,10 +113,10 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					}
 					break;
 					case 2:
-					trigger_speed = 150;
+					trigger_speed = -50;
 				  fric1_on(1000);
 				  fric2_on(1000);
-					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
+					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//·´×ª
 					{ 
 						static int count_=1;
 					  count_++;

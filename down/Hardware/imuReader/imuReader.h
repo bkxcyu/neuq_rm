@@ -8,6 +8,7 @@
 #define YAWH_angular ((unsigned int)(7))
 #define PITCHL_angular ((unsigned int)(4))
 #define PITCHH_angular ((unsigned int)(5))	
+
 /**@brief The structrue records some of the specific data detected by imu
   *
 */
@@ -17,6 +18,13 @@ typedef struct{
 	float time;
 	float yaw_angular;
 	float pitch_angular;
+	float ax;  //º”ÀŸ∂»
+	float ay;
+	float az;
+	float vx;
+	float vy;
+	float vz;
+	
 }IMU_DATA;
 
 

@@ -414,6 +414,12 @@ void IMU_USART_IRQHandler(void){
 					imu_data.yaw_angular=(short)((ucRxBuffer[YAWH_angular]<<8)|ucRxBuffer[YAWL_angular])*0.000030517578125*2000;
 				  imu_data.pitch_angular=(short)((ucRxBuffer[PITCHH_angular]<<8)|ucRxBuffer[PITCHL_angular])*0.000030517578125*2000;
 				break;
+				case 0x51:
+					imu_data.ax=(short)((ucRxBuffer[3]<<8)|ucRxBuffer[2])/32768*16*9.8;
+					imu_data.ay=(short)((ucRxBuffer[5]<<8)|ucRxBuffer[4])/32768*16*9.8;
+			  	imu_data.az=(short)((ucRxBuffer[7]<<8)|ucRxBuffer[6])/32768*16*9.8;
+				break;
+					
 				
 				default:break;			
 			}
