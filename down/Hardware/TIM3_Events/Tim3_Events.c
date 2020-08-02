@@ -20,7 +20,7 @@
 //无线要发送的数据
 u8 send_data[32]={" nihaoya"};
 
-float kp=500,ki=1;
+float kp=250,ki=0;
 //按键宏定义   增强代码可读性
 #define pressed     0
 #define unpressed   1

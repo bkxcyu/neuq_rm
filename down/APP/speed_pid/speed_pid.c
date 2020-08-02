@@ -3,11 +3,12 @@
 
 
 #define IntegralUpperLimit    5000
+#define Integralgimbal        500
 #define IntegralSeparation    300
 #define vPID_OUT_MAX          8000		//即最大电流
-#define gPID_OUT_MAX          10000
-#define gimbal_angel_upperlimit  1000  //云台速度环上限
-#define gimbal_angel_downlimit   20  //云台速度环下限
+#define gPID_OUT_MAX          15000
+#define gimbal_angel_upperlimit  500  //云台速度环上限
+#define gimbal_angel_downlimit   5  //云台速度环下限
 #define tvPID_OUT_MAX         9000    //拨弹轮
 
 int find_max(void);
@@ -180,16 +181,23 @@ void set_gimbal1_motor_speed(int gimbal1_speed)
 /*********************************************云台pid部分*******************************************************/
 void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia)
 {
+	int kpaa;
 	vpid->err = vpid->target_speed - vpid->actual_speed;
-	
+	kpaa = kpa + abs(vpid->err)*5;
+	if(abs(vpid->err) <= 3)
+	{
+		vpid->PID_OUT = 0;
+	}
+	else
+  {
 	if(abs(vpid->err) <= gimbal_angel_downlimit)		//积分分离
 		vpid->err_integration += vpid->err;
 	if(vpid->err_integration > gimbal_angel_upperlimit)		//抗积分饱和
-		vpid->err_integration = IntegralUpperLimit;
+		vpid->err_integration = Integralgimbal;
 	else if(vpid->err_integration < -gimbal_angel_upperlimit)
-		vpid->err_integration = -gimbal_angel_upperlimit;
+		vpid->err_integration = -Integralgimbal;
 	
-	vpid->P_OUT = kpa * vpid->err;								//P项
+	vpid->P_OUT = kpaa * vpid->err;								//P项
 	vpid->I_OUT = kia * vpid->err_integration;		//I项
 	
 	//输出限幅
@@ -199,6 +207,8 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia)
 		vpid->PID_OUT = -gPID_OUT_MAX;
 	else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
+  }
+  
 }
 
 void apid_GIMBAL_PI_realize(float kpa,float kia)
