@@ -10,6 +10,8 @@
 
 
 
+
+
 void send_chassis_info_by_json(void);
 void send_gimbal_info_by_json(void);          //新增 发送云台信息给上位机
 void send_fric_info_by_json(void);            //新增 发送摩擦轮信息给上位机
@@ -25,6 +27,7 @@ void resolve_json_trigger_command(void);
 void resolve_json_mode_command(void);
 void resolve_chassis_mode_command(void);
 void resolve_gimbal_mode_command(void);
+void resolve_json_pidparam_command(void);
 
 void resolve_fric_mode_command(void);
 void caclulate_pwm_pulse(void);

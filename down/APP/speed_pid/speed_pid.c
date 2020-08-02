@@ -1,6 +1,6 @@
 #include "speed_pid.h"
 #include "motor.h"
-
+#include "Kinematic.h"
 
 #define IntegralUpperLimit    5000
 #define Integralgimbal        500
@@ -10,6 +10,9 @@
 #define gimbal_angel_upperlimit  500  //云台速度环上限
 #define gimbal_angel_downlimit   5  //云台速度环下限
 #define tvPID_OUT_MAX         9000    //拨弹轮
+
+
+
 
 int find_max(void);
 
@@ -52,7 +55,6 @@ void VPID_Init_All()
 void vpid_realize(VPID_t *vpid,float kp,float ki)
 {
 	vpid->err = vpid->target_speed - vpid->actual_speed;
-	
 	if(abs(vpid->err) <= IntegralSeparation)		//积分分离
 		vpid->err_integration += vpid->err;
 	if(vpid->err_integration > IntegralUpperLimit)		//抗积分饱和

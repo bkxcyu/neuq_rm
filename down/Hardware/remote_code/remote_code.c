@@ -9,6 +9,7 @@
 #include "gimbal.h"
 #include "imuReader.h"
 #include <math.h>
+#include "delay.h"
 u8 Control_Mode = control_mode;
 
 //内部全局变量，方便调试

@@ -14,6 +14,14 @@
 
 typedef struct
 {
+	float kp;			
+	float ki;						
+}Pid_parameter;
+
+
+
+typedef struct
+{
 	float linear_vel;			//线速度
 	float rpm;						//转速圈每分钟
 }Speed_t;
@@ -75,6 +83,7 @@ typedef struct
 extern Kinematics_t Kinematics;
 extern float max_base_linear_speed;
 extern float max_base_rotational_speed;
+extern Pid_parameter Chassis,Gimbal,Trigger;
 
 extern int stop_flag_1;
 extern int stop_flag_2;
