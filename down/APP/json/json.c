@@ -204,7 +204,7 @@ void resolve_json_handgimbal_command(void)
 	json_decref(root);
 }
 
-//�����յ���Ħ���ֿ���ָ��
+int fric_1;
 void resolve_json_fric_command()
 	{ 
 	json_t *root;
@@ -220,6 +220,7 @@ void resolve_json_fric_command()
 	json_decref(root);
 
 }
+	
 void resolve_json_trigger_command()
 	{ 
 	json_t *root;
@@ -229,7 +230,7 @@ void resolve_json_trigger_command()
 	root = json_loads(json_Buffer,0,&error);
 	trigger_obj = json_object_get( root, "trigger_angular" );
 	item_obj = json_array_get( trigger_obj, 0 );
-	Kinematics.target_angular.trigger_angular=150;//1.0f*json_integer_value(item_obj);
+	Kinematics.target_angular.trigger_angular=1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);
 	json_decref(trigger_obj);
 	json_decref(root);

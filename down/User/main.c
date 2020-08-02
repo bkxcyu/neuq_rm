@@ -69,7 +69,7 @@ void TIM3_IRQHandler(void)
 		time_count++;
 		
 		/*****   遥控器控制    ******/
-		Remote_Control();				//遥控器控制代码
+		//Remote_Control();				//遥控器控制代码
 		
 		/****  ROS上位机控制  *****/
 		if(flag_command_recieved == 1)	//每一毫秒检查一次是否收到控制指令
@@ -92,7 +92,7 @@ void TIM3_IRQHandler(void)
 	 	if(flag_command_recieved2 == 1)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
-			resolve_json_trigger_command();
+			//resolve_json_trigger_command();
       resolve_json_fric_command();
 	
 			flag_command_recieved2 = 0;	//命令接收标志位清零

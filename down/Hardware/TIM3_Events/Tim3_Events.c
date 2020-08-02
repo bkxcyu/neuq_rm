@@ -51,7 +51,18 @@ void Robo_Move()
 		if(Kinematics.target_angular.fric_angular==1)//自动射击使用
 		{   fric1_on(1500);
 				fric2_on(1500);
+			  
 			  trigger_control(150);
+			/*	if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//堵转
+					{ 
+						static int count_=1;
+					  count_++;
+						int   a;
+						a =pow(-1,count_)*50;
+						trigger_control(a);
+						if(count_>100)
+							count_=1;
+					}*/
 		}
 		else if(Kinematics.target_angular.fric_angular==0)
 		{   
