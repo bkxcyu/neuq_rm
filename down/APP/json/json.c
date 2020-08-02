@@ -52,7 +52,8 @@ void send_infantry_info_by_json(void)
 	          (Kinematics.actual_velocities.linear_y),\
           	(Kinematics.actual_velocities.angular_z),\
           	(gimbal2.actual_angle),\
-          	(gimbal1.actual_angle));
+            (gimbal1.actual_angle));
+					
 					
  	out = json_dumps(root, JSON_ENCODE_ANY);
 	printf("%s\r\n", out);
@@ -184,7 +185,30 @@ void resolve_json_gimbal_command()
 	json_decref(root);
 
 }
-
+void resolve_json_pidparam_command(void)   //接受上位机PID参数
+{ 
+	json_t *root;
+	json_t *para_obj;
+	json_t *item_obj;
+	json_error_t error;
+	root = json_loads(json_Buffer,0,&error);
+	para_obj = json_object_get( root, "Pid_param" );
+	item_obj = json_array_get( para_obj, 0 );
+	Chassis.kp=1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( para_obj, 1 );
+	Chassis.ki=1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( para_obj, 2 );
+	Gimbal.kp=1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( para_obj, 3 );
+	Gimbal.ki=1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( para_obj, 4);
+	Trigger.kp=1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( para_obj, 5 );
+	Trigger.ki=1.0f*json_integer_value(item_obj);
+	json_decref(item_obj);
+	json_decref(para_obj);
+	json_decref(root);
+}
 
 
 void resolve_json_handgimbal_command(void)
@@ -237,7 +261,7 @@ void resolve_json_trigger_command()
 
 }
 	
-	//����ģʽ����ָ��
+
 void resolve_json_mode_command()
 {
   resolve_chassis_mode_command();

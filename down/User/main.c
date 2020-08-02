@@ -110,7 +110,7 @@ void TIM3_IRQHandler(void)
 		{
 			//如果自动控制才可以给命令的目标速度赋值
 			if(1)//(Control_Mode & auto_control) == auto_control
-		 resolve_json_fric_command();
+	    resolve_json_pidparam_command();
 		
 			flag_command_recieved4 = 0;	//命令接收标志位清零
 		}
