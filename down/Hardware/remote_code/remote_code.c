@@ -15,7 +15,10 @@ u8 Control_Mode = control_mode;
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
 float cx_speed=0,cy_speed=0;
-int flag = 0;
+float x,y,z;
+static float x_acceleration=0;
+static float y_acceleration=0;
+static float z_acceleration=0;
 
 //ÄÚ²¿º¯ÊıÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
@@ -179,12 +182,11 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 	x_max_acceleration_caculator(x_accelerationRead());
   y_max_acceleration_caculator(y_accelerationRead());
   z_max_acceleration_caculator(z_accelerationRead());
-
+  x=x_acceleration;
+	y=y_acceleration;
+	z=z_acceleration;
 }
 /***********************************************¼ÓËÙ¶È²âÊÔ´úÂë******************************************/
-static float x_acceleration=0;
-static float y_acceleration=0;
-static float z_acceleration=0;
 
 void x_max_acceleration_caculator(float acc)
 {
