@@ -1,2 +1,0 @@
-msg为自定义消息类型，需要修改cmakelist才可使用。
-scripts内有与下位机通信节点
