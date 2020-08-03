@@ -70,8 +70,7 @@ typedef struct
 	Angular_t  actual_angular;
 	
 }Kinematics_t;
-
-
+/****************************************************/
 
 
 
