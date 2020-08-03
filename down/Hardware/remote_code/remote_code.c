@@ -7,7 +7,7 @@
 #include "fric.h"
 #include "stm32f4xx_tim.h"
 #include "gimbal.h"
-#include "imuReader.h"
+#include "imuReader.h"              
 #include <math.h>
 #include "delay.h"
 u8 Control_Mode = control_mode;
@@ -16,16 +16,19 @@ u8 Control_Mode = control_mode;
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
 float cx_speed=0,cy_speed=0;
 int flag = 0;
-
 //ÄÚ²¿º¯ÊıÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
 float caculate_gimbal_pitch_angle(int width,int mid,int min,int max);
 float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
-void x_max_acceleration_caculator(float acc);
-void y_max_acceleration_caculator(float acc);
-void z_max_acceleration_caculator(float acc);
-
+float yaw_max_angular(float yaw);
+float x_max_acceleration_caculator(float acc);
+float y_max_acceleration_caculator(float acc);
+float z_max_acceleration_caculator(float acc);
+static float y_acceleration=0;
+static float z_acceleration=0;
+static float imu_yaw_angular=0;
+float ax,ay,v_yaw;
 // º¯Êı: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
 // ²ÎÊı£ºÎŞ
@@ -176,32 +179,61 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		TIM_SetCompare2(TIM1,pwm_pulse2);
 	
 	}
-	x_max_acceleration_caculator(x_accelerationRead());
-  y_max_acceleration_caculator(y_accelerationRead());
+	ax=x_max_acceleration_caculator(x_accelerationRead());
+  ay=y_max_acceleration_caculator(y_accelerationRead());
   z_max_acceleration_caculator(z_accelerationRead());
-
+  v_yaw=yaw_max_angular(yaw_angularRead());
 }
 /***********************************************¼ÓËÙ¶È²âÊÔ´úÂë******************************************/
-static float x_acceleration=0;
-static float y_acceleration=0;
-static float z_acceleration=0;
 
-void x_max_acceleration_caculator(float acc)
+
+float x_max_acceleration_caculator(float acc)
 {
+	static float x_acceleration=0;
 	if(acc>x_acceleration);
 	x_acceleration=acc;
+	return x_acceleration;
 }
-void y_max_acceleration_caculator(float acc)
+float y_max_acceleration_caculator(float acc)
 {
 	if(acc>y_acceleration);
 	y_acceleration=acc;
+	return y_acceleration;
 }
-void z_max_acceleration_caculator(float acc)
+float z_max_acceleration_caculator(float acc)
 {
 	if(acc>z_acceleration);
 	z_acceleration=acc;
+	return z_acceleration;
 }
 
+float yaw_max_angular(float yaw)
+{
+if(yaw>imu_yaw_angular)
+	imu_yaw_angular=yaw;
+return imu_yaw_angular;
+}
+float x_max_speed_caculator(float x)
+{
+   static float x_last=0;
+	 if(x>x_last)
+		x_last=x;
+	 return x_last;
+}
+float y_max_speed_caculator(float y)
+{
+    static float y_last=0;
+		if(y>y_last)
+		y_last=y;
+		return y_last;
+}
+float z_max_speed_caculator(float z)
+{
+   static float z_last=0;
+	 if(z>z_last)
+		z_last=z;
+    return z_last;
+}
 
 // º¯Êı: caculate_speed()
 // ÃèÊö: ½«Ò£¿ØÆ÷Ò¡¸ËÊä³öÓ³Éäµ½»úÆ÷ÈËÈıÖáËÙ¶ÈÉÏ

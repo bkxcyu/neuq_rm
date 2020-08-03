@@ -24,10 +24,9 @@
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
 
 extern IMU_DATA imu_data;
-
-
 extern char receiveBuffer[MAX_LENGTH];
 extern char json_Buffer[MAX_LENGTH];
+float x_max_speed,y_max_speed,z_max_speed;//测量最大速度用
 int main()
 {
  	All_Init();												//机器人所有配置初始化
@@ -72,6 +71,9 @@ void TIM3_IRQHandler(void)
 		vx=0.001f*(imu_data.ax)+vx;
 		vy=0.001f*(imu_data.ay)+vy;
 		vz=0.001f*(imu_data.az)+vz;
+    x_max_speed=x_max_speed_caculator(vx);
+		y_max_speed=y_max_speed_caculator(vy);
+		z_max_speed=z_max_speed_caculator(vz);
 		time_count++;
 		
 		/*****   遥控器控制    ******/
@@ -152,7 +154,7 @@ void TIM3_IRQHandler(void)
      //send_chassis_info_by_json();
 	   //send_gimbal_info_by_json();
 		 //send_infantry_info_by_json();
-  
+    send_info_by_json();
 			                      } 		   
 
 		                              
