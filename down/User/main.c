@@ -65,7 +65,7 @@ extern uint8_t flag_command_recieved5;
 void TIM3_IRQHandler(void)
 {
 	static int time_count=1;
-	static double vx=0,vy=0,vz=0;
+//	static double vx=0,vy=0,vz=0;
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) 	//溢出中断
 	{ 
 		/*vx=0.001f*(imu_data.ax)+vx;
@@ -77,7 +77,7 @@ void TIM3_IRQHandler(void)
 		time_count++;
 		
 		/*****   遥控器控制    ******/
-		//Remote_Control();				//遥控器控制代码
+		Remote_Control();				//遥控器控制代码
 		
 		/****  ROS上位机控制  *****/
 		if(flag_command_recieved == 1)	//每一毫秒检查一次是否收到控制指令
@@ -154,7 +154,11 @@ void TIM3_IRQHandler(void)
      //send_chassis_info_by_json();
 	   //send_gimbal_info_by_json();
 		 //send_infantry_info_by_json();
-    send_info_by_json();
+    //send_info_by_json();
+
+		 //send_infantry_info_by_json();
+  
+
 			                      } 		   
 
 		                              

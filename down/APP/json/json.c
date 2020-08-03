@@ -208,7 +208,7 @@ void resolve_json_gimbal_command()
 	json_decref(root);
 
 }
-void resolve_json_pidparam_command(void)   //接受上位机PID参数
+/*void resolve_json_pidparam_command(void)   //接受上位机PID参数
 { 
 	json_t *root;
 	json_t *para_obj;
@@ -232,7 +232,7 @@ void resolve_json_pidparam_command(void)   //接受上位机PID参数
 	json_decref(para_obj);
 	json_decref(root);
 }
-
+*/
 
 void resolve_json_handgimbal_command(void)
 { 

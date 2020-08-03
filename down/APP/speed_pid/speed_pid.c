@@ -185,7 +185,7 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia)
 {
 	int kpaa;
 	vpid->err = vpid->target_speed - vpid->actual_speed;
-	kpaa = kpa + abs(vpid->err)*5;
+	kpaa = kpa;
 	if(abs(vpid->err) <= 3)
 	{
 		vpid->PID_OUT = 0;

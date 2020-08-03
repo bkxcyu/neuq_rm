@@ -19,9 +19,10 @@
 #include "json.h"
 #include "kinematic.h"
 //无线要发送的数据
-u8 send_data[32]={" nihaoya"};
 
- Pid_parameter Chassis,Gimbal,Trigger;
+
+ //Pid_parameter Chassis,Gimbal,Trigger;
+float kp=250,ki=1;
 
 //按键宏定义   增强代码可读性
 #define pressed     0
@@ -77,7 +78,7 @@ void Robo_Move()
 	
    	vpid_PI_realize(2,0.05);			//速度闭环2  0.05
 	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定   2.5  0.05
-	  apid_GIMBAL_PI_realize(250,1);     //150  10
+	  apid_GIMBAL_PI_realize(kp,ki);     //150  10
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
 	  set_gimbal_current();
