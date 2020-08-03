@@ -25,6 +25,9 @@ float yaw_max_angular(float yaw);
 float x_max_acceleration_caculator(float acc);
 float y_max_acceleration_caculator(float acc);
 float z_max_acceleration_caculator(float acc);
+float pwm_xunhang_pitch(void);
+float pwm_xunhang_yaw(void);
+
 int pwm_flag=0;
 // º¯Êı: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
@@ -146,8 +149,12 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 			
 		
 		if(stop_CH_width==2)	//Èç¹ûÍ£Ö¹ÃüÁî
-		{  
+		{ 	   
+		 pwm_pulse1=pwm_xunhang_pitch();
+     pwm_pulse2=pwm_xunhang_yaw();
+ 
 			/*static count_pwm=1;
+			
 			if(count_pwm<125)
 			{
 				pwm_pluse1=pwm_pluse1+count_pwm;
@@ -269,6 +276,70 @@ float z_max_speed_caculator(float z)
 //       max£ºÍ¨µÀÊä³ö×î´óÖµ
 // Êä³ö£º¶ÔÓ¦µÄËÙ¶ÈÖµ
 //ÄÚ²¿º¯Êı£¬ÓÃ»§ÎŞĞèµ÷ÓÃ
+ float pwm_xunhang_pitch()
+ {
+   static float cout=0;
+	 static float pwm_pulse1=1500;
+	 cout=cout+0.5f;
+	 if(cout>=0)
+	 {
+		pwm_pulse1=pwm_pulse1-1; 
+	 }
+	 if(cout>=125)
+	 {
+	 pwm_pulse1=1375;
+	 }
+	 if(cout>=375)
+	 {
+	 pwm_pulse1=pwm_pulse1+1;
+	 }
+	 if(cout>=500)
+	 {
+	 pwm_pulse1=1500;
+	 }
+	 if(cout>=750)
+	 {
+	 pwm_pulse1=pwm_pulse1-1;
+	 }
+	 if(cout>=875)
+	 {
+	 cout=125;
+	 }
+	 return pwm_pulse1;
+ }
+ 
+ float pwm_xunhang_yaw()
+ {
+   static float cout=0;
+	 static float pwm_pulse2=1500;
+	 cout=cout+0.5f;
+	 if(cout>=0)
+	 {
+	 pwm_pulse2=pwm_pulse2-1;
+	 }
+	 if(cout>=125)
+	 {
+	 pwm_pulse2=pwm_pulse2+1;
+	 }
+	 if(cout>=375)
+	 {
+	 pwm_pulse2=1625;
+	 }
+	 if(cout>=500)
+	 {
+	 pwm_pulse2=pwm_pulse2-1;
+	 }
+	 if(cout>=750)
+	 {
+	 pwm_pulse2=1375;
+	 }
+	 if(cout>=875)
+	 {
+	 cout=125;
+	 }
+return pwm_pulse2;
+ }
+
 static float caculate_linear_speed(int width,int mid,int min,int max)
 {
   float speed=0;
