@@ -107,11 +107,8 @@ void speed_control(float speed_x, float speed_y, float speed_r)
 		stop_flag_1 = 0;
 		//速度换算
 		BaseVel_To_WheelVel(speed_x, speed_y, speed_r);
-//		motor1.target_speed=-10.0f*(speed_y - speed_x + speed_r*30);
-//		motor2.target_speed=10.0f*(speed_y + speed_x - speed_r*30);
-//		motor3.target_speed=10.0f*(speed_y - speed_x - speed_r*30);
-//		motor4.target_speed=-10.0f*(speed_y + speed_x + speed_r*30);
-		//速度等比例压缩，用来防止多个速度均超速度上限而导致机器人难以调整姿态
+ 
+		
 		max=find_max();
 		if(max>max_motor_speed)
 		{

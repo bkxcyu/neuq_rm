@@ -16,11 +16,14 @@
 #include <jansson.h>
 #include <string.h>
 #include "gimbal.h"
+#include "imuReader.h"
 
 
 #define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336     测试 1111qsy
 #define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
+
+extern IMU_DATA imu_data;
 
 
 extern char receiveBuffer[MAX_LENGTH];
@@ -63,9 +66,12 @@ extern uint8_t flag_command_recieved5;
 void TIM3_IRQHandler(void)
 {
 	static int time_count=1;
-	
+	static double vx=0,vy=0,vz=0;
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) 	//溢出中断
-	{
+	{ 
+		vx=0.001f*(imu_data.ax)+vx;
+		vy=0.001f*(imu_data.ay)+vy;
+		vz=0.001f*(imu_data.az)+vz;
 		time_count++;
 		
 		/*****   遥控器控制    ******/
