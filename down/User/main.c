@@ -68,16 +68,16 @@ void TIM3_IRQHandler(void)
 	static double vx=0,vy=0,vz=0;
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) 	//溢出中断
 	{ 
-		vx=0.001f*(imu_data.ax)+vx;
+		/*vx=0.001f*(imu_data.ax)+vx;
 		vy=0.001f*(imu_data.ay)+vy;
 		vz=0.001f*(imu_data.az)+vz;
     x_max_speed=x_max_speed_caculator(vx);
 		y_max_speed=y_max_speed_caculator(vy);
-		z_max_speed=z_max_speed_caculator(vz);
+		z_max_speed=z_max_speed_caculator(vz);*/
 		time_count++;
 		
 		/*****   遥控器控制    ******/
-		Remote_Control();				//遥控器控制代码
+		//Remote_Control();				//遥控器控制代码
 		
 		/****  ROS上位机控制  *****/
 		if(flag_command_recieved == 1)	//每一毫秒检查一次是否收到控制指令
@@ -118,7 +118,7 @@ void TIM3_IRQHandler(void)
 		{
 			//如果自动控制才可以给命令的目标速度赋值
 			if(1)//(Control_Mode & auto_control) == auto_control
-	    resolve_json_pidparam_command();
+	   // resolve_json_pidparam_command();
 		
 			flag_command_recieved4 = 0;	//命令接收标志位清零
 		}

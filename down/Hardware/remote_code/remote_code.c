@@ -191,7 +191,7 @@ float x_max_acceleration_caculator(float acc)
 {
 	static float x_acceleration=0;
 	if(acc>x_acceleration);
-	x_acceleration=acc;
+	 x_acceleration=acc;
 	return x_acceleration;
 }
 float y_max_acceleration_caculator(float acc)
@@ -209,9 +209,9 @@ float z_max_acceleration_caculator(float acc)
 
 float yaw_max_angular(float yaw)
 {
-if(yaw>imu_yaw_angular)
+  if(yaw>imu_yaw_angular)
 	imu_yaw_angular=yaw;
-return imu_yaw_angular;
+  return imu_yaw_angular;
 }
 float x_max_speed_caculator(float x)
 {
