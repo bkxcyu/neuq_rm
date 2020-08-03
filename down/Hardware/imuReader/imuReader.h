@@ -35,5 +35,8 @@ typedef struct{
 float yawRead(void);
 float yaw_angularRead(void);
 float pitch_angularRead(void);
+float x_accelerationRead(void);
+float y_accelerationRead(void);
+float z_accelerationRead(void);
 
 #endif //_IMUREADER_H_
