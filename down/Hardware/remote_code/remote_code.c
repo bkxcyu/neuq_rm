@@ -15,13 +15,17 @@ u8 Control_Mode = control_mode;
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
 float cx_speed=0,cy_speed=0;
-
+int flag = 0;
 
 //ÄÚ²¿º¯ÊýÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
 float caculate_gimbal_pitch_angle(int width,int mid,int min,int max);
 float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
+void x_max_acceleration_caculator(float acc);
+void y_max_acceleration_caculator(float acc);
+void z_max_acceleration_caculator(float acc);
+
 // º¯Êý: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
 // ²ÎÊý£ºÎÞ
@@ -172,7 +176,32 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		TIM_SetCompare2(TIM1,pwm_pulse2);
 	
 	}
+	x_max_acceleration_caculator(x_accelerationRead());
+  y_max_acceleration_caculator(y_accelerationRead());
+  z_max_acceleration_caculator(z_accelerationRead());
+
 }
+/***********************************************¼ÓËÙ¶È²âÊÔ´úÂë******************************************/
+static float x_acceleration=0;
+static float y_acceleration=0;
+static float z_acceleration=0;
+
+void x_max_acceleration_caculator(float acc)
+{
+	if(acc>x_acceleration);
+	x_acceleration=acc;
+}
+void y_max_acceleration_caculator(float acc)
+{
+	if(acc>y_acceleration);
+	y_acceleration=acc;
+}
+void z_max_acceleration_caculator(float acc)
+{
+	if(acc>z_acceleration);
+	z_acceleration=acc;
+}
+
 
 // º¯Êý: caculate_speed()
 // ÃèÊö: ½«Ò£¿ØÆ÷Ò¡¸ËÊä³öÓ³Éäµ½»úÆ÷ÈËÈýÖáËÙ¶ÈÉÏ
