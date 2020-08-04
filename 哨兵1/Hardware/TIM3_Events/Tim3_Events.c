@@ -31,6 +31,7 @@ u8 send_data[32]={" nihaoya"};
 // 描述: 机器人运动函数，计算机器人pid和遥控器信号解析
 // 参数：无
 // 输出：无
+extern float gimbal_xunhang;
 void Robo_Move()
 {
 	/*****    pid运算   ******///三个pid，一定要把速度pid放最后
@@ -44,13 +45,13 @@ void Robo_Move()
 		apid_PID_realize(0.2,0.05,0);			//角度闭环，角度和位置取其一，不能一起使用
 	//自动模式下，计算控制指令给的速度，所对应的电机速度
 	}
-  if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)
+ if(1) /*if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)*/
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
 		
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//gimbal_control(360,180);
-		if(Kinematics.target_angular.fric_angular==1)//自动射击使用
+/*	if(Kinematics.target_angular.fric_angular==1)//自动射击使用
 		{   fric1_on(1500);
 				fric2_on(1500);
 			  
@@ -66,24 +67,32 @@ void Robo_Move()
 							count_=1;
 					}*/
 		}
-		else if(Kinematics.target_angular.fric_angular==0)
+		/*else if(Kinematics.target_angular.fric_angular==0)
 		{   
 			  fric1_on(1000);
 				fric2_on(1000);
 			  trigger_control(0);
+		}*/
+		if(gimbal_xunhang==1)
+		{
+			pwm_pulse1=pwm_xunhang_pitch();
+      pwm_pulse2=pwm_xunhang_yaw();
+		
+		
 		}
-	}
+		
+	
  
 	
    	vpid_PI_realize(2,0.05);			//速度闭环2  0.05
 	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定   2.5  0.05
-	  apid_GIMBAL_PI_realize(250,1);     //150  10
+	     apid_GIMBAL_PI_realize(250,1);     //150  10
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
 	  set_gimbal_current();
 
-	  TIM_SetCompare1(TIM1,pwm_pulse1);
-		TIM_SetCompare2(TIM1,pwm_pulse2);
+	  TIM_SetCompare1(TIM1,1468);
+		TIM_SetCompare2(TIM1,1645);
 
 	  
 }

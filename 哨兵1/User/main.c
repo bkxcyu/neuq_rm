@@ -29,7 +29,7 @@ extern char json_Buffer[MAX_LENGTH];
 float x_max_speed,y_max_speed,z_max_speed;//测量最大速度用
 int main()
 {
- 	All_Init();												//机器人所有配置初始化
+   	All_Init();												//机器人所有配置初始化
 	max_base_linear_speed = MAX_BASE_LINEAR_SPEED;							//底盘中心最大线速度           
 	max_base_rotational_speed = MAX_BASE_ROTATIONAL_SPEED;			//地盘中心最大角速度
 	max_motor_speed = MAX_MOTOR_SPEED;		//电机最大转速，通过上面宏定义更改
@@ -86,8 +86,8 @@ void TIM3_IRQHandler(void)
 	 if(flag_command_recieved1 == 1)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
-			resolve_json_gimbal_command();
-		  caclulate_pwm_pulse();		
+		/*	resolve_json_gimbal_command();
+		  caclulate_pwm_pulse();	*/	
 			flag_command_recieved1 = 0;	//命令接收标志位清零
 		}
 	 
@@ -95,7 +95,7 @@ void TIM3_IRQHandler(void)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
 			//resolve_json_trigger_command();
-      resolve_json_fric_command();
+      //resolve_json_fric_command();
 	
 			flag_command_recieved2 = 0;	//命令接收标志位清零
 		}
@@ -120,6 +120,7 @@ void TIM3_IRQHandler(void)
 			if(1)//(Control_Mode & auto_control) == auto_control
 			/*resolve_json_handgimbal_command();
 			caclulate_handpwm_pulse();	*/
+			resolve_json_gimbal_command();
 			flag_command_recieved5 = 0;	//命令接收标志位清零
 		}
 		/****  机器人运动控制  *****/

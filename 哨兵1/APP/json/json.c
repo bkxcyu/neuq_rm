@@ -63,8 +63,8 @@ void send_infantry_info_by_json(void)
 }
 
 
-extern float distance;
 
+extern float  distance;
 void send_chassis_info_by_json(void)
 {
 	json_t *root;
@@ -76,9 +76,8 @@ void send_chassis_info_by_json(void)
 	          "pitch_angle", (gimbal2.actual_angle),\
 	          "yaw_angle", (gimbal1.actual_angle),\*/
 						(Kinematics.actual_velocities.linear_x),\
-	           (distance));
-						/*(Kinematics.actual_velocities.linear_y),\
-						(Kinematics.actual_velocities.angular_z),\
+						(distance));
+						/*(Kinematics.actual_velocities.angular_z),\
 	          (gimbal2.actual_angle),\
           	(gimbal1.actual_angle));*/
 	out = json_dumps(root, JSON_ENCODE_ANY);
@@ -128,6 +127,24 @@ json_t *root;
 
 
 
+/*void send_distance_info_by_json()   
+{
+json_t *root;
+	char *out;           //
+	root = json_pack("[{sf}[f]]",\
+						
+					  "distance", (distance),\
+						
+						(distance));   //(int),
+						
+	out = json_dumps(root, JSON_ENCODE_ANY);
+	printf("%s\r\n", out);
+	json_decref(root);
+	//free(root);
+	free(out);
+}
+
+*/
 	float tmp_getx;
 	float tmp_gety;
 
@@ -158,12 +175,13 @@ void resolve_json_chassis_command(void)
 	item_obj = json_array_get( chassis_obj, 1 );
 	Kinematics.target_velocities.linear_y = 1.0f*json_integer_value(item_obj);
 	item_obj = json_array_get( chassis_obj, 2 );
-	Kinematics.target_velocities.angular_z = 1.0f*json_integer_value(item_obj);//100;///100;
+	Kinematics.target_velocities.angular_z = 1.0f*json_integer_value(item_obj);//100;///100;*/
 	json_decref(item_obj); //Decrement the reference count of json. As soon as a call to json_decref() drops the reference count to zero, the value is destroyed and it can no longer be used.
 	json_decref(chassis_obj);
 	json_decref(root);
 }
 //�����յ�����̨����ָ��
+float gimbal_xunhang;
 void resolve_json_gimbal_command()
 { 
 	json_t *root;
@@ -171,9 +189,9 @@ void resolve_json_gimbal_command()
 	json_t *item_obj;
 	json_error_t error;
 	root = json_loads(json_Buffer,0,&error);
-	gimbal_obj = json_object_get( root, "gimbal" );
+	gimbal_obj = json_object_get( root, "state" );
 	item_obj = json_array_get( gimbal_obj, 0 );
-	Kinematics.target_angular.gimbal_angular.yaw_angular=1.0f*json_integer_value(item_obj)/10000;
+	 gimbal_xunhang=1.0f*json_integer_value(item_obj);
 	//item_obj = json_array_get( gimbal_obj, 1 );
 	//Kinematics.target_angular.gimbal_angular.yaw_angular=1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);

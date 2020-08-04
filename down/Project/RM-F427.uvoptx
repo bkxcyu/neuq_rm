@@ -270,16 +270,6 @@
           <WinNumber>1</WinNumber>
           <ItemText>vy</ItemText>
         </Ww>
-        <Ww>
-          <count>23</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>distance</ItemText>
-        </Ww>
-        <Ww>
-          <count>24</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Kinematics.target_velocities.linear_x</ItemText>
-        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

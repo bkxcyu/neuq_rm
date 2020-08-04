@@ -152,51 +152,8 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		{ 	   
 		 pwm_pulse1=pwm_xunhang_pitch();
      pwm_pulse2=pwm_xunhang_yaw();
-			x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+ 
 			
- 			/*static count_pwm=1;
-			
-			if(count_pwm<125)
-			{
-				pwm_pluse1=pwm_pluse1+count_pwm;
-			  pwm_pluse2=pwm_pluse2-count_pwm;
-			  count_pwm++;
-			}
-			if(count_pwm<250&&count_pwm>125)
-			{ 
-			pwm_pluse1=pwm_pluse1+125;
-			pwm_pluse2=pwm_pluse2+count_pwm;
-			count_pwm=count_pwm+2;
-			                                }
-			
-			if(count_pwm<250&&count_pwm>250)
-			
-			
-			
-			xunhang_start(1500,1500);
-			if(pwm_pulse1>=1500&&pwm_pulse2<=1500&&pwm_flag=0)
-			 {
-				 pwm_pulse1=pwm_pulse1+1;
-				 pwm_pulse2=pwm_pulse2-1;
-			 }
-		   if(pwm_pulse1=1625&&pwm_pulse2>=1375)
-			 {
-				 pwm_flag=1;
-				 pwm_pulse2=pwm_pulse2+1;
-			 }
-	     if(pwm_pulse1<=1625&&pwm_pulse2=1625)
-			 {
-         pwm_pulse1=pwm_pulse1-1;				 
-			 }
-			 if(pwm_pulse1=1500&&pwm_pulse2<=1625&&pwm_flag=1)
-			 {
-			   pwm_puse2=pwm_pulse2-1;
-			 }
-			 if(pwm_pulse1>=1500&&pwm_pulse2=1375)
-			 {
-	       pwm_pulse1=pwm_pulse1+1;
-         pwm_flag=0;				 
-			 }*/
 		}
 		if((Control_Mode&DJi_Remote_Control) == DJi_Remote_Control)
 		{
@@ -209,8 +166,8 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		}
 		speed_control(x_speed,y_speed,r_speed);
 		trigger_control(trigger_speed);
-		TIM_SetCompare1(TIM1,pwm_pulse1);
-		TIM_SetCompare2(TIM1,pwm_pulse2);
+		//TIM_SetCompare1(TIM1,pwm_pulse1);
+		//TIM_SetCompare2(TIM1,pwm_pulse2);
 	
 	}
 	/*ax=x_max_acceleration_caculator(x_accelerationRead());
@@ -281,28 +238,28 @@ float z_max_speed_caculator(float z)
  {
    static float cout=0;
 	 static float pwm_pulse1=1500;
-	 cout=cout+0.5f;
-	 if(cout>=0)
+	 cout=cout+1.0f;
+	 if(cout>=0&&cout<125)
 	 {
 		pwm_pulse1=pwm_pulse1-1; 
 	 }
-	 if(cout>=125)
+	 if(cout>=125&&cout<425)
 	 {
 	 pwm_pulse1=1375;
 	 }
-	 if(cout>=375)
+	 if(cout>=425&&cout<550)
 	 {
 	 pwm_pulse1=pwm_pulse1+1;
 	 }
-	 if(cout>=500)
+	 if(cout>=550&&cout<850)
 	 {
 	 pwm_pulse1=1500;
 	 }
-	 if(cout>=750)
+	 if(cout>=850&&cout<925)
 	 {
 	 pwm_pulse1=pwm_pulse1-1;
 	 }
-	 if(cout>=875)
+	 if(cout>=925)
 	 {
 	 cout=125;
 	 }
@@ -313,28 +270,28 @@ float z_max_speed_caculator(float z)
  {
    static float cout=0;
 	 static float pwm_pulse2=1640;
-	 cout=cout+0.5f;
-	 if(cout>=0)
+	 cout=cout+1.0f;
+	 if(cout>=0&&cout<125)
 	 {
 	 pwm_pulse2=pwm_pulse2-1;
 	 }
-	 if(cout>=125)
+	 if(cout>=125&&cout<425)
 	 {
 	 pwm_pulse2=pwm_pulse2+1;
 	 }
-	 if(cout>=375)
+	 if(cout>=425&&cout<550)
 	 {
 	 pwm_pulse2=1765;
 	 }
-	 if(cout>=500)
+	 if(cout>=550&&cout<850)
 	 {
 	 pwm_pulse2=pwm_pulse2-1;
 	 }
-	 if(cout>=750)
+	 if(cout>=850&&cout>925)
 	 {
 	 pwm_pulse2=1515;
 	 }
-	 if(cout>=875)
+	 if(cout>=925)
 	 {
 	 cout=125;
 	 }
