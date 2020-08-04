@@ -45,7 +45,7 @@ void Robo_Move()
 		apid_PID_realize(0.2,0.05,0);			//角度闭环，角度和位置取其一，不能一起使用
 	//自动模式下，计算控制指令给的速度，所对应的电机速度
 	}
-  if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)
+ if(1) /*if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)*/
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
 		
@@ -86,13 +86,13 @@ void Robo_Move()
 	
    	vpid_PI_realize(2,0.05);			//速度闭环2  0.05
 	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定   2.5  0.05
-	  apid_GIMBAL_PI_realize(250,1);     //150  10
+	     apid_GIMBAL_PI_realize(250,1);     //150  10
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
 	  set_gimbal_current();
 
-	  TIM_SetCompare1(TIM1,pwm_pulse1);
-		TIM_SetCompare2(TIM1,pwm_pulse2);
+	  TIM_SetCompare1(TIM1,1468);
+		TIM_SetCompare2(TIM1,1645);
 
 	  
 }
