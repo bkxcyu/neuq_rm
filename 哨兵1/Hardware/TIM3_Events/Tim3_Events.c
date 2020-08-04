@@ -31,6 +31,7 @@ u8 send_data[32]={" nihaoya"};
 // 描述: 机器人运动函数，计算机器人pid和遥控器信号解析
 // 参数：无
 // 输出：无
+extern float gimbal_xunhang;
 void Robo_Move()
 {
 	/*****    pid运算   ******///三个pid，一定要把速度pid放最后
@@ -50,7 +51,7 @@ void Robo_Move()
 		
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//gimbal_control(360,180);
-		if(Kinematics.target_angular.fric_angular==1)//自动射击使用
+/*	if(Kinematics.target_angular.fric_angular==1)//自动射击使用
 		{   fric1_on(1500);
 				fric2_on(1500);
 			  
@@ -66,13 +67,21 @@ void Robo_Move()
 							count_=1;
 					}*/
 		}
-		else if(Kinematics.target_angular.fric_angular==0)
+		/*else if(Kinematics.target_angular.fric_angular==0)
 		{   
 			  fric1_on(1000);
 				fric2_on(1000);
 			  trigger_control(0);
+		}*/
+		if(gimbal_xunhang==1)
+		{
+			pwm_pulse1=pwm_xunhang_pitch();
+      pwm_pulse2=pwm_xunhang_yaw();
+		
+		
 		}
-	}
+		
+	
  
 	
    	vpid_PI_realize(2,0.05);			//速度闭环2  0.05

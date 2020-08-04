@@ -86,8 +86,8 @@ void TIM3_IRQHandler(void)
 	 if(flag_command_recieved1 == 1)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
-			resolve_json_gimbal_command();
-		  caclulate_pwm_pulse();		
+		/*	resolve_json_gimbal_command();
+		  caclulate_pwm_pulse();	*/	
 			flag_command_recieved1 = 0;	//命令接收标志位清零
 		}
 	 
@@ -120,6 +120,7 @@ void TIM3_IRQHandler(void)
 			if(1)//(Control_Mode & auto_control) == auto_control
 			/*resolve_json_handgimbal_command();
 			caclulate_handpwm_pulse();	*/
+			resolve_json_gimbal_command();
 			flag_command_recieved5 = 0;	//命令接收标志位清零
 		}
 		/****  机器人运动控制  *****/

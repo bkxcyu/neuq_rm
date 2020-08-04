@@ -153,49 +153,7 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		 pwm_pulse1=pwm_xunhang_pitch();
      pwm_pulse2=pwm_xunhang_yaw();
  
-			/*static count_pwm=1;
 			
-			if(count_pwm<125)
-			{
-				pwm_pluse1=pwm_pluse1+count_pwm;
-			  pwm_pluse2=pwm_pluse2-count_pwm;
-			  count_pwm++;
-			}
-			if(count_pwm<250&&count_pwm>125)
-			{ 
-			pwm_pluse1=pwm_pluse1+125;
-			pwm_pluse2=pwm_pluse2+count_pwm;
-			count_pwm=count_pwm+2;
-			                                }
-			
-			if(count_pwm<250&&count_pwm>250)
-			
-			
-			
-			xunhang_start(1500,1500);
-			if(pwm_pulse1>=1500&&pwm_pulse2<=1500&&pwm_flag=0)
-			 {
-				 pwm_pulse1=pwm_pulse1+1;
-				 pwm_pulse2=pwm_pulse2-1;
-			 }
-		   if(pwm_pulse1=1625&&pwm_pulse2>=1375)
-			 {
-				 pwm_flag=1;
-				 pwm_pulse2=pwm_pulse2+1;
-			 }
-	     if(pwm_pulse1<=1625&&pwm_pulse2=1625)
-			 {
-         pwm_pulse1=pwm_pulse1-1;				 
-			 }
-			 if(pwm_pulse1=1500&&pwm_pulse2<=1625&&pwm_flag=1)
-			 {
-			   pwm_puse2=pwm_pulse2-1;
-			 }
-			 if(pwm_pulse1>=1500&&pwm_pulse2=1375)
-			 {
-	       pwm_pulse1=pwm_pulse1+1;
-         pwm_flag=0;				 
-			 }*/
 		}
 		if((Control_Mode&DJi_Remote_Control) == DJi_Remote_Control)
 		{
