@@ -238,24 +238,24 @@ float z_max_speed_caculator(float z)
  {
    static float cout=0;
 	 static float pwm_pulse1=1500;
-	 cout=cout+0.5f;
-	 if(cout>=0)
+	 cout=cout+1.0f;
+	 if(cout>=0&&cout<125)
 	 {
 		pwm_pulse1=pwm_pulse1-1; 
 	 }
-	 if(cout>=125)
+	 if(cout>=125&&cout<375)
 	 {
 	 pwm_pulse1=1375;
 	 }
-	 if(cout>=375)
+	 if(cout>=375&&cout<500)
 	 {
 	 pwm_pulse1=pwm_pulse1+1;
 	 }
-	 if(cout>=500)
+	 if(cout>=500&&cout<750)
 	 {
 	 pwm_pulse1=1500;
 	 }
-	 if(cout>=750)
+	 if(cout>=750&&cout<875)
 	 {
 	 pwm_pulse1=pwm_pulse1-1;
 	 }
@@ -270,24 +270,24 @@ float z_max_speed_caculator(float z)
  {
    static float cout=0;
 	 static float pwm_pulse2=1640;
-	 cout=cout+0.5f;
-	 if(cout>=0)
+	 cout=cout+1.0f;
+	 if(cout>=0&&cout<125)
 	 {
 	 pwm_pulse2=pwm_pulse2-1;
 	 }
-	 if(cout>=125)
+	 if(cout>=125&&cout<375)
 	 {
 	 pwm_pulse2=pwm_pulse2+1;
 	 }
-	 if(cout>=375)
+	 if(cout>=375&&cout<500)
 	 {
 	 pwm_pulse2=1765;
 	 }
-	 if(cout>=500)
+	 if(cout>=500&&cout<750)
 	 {
 	 pwm_pulse2=pwm_pulse2-1;
 	 }
-	 if(cout>=750)
+	 if(cout>=750&&cout>875)
 	 {
 	 pwm_pulse2=1515;
 	 }

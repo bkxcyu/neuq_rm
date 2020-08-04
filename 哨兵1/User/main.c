@@ -95,7 +95,7 @@ void TIM3_IRQHandler(void)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
 			//resolve_json_trigger_command();
-      resolve_json_fric_command();
+      //resolve_json_fric_command();
 	
 			flag_command_recieved2 = 0;	//命令接收标志位清零
 		}
@@ -124,7 +124,7 @@ void TIM3_IRQHandler(void)
 			flag_command_recieved5 = 0;	//命令接收标志位清零
 		}
 		/****  机器人运动控制  *****/
-		if(time_count%7 ==0)		//7ms
+		if(time_count%2 ==0)		//7ms
 			Robo_Move();
 		
 		/*****    按键扫描   ******/

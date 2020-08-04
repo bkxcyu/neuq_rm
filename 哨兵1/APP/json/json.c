@@ -64,20 +64,20 @@ void send_infantry_info_by_json(void)
 
 
 
-
+extern float  distance;
 void send_chassis_info_by_json(void)
 {
 	json_t *root;
 	char *out;           //
-	root = json_pack("[{sf}[f]]",\
+	root = json_pack("[{sfsf}[ff]]",\
 						"linear_x", (Kinematics.actual_velocities.linear_x),\
-						/*"linear_y", (Kinematics.actual_velocities.linear_y),\
-						"angular_z", (Kinematics.actual_velocities.angular_z),\
+						"distance", (distance),\
+						/*"angular_z", (Kinematics.actual_velocities.angular_z),\
 	          "pitch_angle", (gimbal2.actual_angle),\
 	          "yaw_angle", (gimbal1.actual_angle),\*/
-						(Kinematics.actual_velocities.linear_x));
-						/*(Kinematics.actual_velocities.linear_y),\
-						(Kinematics.actual_velocities.angular_z),\
+						(Kinematics.actual_velocities.linear_x),\
+						(distance));
+						/*(Kinematics.actual_velocities.angular_z),\
 	          (gimbal2.actual_angle),\
           	(gimbal1.actual_angle));*/
 	out = json_dumps(root, JSON_ENCODE_ANY);
@@ -127,6 +127,24 @@ json_t *root;
 
 
 
+/*void send_distance_info_by_json()   
+{
+json_t *root;
+	char *out;           //
+	root = json_pack("[{sf}[f]]",\
+						
+					  "distance", (distance),\
+						
+						(distance));   //(int),
+						
+	out = json_dumps(root, JSON_ENCODE_ANY);
+	printf("%s\r\n", out);
+	json_decref(root);
+	//free(root);
+	free(out);
+}
+
+*/
 	float tmp_getx;
 	float tmp_gety;
 
@@ -154,7 +172,7 @@ void resolve_json_chassis_command(void)
 	chassis_obj = json_object_get( root, "chassis" );  //Get a value corresponding to key from object
 	item_obj = json_array_get( chassis_obj, 0 );//Returns the element in array at position index
 	Kinematics.target_velocities.linear_x =1.0f*json_integer_value(item_obj);	//real
-	/*item_obj = json_array_get( chassis_obj, 1 );
+	item_obj = json_array_get( chassis_obj, 1 );
 	Kinematics.target_velocities.linear_y = 1.0f*json_integer_value(item_obj);
 	item_obj = json_array_get( chassis_obj, 2 );
 	Kinematics.target_velocities.angular_z = 1.0f*json_integer_value(item_obj);//100;///100;*/
