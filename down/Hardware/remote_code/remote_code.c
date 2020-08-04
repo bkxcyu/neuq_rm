@@ -103,8 +103,8 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 				switch (trigger_CH_width)
 				{
 					case 1:
-				  fric1_on(1800);
-				  fric2_on(1800);
+				  fric1_on(1500);
+				  fric2_on(1500);
          static int count_1=1;	
 					count_1++;
 					if(count_1>100)

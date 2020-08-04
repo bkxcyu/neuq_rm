@@ -65,15 +65,8 @@ extern uint8_t flag_command_recieved5;
 void TIM3_IRQHandler(void)
 {
 	static int time_count=1;
-//	static double vx=0,vy=0,vz=0;
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) 	//溢出中断
 	{ 
-		/*vx=0.001f*(imu_data.ax)+vx;
-		vy=0.001f*(imu_data.ay)+vy;
-		vz=0.001f*(imu_data.az)+vz;
-    x_max_speed=x_max_speed_caculator(vx);
-		y_max_speed=y_max_speed_caculator(vy);
-		z_max_speed=z_max_speed_caculator(vz);*/
 		time_count++;
 		
 		/*****   遥控器控制    ******/
@@ -101,7 +94,7 @@ void TIM3_IRQHandler(void)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
 			//resolve_json_trigger_command();
-      resolve_json_fric_command();
+      //resolve_json_fric_command();
 	
 			flag_command_recieved2 = 0;	//命令接收标志位清零
 		}
@@ -132,7 +125,7 @@ void TIM3_IRQHandler(void)
 		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
-			Robo_Move();
+			//Robo_Move();
 		
 		/*****    按键扫描   ******/
 		if(time_count%31 == 0)		//31ms  消抖
@@ -150,23 +143,27 @@ void TIM3_IRQHandler(void)
 		
 		
 		if(time_count%20 == 0)		//20ms，50Hz 		
-{   
+  {   
      //send_chassis_info_by_json();
 	   //send_gimbal_info_by_json();
 		 //send_infantry_info_by_json();
     //send_info_by_json();
 
 		 //send_infantry_info_by_json();
-  
-
-			                      } 		   
-
-		                              
+  } 		   
+		                            
 		
 		if(time_count>=1000)			//清除计数标志    1s
 			time_count=1;
 		
 	}
 	TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  //清除中断标志位
+}
+void TIM4_IRQHandler(void)//周期50ms，定时器频率20HZ
+{
+	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) 	//溢出中断
+	{
+	 Robo_Move();
+	}
 }
 
