@@ -129,30 +129,8 @@ json_t *root;
 	//free(root);
 	free(out);
 }
-extern float x_max_speed,y_max_speed,z_max_speed;
-extern float ax,ay,v_yaw;
-void send_info_by_json(void)
-{
 
-	json_t *root;
-	char *out;           //
-	root = json_pack("[{sfsfsfsfsf}[fffff]]",\
-						"vx", (x_max_speed),\
-						"vy", (y_max_speed),\
-						"ax", (ax),\
-	          "ay", (ay),\
-	          "oumiga", (v_yaw),\
-						(x_max_speed),\
-						(y_max_speed),\
-						(ax),\
-	          (ay),\
-	          (v_yaw));
-	out = json_dumps(root, JSON_ENCODE_ANY);
-	printf("%s\r\n", out);
-	json_decref(root);
-	//free(root);
-	free(out);
-}
+
 
 
 	float tmp_getx;

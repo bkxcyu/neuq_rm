@@ -98,9 +98,7 @@ SWB|SWC:  1198-2198-3198
 #endif
 
 void Remote_Control(void);
-float x_max_speed_caculator(float x);
-float y_max_speed_caculator(float y);
-float z_max_speed_caculator(float z);
+
 
 
 #endif

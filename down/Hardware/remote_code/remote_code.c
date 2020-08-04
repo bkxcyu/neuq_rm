@@ -21,14 +21,7 @@ float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
 float caculate_gimbal_pitch_angle(int width,int mid,int min,int max);
 float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
-float yaw_max_angular(float yaw);
-float x_max_acceleration_caculator(float acc);
-float y_max_acceleration_caculator(float acc);
-float z_max_acceleration_caculator(float acc);
-static float y_acceleration=0;
-static float z_acceleration=0;
-static float imu_yaw_angular=0;
-float ax,ay,v_yaw;
+
 // º¯Êı: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
 // ²ÎÊı£ºÎŞ
@@ -179,14 +172,15 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		TIM_SetCompare2(TIM1,pwm_pulse2);
 	
 	}
-	ax=x_max_acceleration_caculator(x_accelerationRead());
-  ay=y_max_acceleration_caculator(y_accelerationRead());
-  z_max_acceleration_caculator(z_accelerationRead());
-  v_yaw=yaw_max_angular(yaw_angularRead());
+
 }
+
+
+
+
 /***********************************************¼ÓËÙ¶È²âÊÔ´úÂë******************************************/
 
-
+/*
 float x_max_acceleration_caculator(float acc)
 {
 	static float x_acceleration=0;
@@ -233,7 +227,7 @@ float z_max_speed_caculator(float z)
 	 if(z>z_last)
 		z_last=z;
     return z_last;
-}
+}*/
 
 // º¯Êı: caculate_speed()
 // ÃèÊö: ½«Ò£¿ØÆ÷Ò¡¸ËÊä³öÓ³Éäµ½»úÆ÷ÈËÈıÖáËÙ¶ÈÉÏ
