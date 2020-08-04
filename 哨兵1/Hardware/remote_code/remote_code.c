@@ -311,7 +311,7 @@ float z_max_speed_caculator(float z)
  float pwm_xunhang_yaw()
  {
    static float cout=0;
-	 static float pwm_pulse2=1500;
+	 static float pwm_pulse2=1640;
 	 cout=cout+0.5f;
 	 if(cout>=0)
 	 {
@@ -323,7 +323,7 @@ float z_max_speed_caculator(float z)
 	 }
 	 if(cout>=375)
 	 {
-	 pwm_pulse2=1625;
+	 pwm_pulse2=1765;
 	 }
 	 if(cout>=500)
 	 {
@@ -331,7 +331,7 @@ float z_max_speed_caculator(float z)
 	 }
 	 if(cout>=750)
 	 {
-	 pwm_pulse2=1375;
+	 pwm_pulse2=1515;
 	 }
 	 if(cout>=875)
 	 {
@@ -384,13 +384,13 @@ static float caculate_gimbal_pitch_angle(int width,int mid,int min,int max)
 
 static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
 {
-	float pwm_pulse=1500;
+	float pwm_pulse=1640;
 		if(width>=(mid+2))
-		pwm_pulse=(1500 - 1.0*(width-(mid+2))/(max-(mid+2))*420);
+		pwm_pulse=(1640 - 1.0*(width-(mid+2))/(max-(mid+2))*420);
 	else if(width<=(mid-2))
-	  pwm_pulse=(1500 + 1.0*((mid-2)-width)/((mid-2)-min)*420);
+	  pwm_pulse=(1640 + 1.0*((mid-2)-width)/((mid-2)-min)*420);
 	else
-		pwm_pulse=1500;
+		pwm_pulse=1640;
 	return pwm_pulse;
 	
 }

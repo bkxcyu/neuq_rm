@@ -16,7 +16,7 @@
   enum fric_mode_t fric_modes;
 
 float pwm_pulse1=1500;
-float pwm_pulse2=1500;
+float pwm_pulse2=1667;
 
 
 
