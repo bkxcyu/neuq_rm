@@ -152,8 +152,9 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		{ 	   
 		 pwm_pulse1=pwm_xunhang_pitch();
      pwm_pulse2=pwm_xunhang_yaw();
- 
-			/*static count_pwm=1;
+			x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+			
+ 			/*static count_pwm=1;
 			
 			if(count_pwm<125)
 			{

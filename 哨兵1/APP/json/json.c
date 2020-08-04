@@ -63,19 +63,20 @@ void send_infantry_info_by_json(void)
 }
 
 
-
+extern float distance;
 
 void send_chassis_info_by_json(void)
 {
 	json_t *root;
 	char *out;           //
-	root = json_pack("[{sf}[f]]",\
+	root = json_pack("[{sfsf}[ff]]",\
 						"linear_x", (Kinematics.actual_velocities.linear_x),\
-						/*"linear_y", (Kinematics.actual_velocities.linear_y),\
-						"angular_z", (Kinematics.actual_velocities.angular_z),\
+						"distance", (distance),\
+						/*"angular_z", (Kinematics.actual_velocities.angular_z),\
 	          "pitch_angle", (gimbal2.actual_angle),\
 	          "yaw_angle", (gimbal1.actual_angle),\*/
-						(Kinematics.actual_velocities.linear_x));
+						(Kinematics.actual_velocities.linear_x),\
+	           (distance));
 						/*(Kinematics.actual_velocities.linear_y),\
 						(Kinematics.actual_velocities.angular_z),\
 	          (gimbal2.actual_angle),\
