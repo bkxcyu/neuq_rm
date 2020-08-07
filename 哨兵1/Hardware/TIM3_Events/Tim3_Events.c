@@ -91,8 +91,8 @@ void Robo_Move()
 	  set_trigger_current();
 	  set_gimbal_current();
 
-	  TIM_SetCompare1(TIM1,1468);
-		TIM_SetCompare2(TIM1,1645);
+	  TIM_SetCompare1(TIM1,1462);
+		TIM_SetCompare2(TIM1,1643);
 
 	  
 }
