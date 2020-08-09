@@ -14,5 +14,6 @@ void set_gimbal1_motor_speed(int gimbal1_speed);
 int abs(int input);				//求绝对值函数void apid_GIMBAL_realize(float kpa,float kia,float kpv,float kiv);
 void apid_GIMBAL_PI_realize(float kpa,float kia,float kda);
 void set_GIMBAL_angle(int gimbal1_angle,int gimbal2_angle);
-
+int pid_auto(void);
+int pid_pc(void);
 #endif

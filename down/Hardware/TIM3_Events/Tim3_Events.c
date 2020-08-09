@@ -22,8 +22,9 @@
 
 
  //Pid_parameter Chassis,Gimbal,Trigger;
-float kp=350,ki=1,kd=1;
-
+float kp=550,ki=0.03,kd=0.03;//kp=700左右,ki=0.03,kd=0.1;
+int pid_target_speed=0;
+int pid_target_angle=4096;
 //按键宏定义   增强代码可读性
 #define pressed     0
 #define unpressed   1
@@ -48,7 +49,7 @@ void Robo_Move()
   if(/*(Control_Mode) ==*/ 1 /*0x03*/)//((Control_Mode & auto_control) == auto_control)
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
-		
+		pid_target_speed=pid_pc();
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//gimbal_control(360,180);
 		/*if(Kinematics.target_angular.fric_angular==1)//自动射击使用
@@ -155,10 +156,5 @@ void Wireless_Tune_Para()
 	
 	//处理收到的数据receive_data
 	
-	
-	
-	
-	
 }
-
 

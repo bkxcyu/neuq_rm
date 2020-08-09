@@ -156,7 +156,7 @@ void gimbal_control(float gimbal1_angle,float gimbal2_angle)    //
 		stop_gimbal_motor();			//停下来  并角度闭环
 	}
     else
-    gimbal1_angle = KalmanFilter(gimbal1_angle,1,200);
+    //gimbal1_angle = KalmanFilter(gimbal1_angle,1,200);
 	  set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);//(gimbal1_angle,gimbal2_angle);
 }
 

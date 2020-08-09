@@ -160,9 +160,15 @@ void TIM3_IRQHandler(void)
 	TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  //清除中断标志位
 }
 void TIM4_IRQHandler(void)//周期50ms，定时器频率20HZ
-{
+{	
+	
+	static int time_count=1;
+
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) 	//溢出中断
 	{
+		
+	time_count++;
+
 	 Robo_Move();
 	}
 }
