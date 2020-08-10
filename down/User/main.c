@@ -125,7 +125,7 @@ void TIM3_IRQHandler(void)
 		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
-			//Robo_Move();
+			Robo_Move();
 		
 		/*****    按键扫描   ******/
 		if(time_count%31 == 0)		//31ms  消抖
@@ -162,7 +162,7 @@ void TIM3_IRQHandler(void)
 void TIM4_IRQHandler(void)//周期50ms，定时器频率20HZ
 {	
 	
-	static int time_count=1;
+	/*static int time_count=1;
 
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) 	//溢出中断
 	{
@@ -170,6 +170,6 @@ void TIM4_IRQHandler(void)//周期50ms，定时器频率20HZ
 	time_count++;
 
 	 Robo_Move();
-	}
+	}*/
 }
 
