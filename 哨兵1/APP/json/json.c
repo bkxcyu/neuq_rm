@@ -193,7 +193,7 @@ void resolve_json_gimbal_command()
 	item_obj = json_array_get( gimbal_obj, 0 );
 	 //gimbal_xunhang=1.0f*json_integer_value(item_obj);
 	//item_obj = json_array_get( gimbal_obj, 1 );
-	Kinematics.target_angular.gimbal_angular.yaw_angular=1.0f*json_integer_value(item_obj);
+	Kinematics.target_angular.gimbal_angular.yaw_angular=0.0001f*1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);
 	json_decref(gimbal_obj);
 	json_decref(root);
