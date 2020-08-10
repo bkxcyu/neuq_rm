@@ -3,7 +3,7 @@
 #include "delay.h"
 #include "speed_pid.h"
 #include "angle_pid.h"
-
+#include "stdint.h"
 #include "stm32f4xx.h"
 #include "kinematic.h"
 
@@ -16,9 +16,9 @@ int max_motor_speed=0;		//电机最大线速度
 void record_motor_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_t current)
 {
 	motor->last_angle = motor->actual_angle;
-	motor->actual_angle = angle;
-	motor->actual_speed = speed;
-	motor->actual_current = current;
+	motor->actual_angle = 1.0f*angle;
+	motor->actual_speed = 1.0f*speed;
+	motor->actual_current = 1.0f*current;
 	//motor1.temp = temp;
 	if(motor->start_angle_flag==0)
 	{

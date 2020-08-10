@@ -144,7 +144,7 @@ void gimbal_control(float gimbal1_angle,float gimbal2_angle)    //
 	 	if(stop_flag_4 == 0 && gimbal1_angle == 0)
 	{
 		stop_flag_4 = 1;			//停止   此标志为了避免多次进入
-		stop_gimbal_motor();			//停下来  并角度闭环
+		//stop_gimbal_motor();			//停下来  并角度闭环
 	}
     else
     //gimbal1_angle = KalmanFilter(gimbal1_angle,1,200);

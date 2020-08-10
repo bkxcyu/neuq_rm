@@ -11,6 +11,8 @@
 #define CAN_TRIGGER_ID         0x205
 #define CAN_GIMBAL1_ID         0x20A
 #define CAN_GIMBAL2_ID         0x20B
+typedef unsigned short     int uint16_t;
+typedef   signed short     int int16_t;
 
 
 //电机转速pid参数结构体
@@ -29,17 +31,17 @@ typedef struct{
 //电机机械角度参数
 typedef struct{
 	
-	int err;
-	int last_err;
-	int err_integration;
-	int actual_angle;
-	int target_angle;
-	int P_OUT;
-	int I_OUT;
-	int D_OUT;
-	int PID_OUT;
-	int actual_speed;
-	int target_speed;
+	float err;
+	float last_err;
+	float err_integration;
+	float actual_angle;
+	float target_angle;
+	float P_OUT;
+	float I_OUT;
+	float D_OUT;
+	float PID_OUT;
+	float actual_speed;
+	float target_speed;
 }APID_t;
 //电机参数结构体
 typedef struct{
@@ -53,7 +55,7 @@ typedef struct{
 	int round_cnt;				//相对开机时转过的圈数
 	int total_angle;			//总共转过的计数
 	
-	int actual_speed;			//电机真实速度,rpm
+	float actual_speed;			//电机真实速度,rpm
 	int target_speed;			//电机目标速度,rpm  转/min
 	
 	int actual_current;		//电机真实电流
@@ -84,7 +86,7 @@ typedef struct{
 extern LOOPBACK loopback;
 	
 
-void record_motor_callback(MOTOR_t *motor, unsigned short angle, short speed, short current);
+void record_motor_callback(MOTOR_t *motor, uint16_t angle, int16_t speed, int16_t current);
 void motor_init(void);			//电机初始化
 void set_chassis_current(void);	//设置电机电流
 void set_trigger_current(void);

@@ -22,7 +22,9 @@
 u8 send_data[32]={" nihaoya"};
 
  Pid_parameter Chassis,Gimbal,Trigger;
-
+float kp=580,ki=0.01,kd=0;//kp=700左右,ki=0.03,kd=0.1;
+int pid_target_speed=0;
+int pid_target_angle=4096;
 //按键宏定义   增强代码可读性
 #define pressed     0
 #define unpressed   1
@@ -48,7 +50,7 @@ void Robo_Move()
  if(1) /*if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)*/
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
-		
+		pid_target_speed=pid_pc();		
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//gimbal_control(360,180);
 /*	if(Kinematics.target_angular.fric_angular==1)//自动射击使用
@@ -80,13 +82,9 @@ void Robo_Move()
 		
 		
 		}
-		
-	
- 
-	
    	vpid_PI_realize(2,0.05);			//速度闭环2  0.05
 	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定   2.5  0.05
-	     apid_GIMBAL_PI_realize(250,1);     //150  10
+	  apid_GIMBAL_PI_realize(kp,ki,kd);     //
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
 	  set_gimbal_current();

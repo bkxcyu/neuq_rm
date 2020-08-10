@@ -264,10 +264,10 @@ void CAN1_RX0_IRQHandler(void)	//解析传回数据*****需增加
 	
 	tmp.data[0] = RxMessage.Data[1];
 	tmp.data[1] = RxMessage.Data[0];
-	angle = tmp.uivalue;//(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
+	angle = (uint16_t)tmp.uivalue;//(RxMessage.Data[0]<<8 | RxMessage.Data[1]);
 	tmp.data[0] = RxMessage.Data[3];
 	tmp.data[1] = RxMessage.Data[2];
-	speed = tmp.ivalue;//(RxMessage.Data[2]<<8 | RxMessage.Data[3]);
+	speed = (int16_t)tmp.ivalue;//(RxMessage.Data[2]<<8 | RxMessage.Data[3]);
 	current = (RxMessage.Data[4]<<8 | RxMessage.Data[5]);
 	//temp = RxMessage.Data[6];
 	

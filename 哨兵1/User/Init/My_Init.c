@@ -60,7 +60,7 @@ void All_Init()
 
 	TIM3_Int_Init(10-1,9000-1);		  //定时器时钟90M，9000，所以90M/9000=10Khz的计数频率，计数10次为1ms  即1khz
 	//TIM12_PWM_Init(1000-1,90-1);		//90M/90约1Mhz的计数频率,重装载值1000，所以PWM频率为 1M/400=2.5Khz. 
-
+  TIM4_Int_Init(100-1,9000-1);
   bsp_imu_usart_init();
 	VPID_Init_All();								//速度pid参数初始化
 	APID_Init_All();								//角度pid参数初始化
