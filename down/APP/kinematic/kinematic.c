@@ -23,8 +23,8 @@
 
 Kinematics_t Kinematics;
 
-float max_base_linear_speed=0;		//底盘最大线速度
-float max_base_rotational_speed=0;		//底盘最大角速度
+float max_base_linear_speed=217.817f;		//底盘最大线速度
+float max_base_rotational_speed=7.260570f;		//底盘最大角速度
 
 //逆运动学公式
 //把想要得到的底盘速度转换为轮子的线速度
@@ -157,6 +157,7 @@ void gimbal_control(float gimbal1_angle,float gimbal2_angle)    //
 	}
     else
     //gimbal1_angle = KalmanFilter(gimbal1_angle,1,200);
+		stop_flag_4 = 0;
 	  set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);//(gimbal1_angle,gimbal2_angle);
 }
 

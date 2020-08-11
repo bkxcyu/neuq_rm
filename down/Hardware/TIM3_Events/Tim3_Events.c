@@ -22,7 +22,7 @@
 
 
  //Pid_parameter Chassis,Gimbal,Trigger;
-float kp=550,ki=0.03,kd=0.03;//kp=700左右,ki=0.03,kd=0.1;
+float kp=580,ki=0,kd=0.1;//kp=700左右,ki=0.03,kd=0.1;
 int pid_target_speed=0;
 int pid_target_angle=4096;
 //按键宏定义   增强代码可读性

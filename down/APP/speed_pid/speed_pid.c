@@ -187,7 +187,10 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kda)
 	vpid->err = vpid->target_speed - vpid->actual_speed;
 	//vpid->err = vpid->target_angle - vpid->actual_angle;
 	
-	
+	if(vpid->err==0)
+	{
+   vpid->err_integration=0;
+	}
 	if(abs(vpid->err) <= gimbal_angel_downlimit)		//积分分离
 			vpid->err_integration += vpid->err;
 //	if(vpid->err_integration > gimbal_angel_upperlimit)		//抗积分饱和
