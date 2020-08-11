@@ -135,7 +135,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>d</Name>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -265,11 +265,6 @@
           <WinNumber>1</WinNumber>
           <ItemText>fric_1</ItemText>
         </Ww>
-        <Ww>
-          <count>22</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>vy</ItemText>
-        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -311,21 +306,6 @@
           <count>7</count>
           <WinNumber>2</WinNumber>
           <ItemText>Trigger.ki</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>vx</ItemText>
-        </Ww>
-        <Ww>
-          <count>9</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>rc.s1</ItemText>
-        </Ww>
-        <Ww>
-          <count>10</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>CAN1_Send_CHASSIS_Msg(current_msg)</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

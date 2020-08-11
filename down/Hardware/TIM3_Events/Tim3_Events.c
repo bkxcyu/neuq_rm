@@ -19,9 +19,10 @@
 #include "json.h"
 #include "kinematic.h"
 //无线要发送的数据
-u8 send_data[32]={" nihaoya"};
 
- Pid_parameter Chassis,Gimbal,Trigger;
+
+ //Pid_parameter Chassis,Gimbal,Trigger;
+float kp=350,ki=1,kd=1;
 
 //按键宏定义   增强代码可读性
 #define pressed     0
@@ -44,18 +45,18 @@ void Robo_Move()
 		apid_PID_realize(0.2,0.05,0);			//角度闭环，角度和位置取其一，不能一起使用
 	//自动模式下，计算控制指令给的速度，所对应的电机速度
 	}
-  if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)
+  if(/*(Control_Mode) ==*/ 1 /*0x03*/)//((Control_Mode & auto_control) == auto_control)
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
 		
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//gimbal_control(360,180);
-		if(Kinematics.target_angular.fric_angular==1)//自动射击使用
+		/*if(Kinematics.target_angular.fric_angular==1)//自动射击使用
 		{   fric1_on(1500);
 				fric2_on(1500);
 			  
 			  trigger_control(150);
-			/*	if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//堵转
+			if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//堵转
 					{ 
 						static int count_=1;
 					  count_++;
@@ -64,20 +65,20 @@ void Robo_Move()
 						trigger_control(a);
 						if(count_>100)
 							count_=1;
-					}*/
+					}
 		}
 		else if(Kinematics.target_angular.fric_angular==0)
 		{   
 			  fric1_on(1000);
 				fric2_on(1000);
 			  trigger_control(0);
-		}
+		}*/
 	}
  
 	
    	vpid_PI_realize(2,0.05);			//速度闭环2  0.05
 	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定   2.5  0.05
-	  apid_GIMBAL_PI_realize(250,1);     //150  10
+	  apid_GIMBAL_PI_realize(kp,ki,kd);     //
 		set_chassis_current();		//设定电机电流
 	  set_trigger_current();
 	  set_gimbal_current();

@@ -6,7 +6,7 @@
 #define Integralgimbal        500
 #define IntegralSeparation    300
 #define vPID_OUT_MAX          8000		//即最大电流
-#define gPID_OUT_MAX          15000
+#define gPID_OUT_MAX          20000
 #define gimbal_angel_upperlimit  500  //云台速度环上限
 #define gimbal_angel_downlimit   5  //云台速度环下限
 #define tvPID_OUT_MAX         9000    //拨弹轮
@@ -181,11 +181,9 @@ void set_gimbal1_motor_speed(int gimbal1_speed)
 
 
 /*********************************************云台pid部分*******************************************************/
-void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia)
+void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia,float kda)
 {
-	int kpaa;
 	vpid->err = vpid->target_speed - vpid->actual_speed;
-	kpaa = kpa + abs(vpid->err)*5;
 	if(abs(vpid->err) <= 3)
 	{
 		vpid->PID_OUT = 0;
@@ -199,26 +197,27 @@ void apid_GIMBAL_realize(APID_t *vpid,float kpa,float kia)
 	else if(vpid->err_integration < -gimbal_angel_upperlimit)
 		vpid->err_integration = -Integralgimbal;
 	
-	vpid->P_OUT = kpaa * vpid->err;								//P项
+	vpid->P_OUT = kpa * vpid->err;								//P项
 	vpid->I_OUT = kia * vpid->err_integration;		//I项
-	
+	vpid->D_OUT = kda * (vpid->err-vpid->last_err);//D项
+	vpid->last_err=vpid->err;
 	//输出限幅
-	if((vpid->P_OUT + vpid->I_OUT) > gPID_OUT_MAX) 
+	if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT)> gPID_OUT_MAX) 
 		vpid->PID_OUT = gPID_OUT_MAX;
-	else if((vpid->P_OUT + vpid->I_OUT) < -gPID_OUT_MAX) 
+	else if((vpid->P_OUT + vpid->I_OUT + vpid->D_OUT) < -gPID_OUT_MAX) 
 		vpid->PID_OUT = -gPID_OUT_MAX;
 	else
-		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
+		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT + vpid->D_OUT;
   }
   
 }
 
-void apid_GIMBAL_PI_realize(float kpa,float kia)
+void apid_GIMBAL_PI_realize(float kpa,float kia,float kda)
 {
 	//读取电机当前转速
 	gimbal1.apid.actual_speed = gimbal1.actual_speed;
 	//计算输出值
-	apid_GIMBAL_realize(&gimbal1.apid,kpa,kia);
+	apid_GIMBAL_realize(&gimbal1.apid,kpa,kia,kda);
 }
 
 /*************************************************云台pid部分******************************************************/

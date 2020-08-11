@@ -96,8 +96,8 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 				switch (trigger_CH_width)
 				{
 					case 1:
-				  fric1_on(1800);
-				  fric2_on(1800);
+				  fric1_on(1500);
+				  fric2_on(1500);
          static int count_1=1;	
 					count_1++;
 					if(count_1>100)
@@ -185,7 +185,7 @@ float x_max_acceleration_caculator(float acc)
 {
 	static float x_acceleration=0;
 	if(acc>x_acceleration);
-	x_acceleration=acc;
+	 x_acceleration=acc;
 	return x_acceleration;
 }
 float y_max_acceleration_caculator(float acc)
@@ -203,9 +203,9 @@ float z_max_acceleration_caculator(float acc)
 
 float yaw_max_angular(float yaw)
 {
-if(yaw>imu_yaw_angular)
+  if(yaw>imu_yaw_angular)
 	imu_yaw_angular=yaw;
-return imu_yaw_angular;
+  return imu_yaw_angular;
 }
 float x_max_speed_caculator(float x)
 {

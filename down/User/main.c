@@ -26,7 +26,7 @@
 extern IMU_DATA imu_data;
 extern char receiveBuffer[MAX_LENGTH];
 extern char json_Buffer[MAX_LENGTH];
-
+float x_max_speed,y_max_speed,z_max_speed;//测量最大速度用
 int main()
 {
  	All_Init();												//机器人所有配置初始化
@@ -65,10 +65,8 @@ extern uint8_t flag_command_recieved5;
 void TIM3_IRQHandler(void)
 {
 	static int time_count=1;
-
 	if(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) 	//溢出中断
 	{ 
-		
 		time_count++;
 		
 		/*****   遥控器控制    ******/
@@ -96,7 +94,7 @@ void TIM3_IRQHandler(void)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
 			//resolve_json_trigger_command();
-      resolve_json_fric_command();
+      //resolve_json_fric_command();
 	
 			flag_command_recieved2 = 0;	//命令接收标志位清零
 		}
@@ -113,7 +111,7 @@ void TIM3_IRQHandler(void)
 		{
 			//如果自动控制才可以给命令的目标速度赋值
 			if(1)//(Control_Mode & auto_control) == auto_control
-	    resolve_json_pidparam_command();
+	   // resolve_json_pidparam_command();
 		
 			flag_command_recieved4 = 0;	//命令接收标志位清零
 		}
@@ -127,7 +125,7 @@ void TIM3_IRQHandler(void)
 		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
-			Robo_Move();
+			//Robo_Move();
 		
 		/*****    按键扫描   ******/
 		if(time_count%31 == 0)		//31ms  消抖
@@ -145,19 +143,27 @@ void TIM3_IRQHandler(void)
 		
 		
 		if(time_count%20 == 0)		//20ms，50Hz 		
-{   
+  {   
      //send_chassis_info_by_json();
 	   //send_gimbal_info_by_json();
 		 //send_infantry_info_by_json();
+    //send_info_by_json();
 
-			                      } 		   
-
-		                              
+		 //send_infantry_info_by_json();
+  } 		   
+		                            
 		
 		if(time_count>=1000)			//清除计数标志    1s
 			time_count=1;
 		
 	}
 	TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  //清除中断标志位
+}
+void TIM4_IRQHandler(void)//周期50ms，定时器频率20HZ
+{
+	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) 	//溢出中断
+	{
+	 Robo_Move();
+	}
 }
 
