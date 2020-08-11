@@ -57,6 +57,7 @@ def send_gimbal_hand_angle(hand_pitch,hand_yaw):
     data = {"hand_angle":[hand_pitch,hand_yaw]}
     data_string = json.dumps(data)
     ser.write('*' + data_string + '<')
+
 class CHASSIS_NORMAL(smach.State):
     def send_translation(translation):
         data ={"translation":[translation]}
@@ -148,7 +149,7 @@ class GIMBAL_AUTO_AIM(smach.State):
         elif getformkey==7:
             return 'TRANSLATE_HALF'
         elif getformkey ==8:
-            return 'TRANSLATE_ NINE'
+            return 'TRANSLATE_NINE'
         elif getformkey ==9:
             return 'TRANSLATE_HAND_FIRE'
         elif AUTO_AIM_FINISH==1 and FAXIANDIJUN==1:

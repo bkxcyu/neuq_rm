@@ -1,0 +1,14 @@
+\subsubsection usage Usage
+\verbatim
+<node name="serial" pkg="teleopaserial" type="serial">
+  <param name="chassis_kp" type="double" value="0.0" />
+  <param name="chassis_ki" type="double" value="0.0" />
+  <param name="gimbal_kp" type="double" value="0.0" />
+  <param name="gimbal_ki" type="double" value="0.0" />
+  <param name="bullet_kp" type="double" value="0.0" />
+  <param name="bullet_ki" type="double" value="0.0" />
+  <param name="gimbal_up" type="double" value="1500.0" />
+  <param name="gimbal_left" type="double" value="1500.0" />
+</node>
+\endverbatim
+

@@ -1,13 +1,10 @@
 #!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 from __future__ import print_function
-
 import roslib; roslib.load_manifest('teleop_twist_keyboard')
 import rospy
-
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String
-#from pynput import keyboard
 import string
 
 import sys, select, termios, tty
@@ -69,24 +66,25 @@ speedBindings={
 
 
 schemaTranslation={
-        #'1':"chassis_normal",
-        #'2':"chassis_dodge",
-       # '3':"chassis_motion",
-       # '4':"chassis_follow",
-        #'5':"gimbal_auto_aim",
-        '6':"load",
-        '7':"gimbal_turn",
-        '8':"gimbal_side",
-        '9':"gimbal_hand",
-        #'0':"gimbal_shand",
-        #'-':"gimbal_auto_fire",
-        'f':"fire",
-	'g':"stop_fire",
-	'up':"up",
+        '1':"chassis_normal",
+        '2':"chassis_dodge",
+        '3':"chassis_motion",
+        '4':"chassis_follow",
+
+        '5':"gimbal_auto_aim",
+        '6':"gimbal_left_nine",
+        '7':"gimbal_right_nine",
+        '8':"gimbal_load",
+        '9':"gimbal_hand_aim",
+        
+        '-':"auto_fire",
+        '=':"hand_fire",
+        '[':'fire',
+
+	    'up':"up",
         'down':"down",
-	'left':"left",
-	'right':"right",
-      
+	    'left':"left",
+	    'right':"right",
 }
 
 
@@ -116,7 +114,7 @@ if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
     twistpub = rospy.Publisher('teleop_twist', Twist, queue_size = 1)
-    translationpub = rospy.Publisher('schemaTranslation', String, queue_size = 1)
+    translationpub = rospy.Publisher('teleopschemaTranslation', String, queue_size = 1)
     rospy.init_node('teleop_keyboard')
 
     speed = rospy.get_param("~speed", 0.5)
@@ -141,6 +139,7 @@ if __name__=="__main__":
                 twist = Twist()
                 twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed
                 twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                print('发布速度')
                 twistpub.publish(twist)
             elif key in speedBindings.keys():
                 speed = speed * speedBindings[key][0]

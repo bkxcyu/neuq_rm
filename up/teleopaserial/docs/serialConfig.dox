@@ -1,0 +1,13 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~chassis_kp" : \b [double] chassis_kp min: 0.0, default: 0.0, max: 3.0
+- \b "~chassis_ki" : \b [double] chassis_ki min: 0.0, default: 0.0, max: 0.5
+- \b "~gimbal_kp" : \b [double] gimbal_kp min: 0.0, default: 0.0, max: 500.0
+- \b "~gimbal_ki" : \b [double] gimbal_ki min: 0.0, default: 0.0, max: 3.0
+- \b "~bullet_kp" : \b [double] bullet_kp min: 0.0, default: 0.0, max: 3.0
+- \b "~bullet_ki" : \b [double] bullet_ki min: 0.0, default: 0.0, max: 3.0
+- \b "~gimbal_up" : \b [double] gimbal_up min: 1500.0, default: 1500.0, max: 1625.0
+- \b "~gimbal_left" : \b [double] gimbal_left min: 1500.0, default: 1500.0, max: 1625.0
+

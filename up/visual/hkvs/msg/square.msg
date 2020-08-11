@@ -8,4 +8,4 @@ float32 zs_y
 float32 zx_y
 float32 ys_y
 float32 yx_y
-
+float32 square_num
