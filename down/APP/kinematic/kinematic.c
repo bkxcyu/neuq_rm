@@ -150,14 +150,12 @@ void gimbal_control(float gimbal1_angle,float gimbal2_angle)    //
 	//gimbal1_angle=gimbal1_angle*8191/360;
   //gimbal2_angle=gimbal2_angle*8191/360;
 	
-	 	if(stop_flag_4 == 0 && gimbal1_angle == 0)
+	 	if(gimbal1_angle == 0)
 	{
-		stop_flag_4 = 1;			//停止   此标志为了避免多次进入
 		stop_gimbal_motor();			//停下来  并角度闭环
 	}
     else
     //gimbal1_angle = KalmanFilter(gimbal1_angle,1,200);
-		stop_flag_4 = 0;
 	  set_GIMBAL_angle(gimbal1_angle,gimbal2_angle);//(gimbal1_angle,gimbal2_angle);
 }
 
