@@ -57,9 +57,13 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 				switch(trigger_CH_width)
 				{
 					case  1:
-					trigger_speed = 150;
-			   	fric1_on(1500);
-			  	fric2_on(1500);
+							  fric1_on(1500);
+				  fric2_on(1500);
+         static int count_1=1;	
+					count_1++;
+					if(count_1>100)
+					{trigger_speed = 150;
+					    count_1=1;                       }
 					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
 					{ 
 						static int count_=1;

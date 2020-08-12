@@ -42,10 +42,7 @@ int main()
 	{
 		LED0=!LED0;
 		delay_ms(500);
-		//fric_off();
 		
-//		Usart_SendString( DEBUG_USART, json_Buffer);
-//		Usart_SendString( DEBUG_USART, "\r\n");
 		
 		
 	}
@@ -78,7 +75,7 @@ void TIM3_IRQHandler(void)
 		{
 			//如果自动控制才可以给命令的目标速度赋值
 			if(1)//(Control_Mode & auto_control) == auto_control
-			resolve_json_chassis_command();
+			//resolve_json_chassis_command();
 		
 			flag_command_recieved = 0;	//命令接收标志位清零
 		}
@@ -124,7 +121,7 @@ void TIM3_IRQHandler(void)
 		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
-			//Robo_Move();
+			Robo_Move();
 		
 		/*****    按键扫描   ******/
 		if(time_count%31 == 0)		//31ms  消抖
@@ -158,7 +155,7 @@ void TIM3_IRQHandler(void)
 	TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  //清除中断标志位
 }
 void TIM4_IRQHandler(void)//周期50ms，定时器频率20HZ
-{	
+{	/*
 	
 	static int time_count=1;
 
@@ -168,6 +165,6 @@ void TIM4_IRQHandler(void)//周期50ms，定时器频率20HZ
 	time_count++;
 
 	 Robo_Move();
-	}
+	}*/
 }
 
