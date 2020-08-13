@@ -26,7 +26,7 @@
 extern IMU_DATA imu_data;
 extern char receiveBuffer[MAX_LENGTH];
 extern char json_Buffer[MAX_LENGTH];
-float x_max_speed,y_max_speed,z_max_speed;//测量最大速度用
+
 int main()
 {
   All_Init();												//机器人所有配置初始化
