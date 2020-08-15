@@ -103,6 +103,7 @@ float y_max_speed_caculator(float y);
 float z_max_speed_caculator(float z);
 float pwm_xunhang_pitch(void);
 float pwm_xunhang_yaw(void);
+float ljy(float dis);
 
 
 #endif

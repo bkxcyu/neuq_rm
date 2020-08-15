@@ -2,7 +2,7 @@
 /*****    此文件专门用来放TIM3定时器中断中运行的函数   ******/
 #include <string.h>
 #include <stdio.h>
-
+#include <math.h>
 #include "Tim3_Events.h"
 #include "key.h"
 #include "led.h"
@@ -23,8 +23,10 @@ u8 send_data[32]={" nihaoya"};
 
  Pid_parameter Chassis,Gimbal,Trigger;
 float kp=580,ki=0,kd=0;//kp=700左右,ki=0.03,kd=0.1;
+float kpv=3;
 int pid_target_speed=0;
 int pid_target_angle=4096;
+extern float trigger_speed;
 //按键宏定义   增强代码可读性
 #define pressed     0
 #define unpressed   1
@@ -49,9 +51,9 @@ void Robo_Move()
 	}
  if(1) /*if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)*/
 	{
-		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
-		pid_target_speed=pid_pc();		
-		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
+		//speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
+		//pid_target_speed=pid_pc();		
+		
 		//gimbal_control(360,180);
 /*	if(Kinematics.target_angular.fric_angular==1)//自动射击使用
 		{   fric1_on(1500);
@@ -75,24 +77,54 @@ void Robo_Move()
 				fric2_on(1000);
 			  trigger_control(0);
 		}*/
-		if(gimbal_xunhang==1)
+	/*	if(gimbal_xunhang==1)
 		{
-			pwm_pulse1=pwm_xunhang_pitch();
+			pwm_pulse1=1462;   //pwm_xunhang_pitch();
       pwm_pulse2=pwm_xunhang_yaw();
-		
-		
+	   	TIM_SetCompare1(TIM1,pwm_pulse1);
+		  TIM_SetCompare2(TIM1,pwm_pulse2);
+			fric1_on(400);
+			fric2_on(400);
+      trigger_speed=0;
+		}*/
+		if(1) //(gimbal_xunhang==2)
+
+		{
+			//gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
+			//apid_GIMBAL_PI_realize(kp,ki,kd);     //
+			//TIM_SetCompare1(TIM1,1462);
+			//set_gimbal_current();
+		/*	fric1_on(1500);
+			fric2_on(1500);
+         static int count_1=1;	
+					count_1++;
+					if(count_1>15)
+					{trigger_speed = 150;
+					    count_1=1;                       }
+					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//堵转
+					{ 
+						static int count_=1;
+					  count_++;
+						trigger_speed =pow(-1,count_)*50;
+						if(count_>100)
+							count_=1;
+					}*/
 		}
-   	vpid_PI_realize(2,0.05);			//速度闭环2  0.05
+			/*if(gimbal_xunhang==0)
+			{
+				TIM_SetCompare1(TIM1,1462);
+				TIM_SetCompare2(TIM1,1640);
+				
+			fric1_on(400);
+			fric2_on(400);
+      trigger_speed=0;
+				
+			}*/
+
+   	vpid_PI_realize(kpv,0.05);			//速度闭环2  0.05
 	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定   2.5  0.05
-	  apid_GIMBAL_PI_realize(kp,ki,kd);     //
 		set_chassis_current();		//设定电机电流
-	  set_trigger_current();
-	  set_gimbal_current();
-
-	  TIM_SetCompare1(TIM1,1462);
-		TIM_SetCompare2(TIM1,1643);
-
-	  
+	  set_trigger_current();	  
 }
 union {float fvalue;char data[4];}tmp1;
 //底盘信息转换成十六进制数发出去
