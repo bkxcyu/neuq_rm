@@ -100,7 +100,7 @@ void TIM3_IRQHandler(void)
 		{
 		if(1)//(Control_Mode & auto_control) == auto_control
 			//resolve_json_gimbal_command();
-		  //caclulate_pwm_pulse();		
+		  caclulate_pwm_pulse();		
 			flag_command_recieved3 = 0;	//命令接收标志位清零
 		}
 			if(flag_command_recieved4 == 1)	//每一毫秒检查一次是否收到控制指令

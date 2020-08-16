@@ -51,11 +51,10 @@ void Robo_Move()
 	}
  if(1) /*if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)*/
 	{
-		//speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
-		//pid_target_speed=pid_pc();		
-		
-		//gimbal_control(360,180);
-/*	if(Kinematics.target_angular.fric_angular==1)//自动射击使用
+		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
+		pid_target_speed=pid_pc();		
+		gimbal_control(Kinematics.actual_angular.gimbal_angular.yaw_angular,Kinematics.actual_angular.gimbal_angular.pitch_angular);
+	if(Kinematics.target_angular.fric_angular==1)//自动射击使用
 		{   fric1_on(1500);
 				fric2_on(1500);
 			  
@@ -110,7 +109,7 @@ void Robo_Move()
 							count_=1;
 					}*/
 		}
-			/*if(gimbal_xunhang==0)
+			if(gimbal_xunhang==0)
 			{
 				TIM_SetCompare1(TIM1,1462);
 				TIM_SetCompare2(TIM1,1640);
@@ -119,16 +118,19 @@ void Robo_Move()
 			fric2_on(400);
       trigger_speed=0;
 				
-			}*/
+			}
 
    	vpid_PI_realize(kpv,0.05);			//速度闭环2  0.05
 	  tvpid_PI_realize(2.5,0.05);      //拨弹轮速度闭环  参数未确定   2.5  0.05
+		apid_GIMBAL_PI_realize(kp,ki,kd);
 		set_chassis_current();		//设定电机电流
-	  set_trigger_current();	  
+	  set_trigger_current();	
+    set_gimbal_current();		
+ }
 }
 union {float fvalue;char data[4];}tmp1;
 //底盘信息转换成十六进制数发出去
-void send_chassis_info_by_hex(void)//**************************未用到
+/*void send_chassis_info_by_hex(void)//**************************未用到
 {
 	char str[17];
 	str[0] = 0x55;
@@ -156,12 +158,12 @@ void send_chassis_info_by_hex(void)//**************************未用到
 	str[14] = '\r';
 	str[15] = '\n';
 	for(char i=0;i<16;i++)
-		Usart_SendByte( JSON_USART, str[i]);
+	Usart_SendByte( JSON_USART, str[i]);
 	
 	
-};
+}
 
-
+*/
 
 // 函数: Debug_Key()
 // 描述: 调试用的按键，即单片机上的白色按键
@@ -174,9 +176,7 @@ void Debug_Key()
 	{
 		LED4=!LED4;												//LED4反转，用于状态指示
 		key_flag = pressed;			          //按键被按下
-		// your codes below
-		
-		//NRF24L01_TxPacket(send_data);			//nrf发送字符串
+	
 	}
 	else if(!key_press())
 		key_flag=unpressed;		//按键未被按下
@@ -198,5 +198,6 @@ void Wireless_Tune_Para()
 	
 	
 }
+
 
 

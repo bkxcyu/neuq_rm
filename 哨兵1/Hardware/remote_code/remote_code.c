@@ -14,7 +14,7 @@ u8 Control_Mode = control_mode;
 
 //ÄÚ²¿È«¾Ö±äÁ¿£¬·½±ãµ÷ÊÔ
 float x_speed=0,y_speed=0,r_speed=0,trigger_speed=0,theta=0;
-extern float distance;
+
 int flag = 0;
 //ÄÚ²¿º¯ÊýÉùÃ÷
 float caculate_linear_speed(int width,int mid,int min,int max);
@@ -47,7 +47,7 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		
 	}
 	
-	if(1)//((Control_Mode & auto_control) != auto_control)			//Èç¹û¿ØÖÆÄ£Ê½²»µÈÓÚ×Ô¶¯¿ØÖÆ£¬¼´Ò£¿Ø¿ØÖÆ
+	if((Control_Mode & auto_control) != auto_control)			//Èç¹û¿ØÖÆÄ£Ê½²»µÈÓÚ×Ô¶¯¿ØÖÆ£¬¼´Ò£¿Ø¿ØÖÆ
 	{
 		
 			if(chassis_CH_width==3)
@@ -57,19 +57,8 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 				switch(trigger_CH_width)
 				{
 					case  1:
-		 pwm_pulse1=pwm_xunhang_pitch();
-     pwm_pulse2=pwm_xunhang_yaw();
-          fric1_on(1000);
-				  fric2_on(1000);
-          trigger_speed = 0;
-					break;
-					
-					case 2:
-					pwm_pulse2=ljy(distance);
-
-					pwm_pulse1=1462;
-          fric1_on(1800);
-				  fric2_on(1800);
+							  fric1_on(1500);
+				  fric2_on(1500);
          static int count_1=1;	
 					count_1++;
 					if(count_1>100)
@@ -83,8 +72,10 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 						if(count_>100)
 							count_=1;
 					}
-
-					 /*trigger_speed = 150;
+					break;
+					
+					case 2:
+					 trigger_speed = 150;
 				   fric1_on(1000);
 				   fric2_on(1000);
 					if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//¶Â×ª
@@ -94,22 +85,20 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 						trigger_speed =pow(-1,count_)*50;
 						if(count_>100)
 							count_=1;
-					}*/
+					}
 					break;
 					
 					case 3:
-					pwm_pulse2=ljy(distance);
-					pwm_pulse1=1462;
-				  fric1_on(1000);
-				  fric2_on(1000);
-          trigger_speed = 0;
+						trigger_speed = 0;
+				    fric1_on(1000);
+				    fric2_on(1000);
 					break;
 					
 					default:
 	      	break;
 				}
-				//pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
-				//pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+				pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+				pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
 			
 			                      }
 			if(gimbal_CH_width==1)
@@ -181,8 +170,8 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		}
 		speed_control(x_speed,y_speed,r_speed);
 		trigger_control(trigger_speed);
-		TIM_SetCompare1(TIM1,pwm_pulse1);
-		TIM_SetCompare2(TIM1,pwm_pulse2);
+		//TIM_SetCompare1(TIM1,pwm_pulse1);
+		//TIM_SetCompare2(TIM1,pwm_pulse2);
 	
 	}
 	/*ax=x_max_acceleration_caculator(x_accelerationRead());
@@ -367,15 +356,3 @@ static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
 	return pwm_pulse;
 	
 }
-
-float ljy(float dis)
-{
-  float sita;
-	float pwm_pulse2=1640;
-	sita=atan((85-dis)*0.333333f*0.01f);
-	sita=sita*180*0.31831f;
-	pwm_pulse2=1640-sita*2.777f;
-	return pwm_pulse2;
-}
-
-
