@@ -19,7 +19,7 @@
 #include "imuReader.h"
 
 
-#define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336     测试 1111qsy
+#define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336     
 #define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
 
