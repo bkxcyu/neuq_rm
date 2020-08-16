@@ -112,7 +112,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 				//pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
 			
 			                      }
-			/*if(gimbal_CH_width==1)
+			if(gimbal_CH_width==1)
 			{
 				switch (trigger_CH_width)
 				{
@@ -178,7 +178,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		else if((Control_Mode&FS_Remote_Control) == FS_Remote_Control)		//ÒòÎªFS_Remote_Control = 0£¬Òò´ËÅĞ¶ÏÊ±±ØĞë·ÅÔÚelse ifÀï
 		{
 			y_speed = -y_speed;
-		}*/
+		}
 		speed_control(x_speed,y_speed,r_speed);
 		trigger_control(trigger_speed);
 		TIM_SetCompare1(TIM1,pwm_pulse1);
