@@ -189,11 +189,11 @@ void resolve_json_gimbal_command()
 	json_t *item_obj;
 	json_error_t error;
 	root = json_loads(json_Buffer,0,&error);
-	gimbal_obj = json_object_get( root, "gimbal" );
+	gimbal_obj = json_object_get( root, "angle" );
 	item_obj = json_array_get( gimbal_obj, 0 );
-	 //gimbal_xunhang=1.0f*json_integer_value(item_obj);
-	//item_obj = json_array_get( gimbal_obj, 1 );
-	Kinematics.target_angular.gimbal_angular.yaw_angular=0.0001f*1.0f*json_integer_value(item_obj);
+	Kinematics.target_angular.gimbal_angular.pitch_angular=0.01f*1.0f*json_integer_value(item_obj);
+	item_obj = json_array_get( gimbal_obj, 1 );
+	Kinematics.target_angular.gimbal_angular.yaw_angular=0.01f*1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);
 	json_decref(gimbal_obj);
 	json_decref(root);
