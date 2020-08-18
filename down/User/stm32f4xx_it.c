@@ -219,7 +219,7 @@ void JSON_USART_IRQHandler(void)
 			memset(receiveBuffer, 0, sizeof(receiveBuffer)); //清空接收缓冲区
 			
 		}//********************************************
-		else if(ucTemp == '<')	//结束标志位  
+		else if(ucTemp == '+')	//结束标志位  
 		{
 			json_count=0;
 			//标志位置一，标识收到命令
