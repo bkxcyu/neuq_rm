@@ -238,9 +238,7 @@ void JSON_USART_IRQHandler(void)
 		{
 			receiveBuffer[json_count++] = ucTemp;
 		}
-//			else if((flag_json_recieve & flag_json_stop) == flag_json_stop )
-//				;
-		
+
 	}
 	if(USART_GetITStatus(JSON_USART, USART_IT_TXE) != RESET)//发送区已空，表示可以继续发送数据
   {
@@ -291,7 +289,7 @@ void CAN1_RX0_IRQHandler(void)	//解析传回数据*****需增加
 		case(CAN_GIMBAL1_ID):
 		record_motor_callback(&gimbal1, angle, speed, current);
 		case(CAN_GIMBAL2_ID):
-		record_motor_callback(&gimbal1, angle, speed, current);
+		record_motor_callback(&gimbal2, angle, speed, current);
 		case(CAN_LoopBack_ID):
 		{
 			loopback.motor1_current= RxMessage.Data[0]<<8 | RxMessage.Data[1]<<0;

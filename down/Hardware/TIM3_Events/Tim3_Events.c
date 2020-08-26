@@ -35,45 +35,21 @@ int pid_target_angle=4096;
 // 输出：无
 void Robo_Move()
 {
-	/*****    pid运算   ******///三个pid，一定要把速度pid放最后
 	if(stop_flag_1 && ap_pid_flag == ang_pid)			//如果此时速度为0（停止）或者自动控制时没有在运行位置闭环   那么角度闭环
 	{	
 		break_jugement();
-		if(stop_flag_3 && 1 )
+		if(stop_flag_3 && 1)
 		{
 			stop_chassis_motor();
 		}
-		apid_PID_realize(0.2,0.05,0);			//角度闭环，角度和位置取其一，不能一起使用
-	//自动模式下，计算控制指令给的速度，所对应的电机速度
+		apid_PID_realize(0.2,0.05,0);			
+	
 	}
   if(/*(Control_Mode) ==*/ 1 /*0x03*/)//((Control_Mode & auto_control) == auto_control)
 	{
-		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
-		pid_target_speed=pid_pc();
+		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);		
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
-		//gimbal_control(360,180);
-		/*if(Kinematics.target_angular.fric_angular==1)//自动射击使用
-		{   fric1_on(1500);
-				fric2_on(1500);
-			  
-			  trigger_control(150);
-			if(motor5.actual_speed<20&&motor5.actual_speed>-20)    						//堵转
-					{ 
-						static int count_=1;
-					  count_++;
-						int   a;
-						a =pow(-1,count_)*50;
-						trigger_control(a);
-						if(count_>100)
-							count_=1;
-					}
-		}
-		else if(Kinematics.target_angular.fric_angular==0)
-		{   
-			  fric1_on(1000);
-				fric2_on(1000);
-			  trigger_control(0);
-		}*/
+		auto_fire();//上位机发送标志位  开火
 	}
  
 	

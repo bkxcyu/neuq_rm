@@ -129,30 +129,6 @@ json_t *root;
 	//free(root);
 	free(out);
 }
-extern float x_max_speed,y_max_speed,z_max_speed;
-extern float ax,ay,v_yaw;
-void send_info_by_json(void)
-{
-
-	json_t *root;
-	char *out;           //
-	root = json_pack("[{sfsfsfsfsf}[fffff]]",\
-						"vx", (x_max_speed),\
-						"vy", (y_max_speed),\
-						"ax", (ax),\
-	          "ay", (ay),\
-	          "oumiga", (v_yaw),\
-						(x_max_speed),\
-						(y_max_speed),\
-						(ax),\
-	          (ay),\
-	          (v_yaw));
-	out = json_dumps(root, JSON_ENCODE_ANY);
-	printf("%s\r\n", out);
-	json_decref(root);
-	//free(root);
-	free(out);
-}
 
 
 	float tmp_getx;
@@ -163,7 +139,6 @@ void send_info_by_json(void)
 //json���ݻ�����
 char json_Buffer[MAX_LENGTH];
 extern char receiveBuffer[MAX_LENGTH];
-//��־λ����־�Ѿ��յ�һ������ָ��ڶ�ʱ���ж��е������н�������
 uint8_t flag_command_recieved = 0;
 uint8_t flag_command_recieved1 = 0;
 uint8_t flag_command_recieved2 = 0;
@@ -178,14 +153,14 @@ void resolve_json_chassis_command(void)
 	json_t *chassis_obj;
 	json_t *item_obj;
 	json_error_t error;
-	root = json_loads(json_Buffer,0,&error); //����Json�ַ��� ����������������or  object
+	root = json_loads(json_Buffer,0,&error); //
 	chassis_obj = json_object_get( root, "chassis" );  //Get a value corresponding to key from object
 	item_obj = json_array_get( chassis_obj, 0 );//Returns the element in array at position index
 	Kinematics.target_velocities.linear_x =5.0f*json_integer_value(item_obj);	//real
 	item_obj = json_array_get( chassis_obj, 1 );
 	Kinematics.target_velocities.linear_y = 5.0f*json_integer_value(item_obj);
 	item_obj = json_array_get( chassis_obj, 2 );
-	Kinematics.target_velocities.angular_z = 0.8f*json_integer_value(item_obj);//100;///100;
+	Kinematics.target_velocities.angular_z = 0.8f*json_integer_value(item_obj);
 	json_decref(item_obj); //Decrement the reference count of json. As soon as a call to json_decref() drops the reference count to zero, the value is destroyed and it can no longer be used.
 	json_decref(chassis_obj);
 	json_decref(root);

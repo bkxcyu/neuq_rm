@@ -21,14 +21,7 @@ float caculate_linear_speed(int width,int mid,int min,int max);
 float caculate_rotational_speed(int width,int mid,int min,int max);
 float caculate_gimbal_pitch_angle(int width,int mid,int min,int max);
 float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
-float yaw_max_angular(float yaw);
-float x_max_acceleration_caculator(float acc);
-float y_max_acceleration_caculator(float acc);
-float z_max_acceleration_caculator(float acc);
-static float y_acceleration=0;
-static float z_acceleration=0;
-static float imu_yaw_angular=0;
-float ax,ay,v_yaw;
+
 // º¯Êı: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
 // ²ÎÊı£ºÎŞ
@@ -99,9 +92,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					
 					default:
 	      	break;
-				}
-				
-			
+				}						
 			                      }
 			if(gimbal_CH_width==1)
 			{
@@ -154,7 +145,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 			
 			
 		
-		if(dance_CH_width==2)	//Èç¹ûÍ£Ö¹ÃüÁî
+		if(dance_CH_width==2)	//Ğ¡ÍÓÂİÄ£Ê½
 		{
 		x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
 		y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
@@ -178,67 +169,18 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		{
 			y_speed = -y_speed;
 		}
-		speed_control(x_speed,y_speed,r_speed);
+		Kinematics.target_velocities.linear_x=x_speed;//·ÅÔÚrobomoveÖĞÖ´ĞĞ.
+		Kinematics.target_velocities.linear_y=y_speed;
+		Kinematics.target_velocities.angular_z=r_speed;
+		//speed_control(x_speed,y_speed,r_speed);
 		trigger_control(trigger_speed);
-		TIM_SetCompare1(TIM1,pwm_pulse1);
-		TIM_SetCompare2(TIM1,pwm_pulse2);
+		//TIM_SetCompare1(TIM1,pwm_pulse1);
+		//TIM_SetCompare2(TIM1,pwm_pulse2);
 	
 	}
-	ax=x_max_acceleration_caculator(x_accelerationRead());
-  ay=y_max_acceleration_caculator(y_accelerationRead());
-  z_max_acceleration_caculator(z_accelerationRead());
-  v_yaw=yaw_max_angular(yaw_angularRead());
-}
-/***********************************************¼ÓËÙ¶È²âÊÔ´úÂë******************************************/
-
-
-float x_max_acceleration_caculator(float acc)
-{
-	static float x_acceleration=0;
-	if(acc>x_acceleration);
-	 x_acceleration=acc;
-	return x_acceleration;
-}
-float y_max_acceleration_caculator(float acc)
-{
-	if(acc>y_acceleration);
-	y_acceleration=acc;
-	return y_acceleration;
-}
-float z_max_acceleration_caculator(float acc)
-{
-	if(acc>z_acceleration);
-	z_acceleration=acc;
-	return z_acceleration;
+	
 }
 
-float yaw_max_angular(float yaw)
-{
-  if(yaw>imu_yaw_angular)
-	imu_yaw_angular=yaw;
-  return imu_yaw_angular;
-}
-float x_max_speed_caculator(float x)
-{
-   static float x_last=0;
-	 if(x>x_last)
-		x_last=x;
-	 return x_last;
-}
-float y_max_speed_caculator(float y)
-{
-    static float y_last=0;
-		if(y>y_last)
-		y_last=y;
-		return y_last;
-}
-float z_max_speed_caculator(float z)
-{
-   static float z_last=0;
-	 if(z>z_last)
-		z_last=z;
-    return z_last;
-}
 
 // º¯Êı: caculate_speed()
 // ÃèÊö: ½«Ò£¿ØÆ÷Ò¡¸ËÊä³öÓ³Éäµ½»úÆ÷ÈËÈıÖáËÙ¶ÈÉÏ

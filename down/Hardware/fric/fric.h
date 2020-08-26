@@ -17,7 +17,7 @@ typedef unsigned long long uint64_t;
 typedef unsigned char bool_t;
 typedef float fp32;
 typedef double fp64;
-
+void auto_fire(void);
 extern void fric_PWM_configuration(void);
 extern void fric_off(void);
 extern void fric1_on(uint16_t cmd);
