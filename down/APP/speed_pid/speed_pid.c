@@ -14,7 +14,7 @@
 int pid_flag_start=1;
 int pid_flag_end=0;
 
-
+int vpid_out_max=vPID_OUT_MAX;
 int find_max(void);
 
 // 函数: VPID_Init()
@@ -67,10 +67,10 @@ void vpid_realize(VPID_t *vpid,float kp,float ki)
 	vpid->I_OUT = ki * vpid->err_integration;		//I项
 	
 	//输出限幅
-	if((vpid->P_OUT + vpid->I_OUT) > vPID_OUT_MAX) 
-		vpid->PID_OUT = vPID_OUT_MAX;
-	else if((vpid->P_OUT + vpid->I_OUT) < -vPID_OUT_MAX) 
-		vpid->PID_OUT = -vPID_OUT_MAX;
+	if((vpid->P_OUT + vpid->I_OUT) > vpid_out_max) 
+		vpid->PID_OUT = vpid_out_max;
+	else if((vpid->P_OUT + vpid->I_OUT) < -vpid_out_max) 
+		vpid->PID_OUT = -vpid_out_max;
 	else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
 }

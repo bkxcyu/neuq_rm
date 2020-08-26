@@ -1,6 +1,6 @@
 #ifndef _MODE_H
 #define _MODE_H
-
+extern int vpid_out_max;
 typedef enum  chassis_mode_t
 { 
 	 chassis_normal_mode=0,

@@ -30,9 +30,7 @@ Kinematics_t Kinematics;
 //把想要得到的底盘速度转换为轮子的线速度
 void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z)
 {
-//	Kinematics.target_velocities.linear_x  = linear_x;
-//	Kinematics.target_velocities.linear_y  = linear_y;
-//	Kinematics.target_velocities.angular_z = angular_z;
+
 	
 	Kinematics.wheel1.target_speed.linear_vel = 1.04f*(linear_y - linear_x + angular_z*(half_width + half_length));
 	Kinematics.wheel2.target_speed.linear_vel = linear_y + linear_x - angular_z*(half_width + half_length);

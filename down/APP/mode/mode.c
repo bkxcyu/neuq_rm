@@ -1,6 +1,6 @@
 #include "json.h" 
 #include "mode.h"
-
+#include "motor.h"
 
 extern enum  chassis_mode_t  chassis_modes;
 extern enum  gimbal_mode_t   gimbal_modes;
@@ -13,6 +13,11 @@ void chassis_behavior(void)
 	{
 		case chassis_normal_mode:
 			
+		  max_motor_speed=15336;
+		  max_base_linear_speed=217.812f;
+		  max_base_rotational_speed=7.26057;
+			vpid_out_max=8000;
+		
 		break;
 		
 		case 	chassis_dodge_mode:
@@ -21,6 +26,11 @@ void chassis_behavior(void)
 		
 		case chassis_motion_mode:
 			
+			max_motor_speed=30672;
+		  max_base_linear_speed=435.624f;
+		  max_base_rotational_speed=14.52114;
+			vpid_out_max=16000;
+		
 		break;
 		
 		case  chassis_follow_mode:

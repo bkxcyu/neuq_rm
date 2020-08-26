@@ -33,7 +33,7 @@ int main()
  	All_Init();												//机器人所有配置初始化
 	max_base_linear_speed = MAX_BASE_LINEAR_SPEED;							//底盘中心最大线速度           
 	max_base_rotational_speed = MAX_BASE_ROTATIONAL_SPEED;			//地盘中心最大角速度
-	max_motor_speed = MAX_MOTOR_SPEED;		//电机最大转速，通过上面宏定义更改
+//	max_motor_speed = MAX_MOTOR_SPEED;		//电机最大转速，通过上面宏定义更改
 		
 	//	set_moto_angle(4000,0,0,0);		//调试   设定指定角度
 	
@@ -122,6 +122,7 @@ void TIM3_IRQHandler(void)
 		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
+			chassis_behavior();
 			Robo_Move();
 		
 		/*****    按键扫描   ******/

@@ -66,6 +66,8 @@ typedef struct{
 extern MOTOR_t motor1,motor2,motor3,motor4,motor5,motor6,gimbal1,gimbal2;//**********************************
 
 extern int max_motor_speed;
+extern float max_base_linear_speed;
+extern float max_base_rotational_speed;
 
 //电机电流参数结构体
 typedef struct{			
