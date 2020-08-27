@@ -55,22 +55,27 @@ void VPID_Init_All()
 // 内部函数，用户无需调用
 void vpid_realize(VPID_t *vpid,float kp,float ki)
 {
-	vpid->err = vpid->target_speed - vpid->actual_speed;
+		vpid->err = vpid->target_speed - vpid->actual_speed;
+		
+	if(vpid->err==0)
+	{
+   vpid->err_integration=0;
+	}
 	if(abs(vpid->err) <= IntegralSeparation)		//积分分离
-		vpid->err_integration += vpid->err;
+			vpid->err_integration += vpid->err;
 	if(vpid->err_integration > IntegralUpperLimit)		//抗积分饱和
 		vpid->err_integration = IntegralUpperLimit;
 	else if(vpid->err_integration < -IntegralUpperLimit)
-		vpid->err_integration = -IntegralUpperLimit;
+		vpid->err_integration = -Integralgimbal;
 	
 	vpid->P_OUT = kp * vpid->err;								//P项
 	vpid->I_OUT = ki * vpid->err_integration;		//I项
 	
 	//输出限幅
-	if((vpid->P_OUT + vpid->I_OUT) > vpid_out_max) 
-		vpid->PID_OUT = vpid_out_max;
-	else if((vpid->P_OUT + vpid->I_OUT) < -vpid_out_max) 
-		vpid->PID_OUT = -vpid_out_max;
+	if((vpid->P_OUT + vpid->I_OUT )> vPID_OUT_MAX) 
+		vpid->PID_OUT = vPID_OUT_MAX;
+	else if((vpid->P_OUT + vpid->I_OUT ) < -vPID_OUT_MAX) 
+		vpid->PID_OUT = -vPID_OUT_MAX;
 	else
 		vpid->PID_OUT = vpid->P_OUT + vpid->I_OUT;
 }
