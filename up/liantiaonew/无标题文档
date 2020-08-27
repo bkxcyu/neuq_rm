@@ -1,0 +1,6 @@
+roscore
+ source ./devel/setup.bash
+rosrun hkvs hkvs_pub 
+rosrun hkvs tyj
+rosrun hkvs serialfirst.py
+密码：tyj200117

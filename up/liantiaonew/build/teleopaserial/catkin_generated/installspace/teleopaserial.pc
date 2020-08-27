@@ -1,0 +1,8 @@
+prefix=/home/tyj/liantiaonew/install
+
+Name: teleopaserial
+Description: Description of teleopaserial
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime

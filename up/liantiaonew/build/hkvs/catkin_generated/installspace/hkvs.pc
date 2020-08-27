@@ -1,0 +1,8 @@
+prefix=/home/tyj/liantiaonew/install
+
+Name: hkvs
+Description: Description of hkvs
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: cv_bridge std_msgs roscpp image_transport message_generation

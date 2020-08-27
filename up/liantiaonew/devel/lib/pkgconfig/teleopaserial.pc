@@ -1,0 +1,8 @@
+prefix=/home/tyj/liantiaonew/devel
+
+Name: teleopaserial
+Description: Description of teleopaserial
+Version: 0.0.0
+Cflags: -I/home/tyj/liantiaonew/devel/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime

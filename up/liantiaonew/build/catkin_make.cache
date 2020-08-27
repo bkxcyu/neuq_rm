@@ -1,0 +1,2 @@
+hkvs:hkvs_cam
+-DCATKIN_DEVEL_PREFIX=/home/tyj/liantiaonew/devel -DCMAKE_INSTALL_PREFIX=/home/tyj/liantiaonew/install -G Unix Makefiles
