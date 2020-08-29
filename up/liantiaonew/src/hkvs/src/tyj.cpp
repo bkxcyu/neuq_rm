@@ -34,7 +34,20 @@ cv::Point left_bottom;
 cv::Point right_top;
 cv::Point right_bottom;
 
+cv::Point pt1;
+cv::Point pt2;
+cv::Point pt3;
+cv::Point pt4;
+
+cv::Point pt5;
+cv::Point pt6;
+cv::Point pt7;
+cv::Point pt8;
+
 cv_bridge::CvImagePtr cv_ptr;
+
+
+
 class ImageConverter
 {
 private:
@@ -47,6 +60,9 @@ private:
     ros::Publisher squarepub = nh_.advertise<hkvs::square>("point2d", 1);
     ros::Publisher velpub = nh_.advertise<hkvs::vel>("vel_linear", 1);
 public:
+
+    cv::RotatedRect& adjustRec(cv::RotatedRect& rec);
+    int judgeAngle(cv::RotatedRect& rec,cv::RotatedRect& rec1);
     ImageConverter()
     : it_(nh_)
     {
@@ -194,22 +210,45 @@ public:
                     measurement.at<float>(0) = (float)rrect.center.x;
                     measurement.at<float>(1) = (float)rrect.center.y;
                     KF.correct(measurement);
+		    
+		    pt1=vertices[0];
+		    pt2=vertices[1];
+		    pt3=vertices[2];
+		    pt4=vertices[3];
 
-		    left_bottom=vertices[2];
-	    	    left_top=vertices[3];
-		    right_top = verticesA[0];
-		    right_bottom=verticesA[1];
-                    
-                    cout<<"left_bottom: "<<left_bottom<<endl;
-		    cout<<"left_top: "<<left_top<<endl;
-		    cout<<"right_top: "<<right_top<<endl;
-		    cout<<"right_bottom: "<<right_bottom<<endl;
+		    pt5=verticesA[0];
+		    pt6=verticesA[1];
+		    pt7=verticesA[2];
+		    pt8=verticesA[3];
+		    adjustRec(rrect);
+		    adjustRec(rrectA);
+		    int judge=judgeAngle(rrect,rrectA);
+     		    if(judge==1){
+			left_bottom=pt5;
+	    	    	left_top=pt6;
+		    	right_top = pt3;
+		    	right_bottom=pt4;				
+		    }
+		    else if(judge==2){
+			left_bottom=pt5;
+	    	    	left_top=pt6;
+		    	right_top = pt1;
+		    	right_bottom=pt2;				
+		    }
+		    else if(judge==3){
+			left_bottom=pt7;
+	    	    	left_top=pt8;
+		    	right_top = pt3;
+		    	right_bottom=pt4;				
+		    }
+		    else if(judge==4){
+			left_bottom=pt7;
+	    	    	left_top=pt8;
+		    	right_top = pt1;
+		    	right_bottom=pt2;				
+		    }
 
-		    line(binary1,left_bottom,left_top,Scalar(0,255,255),1);
-		    line(binary1,left_top,right_top,Scalar(0,255,255),1);
-		    line(binary1,right_top,right_bottom,Scalar(0,255,255),1);
-		    line(binary1,right_bottom,left_bottom,Scalar(0,255,255),1);
-            	    delete[]vertices;
+		    
                     int a1 = rrect.center.x-0.5*rrect.size.width;
                     int a2 = rrect.center.y-0.5*rrect.size.height;
                     int b1 = rrectA.center.x+0.5*rrectA.size.width;
@@ -219,6 +258,11 @@ public:
                     int d1 = b1;
                     int d2 = c2;  
                   
+		    line(binary1,left_bottom,left_top,Scalar(0,255,255),1);
+		    line(binary1,left_top,right_top,Scalar(0,255,255),1);
+		    line(binary1,right_top,right_bottom,Scalar(0,255,255),1);
+		    line(binary1,right_bottom,left_bottom,Scalar(0,255,255),1);
+
 
                     int point_x=(rrect.center.x+rrectA.center.x)/2;                 
                     //cout<<"point_x="<<point_x<<endl;
@@ -269,7 +313,7 @@ public:
             //}
             imshow("frame",binary1); 
             waitKey(1);
-
+            	    delete[]vertices;
             finish = clock();
             totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
             //cout<<"Time whole"<<totaltime<<"秒"<<endl;
@@ -278,6 +322,47 @@ public:
     }
     }
 };
+
+RotatedRect& ImageConverter::adjustRec(cv::RotatedRect& rec)
+{
+	using std::swap;
+
+	float& width = rec.size.width;
+	float& height = rec.size.height;
+	float& angle = rec.angle;
+
+
+	while (angle >= 90.0) angle -= 180.0;
+	while (angle < -90.0) angle += 180.0;
+
+	
+	
+		if (angle >= 45.0)
+		{
+			swap(width, height);
+			angle -= 90.0;
+		}
+		else if (angle < -45.0)
+		{
+			swap(width, height);
+			angle += 90.0;
+		}
+	
+
+	return rec;
+}
+
+int ImageConverter::judgeAngle(cv::RotatedRect& rec,cv::RotatedRect& rec1){
+	float& angle = rec.angle;
+	float& angle1 = rec1.angle;
+	if (angle>0 && angle1>0) return 1;
+	else if(angle>0 && angle1<0)return 2;
+	else if(angle<0 && angle1>0)return 3;
+	else return 4;
+
+}
+ 
+
 
 int main(int argc, char** argv)
 {
