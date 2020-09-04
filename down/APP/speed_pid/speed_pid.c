@@ -2,13 +2,13 @@
 #include "motor.h"
 #include "Kinematic.h"
 
-#define IntegralUpperLimit    5000
-#define Integralgimbal        500
-#define IntegralSeparation    300
+#define IntegralUpperLimit    5000    //底盘抗积分饱和值
+#define Integralgimbal        500     //云台积分饱和值
+#define IntegralSeparation    300     //底盘积分分离
 #define vPID_OUT_MAX          8000		//即最大电流
-#define gPID_OUT_MAX          30000
-#define gimbal_angel_upperlimit  500  //云台速度环上限
-#define gimbal_angel_downlimit   20  //云台速度环下限
+#define gPID_OUT_MAX          30000   //云台pid输出限幅
+#define gimbal_angel_upperlimit  500  //云台抗积分饱和值
+#define gimbal_angel_downlimit   20   //云台积分分离
 #define tvPID_OUT_MAX         9000    //拨弹轮
 
 int pid_flag_start=1;
