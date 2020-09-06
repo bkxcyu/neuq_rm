@@ -53,7 +53,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 				{
 					case  1:
 					
-			   	fric1_on(1500);
+			   	fric1_on(1500);//1500
 				  fric2_on(1500);
          static int count_1=1;	
 					count_1++;
@@ -86,7 +86,7 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					
 					case 3:
 						trigger_speed = 0;
-				    fric1_on(1000);
+				    fric1_on(1000);//1000
 				    fric2_on(1000);
 					break;
 					

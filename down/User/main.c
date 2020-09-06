@@ -122,7 +122,7 @@ void TIM3_IRQHandler(void)
 		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
-			chassis_behavior();
+		//	chassis_behavior();
 			Robo_Move();
 		
 		/*****    按键扫描   ******/

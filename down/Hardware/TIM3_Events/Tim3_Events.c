@@ -49,7 +49,7 @@ void Robo_Move()
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);		
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
-		auto_fire();//上位机发送标志位  开火
+		//auto_fire();//上位机发送标志位  开火
 	}
  
 	
