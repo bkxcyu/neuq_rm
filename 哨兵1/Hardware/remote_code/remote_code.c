@@ -356,6 +356,3 @@ static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
 	return pwm_pulse;
 	
 }
-
-
-

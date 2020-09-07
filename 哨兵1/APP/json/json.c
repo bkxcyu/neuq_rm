@@ -15,8 +15,8 @@
   enum gimbal_mode_t gimbal_modes;
   enum fric_mode_t fric_modes;
 
-float pwm_pulse1=1500;
-float pwm_pulse2=1667;
+float pwm_pulse1;
+float pwm_pulse2;
 
 
 
@@ -182,6 +182,22 @@ void resolve_json_chassis_command(void)
 }
 //�����յ�����̨����ָ��
 float gimbal_xunhang;
+void resolve_gimbal_mode_command()
+{ 
+	json_t *root;
+	json_t *gimbal_obj;
+	json_t *item_obj;
+	json_error_t error;
+	root = json_loads(json_Buffer,0,&error);
+	gimbal_obj = json_object_get( root, "state" );
+	item_obj = json_array_get( gimbal_obj, 0 );
+	gimbal_xunhang=1.0f*json_integer_value(item_obj);
+	json_decref(item_obj);
+	json_decref(gimbal_obj);
+	json_decref(root);
+
+}
+
 void resolve_json_gimbal_command()
 { 
 	json_t *root;
@@ -295,21 +311,6 @@ void resolve_chassis_mode_command()
 	chassis_modes = (chassis_mode_t)(json_integer_value(item_obj));
 	json_decref(item_obj);
 	json_decref(chassis_mode_obj);
-	json_decref(root);
-
-}
-void resolve_gimbal_mode_command()
-{
-  json_t *root;
-	json_t *gimbal_mode_obj;
-	json_t *item_obj;
-	json_error_t error;
-	root = json_loads(json_Buffer,0,&error);
-	gimbal_mode_obj = json_object_get( root, "gimbal_mode" );
-	item_obj = json_array_get( gimbal_mode_obj, 0 );
-	gimbal_modes = (gimbal_mode_t)(json_integer_value(item_obj));
-	json_decref(item_obj);
-	json_decref(gimbal_mode_obj);
 	json_decref(root);
 
 }
