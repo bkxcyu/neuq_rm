@@ -42,8 +42,6 @@ int main()
 	while(1)
 	{
 		
-		//fric1_on(2200);
-		//fric2_on(2200);
 		LED0=!LED0;
 		delay_ms(500);
 	
