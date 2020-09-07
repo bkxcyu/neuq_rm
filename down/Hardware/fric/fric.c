@@ -46,7 +46,7 @@ void fric_PWM_configuration(void) //
     TIM_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_Low;
     TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Set;
     TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCIdleState_Reset;
-    TIM_OCInitStructure.TIM_Pulse = 1000;//ÐÞ¸Ä
+    //TIM_OCInitStructure.TIM_Pulse = 1000;//ÐÞ¸Ä
 
     TIM_OC3Init(TIM1, &TIM_OCInitStructure);
     TIM_OC4Init(TIM1, &TIM_OCInitStructure);
