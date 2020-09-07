@@ -68,7 +68,7 @@ void TIM3_IRQHandler(void)
 		time_count++;
 		
 		/*****   遥控器控制    ******/
-	//	Remote_Control();				//遥控器控制代码
+		Remote_Control();				//遥控器控制代码
 		
 		/****  ROS上位机控制  *****/
 		if(flag_command_recieved == 1)	//每一毫秒检查一次是否收到控制指令
@@ -123,7 +123,7 @@ void TIM3_IRQHandler(void)
 		}
 		/****  机器人运动控制  *****/
 		if(time_count%7 ==0)		//7ms
-			//Robo_Move();
+			Robo_Move();
 		
 		/*****    按键扫描   ******/
 		if(time_count%31 == 0)		//31ms  消抖

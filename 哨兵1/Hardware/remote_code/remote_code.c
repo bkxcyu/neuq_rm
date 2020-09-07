@@ -97,8 +97,8 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					default:
 	      	break;
 				}
-				pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
-				pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
+				//pwm_pulse1=caculate_gimbal_pitch_angle(i_CH_width,i_initial_value,i_min_value,i_max_value);
+				//pwm_pulse2=caculate_gimbal_yaw_angle(x_CH_width,x_initial_value,x_min_value,x_max_value);
 			
 			                      }
 			if(gimbal_CH_width==1)
@@ -170,8 +170,8 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		}
 		speed_control(x_speed,y_speed,r_speed);
 		trigger_control(trigger_speed);
-		//TIM_SetCompare1(TIM1,pwm_pulse1);
-		//TIM_SetCompare2(TIM1,pwm_pulse2);
+		TIM_SetCompare1(TIM1,pwm_pulse1);
+		 TIM_SetCompare2(TIM1,pwm_pulse2);
 	
 	}
 	/*ax=x_max_acceleration_caculator(x_accelerationRead());

@@ -50,7 +50,7 @@ void Robo_Move()
  if(1) /*if((Control_Mode) == 0x03)//((Control_Mode & auto_control) == auto_control)*/
 	{
 		speed_control(Kinematics.target_velocities.linear_x, Kinematics.target_velocities.linear_y, Kinematics.target_velocities.angular_z);
-		pid_target_speed=pid_pc();		
+		//pid_target_speed=pid_pc();		
 		gimbal_control(Kinematics.target_angular.gimbal_angular.yaw_angular,Kinematics.target_angular.gimbal_angular.pitch_angular);
 		//gimbal_control(360,180);
 /*	if(Kinematics.target_angular.fric_angular==1)//自动射击使用
@@ -89,8 +89,8 @@ void Robo_Move()
 	  set_trigger_current();
 	  set_gimbal_current();
 
-	  TIM_SetCompare1(TIM1,1462);
-		TIM_SetCompare2(TIM1,1643);
+	 // TIM_SetCompare1(TIM1,1462);
+		//TIM_SetCompare2(TIM1,1643);
 
 	  
 }
