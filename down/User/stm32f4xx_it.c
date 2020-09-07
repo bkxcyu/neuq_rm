@@ -248,7 +248,7 @@ void JSON_USART_IRQHandler(void)
 }
 
 
-//set_motor_speed(motor1.target_speed, motor2.target_speed, motor3.target_speed, motor4.target_speed);
+
 union {char data[2];uint16_t uivalue;int16_t ivalue;}tmp;
 
 #if CAN1_RX0_INT_ENABLE	//Ê¹ÄÜRX0ÖÐ¶Ï

@@ -65,6 +65,7 @@ void send_infantry_info_by_json(void)
 
 
 
+
 void send_chassis_info_by_json(void)
 {
 	Kinematics.actual_velocities.linear_x=5;

@@ -22,6 +22,8 @@ float caculate_rotational_speed(int width,int mid,int min,int max);
 float caculate_gimbal_pitch_angle(int width,int mid,int min,int max);
 float caculate_gimbal_yaw_angle(int width,int mid,int min,int max);
 
+int QQ=0,SS=0;
+
 // º¯Êı: Remote_Control()
 // ÃèÊö: Ò£¿Ø´úÂë£¬½«Ò£¿ØÆ÷Êä³ö¶ÔÓ¦µ½»úÆ÷ÈË¾ßÌå¶¯×÷ÉÏ£¬·ÅÔÚ¶¨Ê±Æ÷Àï²»¶ÏµØË¢
 // ²ÎÊı£ºÎŞ
@@ -53,8 +55,8 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 				{
 					case  1:
 					
-			   	fric1_on(1500);
-				  fric2_on(1500);
+			   	fric1_on(QQ);
+				  fric2_on(QQ);
          static int count_1=1;	
 					count_1++;
 					if(count_1>100)
@@ -86,8 +88,8 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 					
 					case 3:
 						trigger_speed = 0;
-				    fric1_on(1000);
-				    fric2_on(1000);
+				    fric1_on(400);
+				    fric2_on(400);
 					break;
 					
 					default:
