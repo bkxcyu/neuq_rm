@@ -44,10 +44,10 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 	{
 		
 			if(chassis_CH_width==3)
-			{
-				x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
-			  y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
-			  r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
+			{  
+				 x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
+				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+			   r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
 				
 				switch(trigger_CH_width)
 				{
@@ -147,9 +147,9 @@ void Remote_Control()    //Õâ¸öº¯ÊıÀï¾Í²»¶ÏµØÅĞ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼ş¾Í×öÏ
 		
 		if(dance_CH_width==2)	//Ğ¡ÍÓÂİÄ£Ê½
 		{
-		x_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
-		y_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
-		r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value);  
+		     x_speed=caculate_linear_speed(y_CH_width,y_initial_value,y_min_value,y_max_value);
+				 y_speed=caculate_linear_speed(x_CH_width,x_initial_value,x_min_value,x_max_value);
+			   r_speed=caculate_rotational_speed(r_CH_width,r_initial_value,r_min_value,r_max_value); 
 		theta = Kinematics.actual_velocities.angular_z * 0.004f + theta; 
 	  theta = yawRead();
 		cx_speed = x_speed*cos(theta) + y_speed*sin(theta);

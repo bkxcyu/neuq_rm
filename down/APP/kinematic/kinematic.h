@@ -2,8 +2,8 @@
 #define _KINEMATIC_H
 
 #define wheel_diameter  10.000000f			//轮子直径
-#define half_width  13.000000f		//底盘半宽
-#define half_length  13.000000f		//底盘半长
+#define half_width  25.000000f		//底盘半宽
+#define half_length  35.000000f		//底盘半长
 
 #define PI 			3.141593f
 #define RPM2RAD 0.104720f										//转速转角速度		1 rpm = 2pi/60 rad/s 

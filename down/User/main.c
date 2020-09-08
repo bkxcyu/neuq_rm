@@ -22,8 +22,8 @@
 #define MAX_MOTOR_SPEED   15336				//电机最大转速，宏定义方便修改   范围0 - 10000   15336   
 #define MAX_BASE_LINEAR_SPEED    217.817f    //底盘最大平移速度，单位cm/s   
 #define MAX_BASE_ROTATIONAL_SPEED    7.260570f    //底盘最大旋转速度，单位rad/s    
-float max_base_linear_speed;
-float max_base_rotational_speed;
+float max_base_linear_speed=217.817f;
+float max_base_rotational_speed=7.260570f;
 extern IMU_DATA imu_data;
 extern char receiveBuffer[MAX_LENGTH];
 extern char json_Buffer[MAX_LENGTH];
