@@ -32,10 +32,10 @@ void BaseVel_To_WheelVel(float linear_x, float linear_y, float angular_z)
 {
 
 	
-	Kinematics.wheel1.target_speed.linear_vel = linear_x - linear_y - angular_z*(half_width+half_length);
-	Kinematics.wheel2.target_speed.linear_vel = linear_x + linear_y + angular_z*(half_width+half_length);
-	Kinematics.wheel3.target_speed.linear_vel = linear_x + linear_y - angular_z*(half_width+half_length);
-	Kinematics.wheel4.target_speed.linear_vel = linear_x -  linear_y + angular_z*(half_width+half_length);
+	Kinematics.wheel1.target_speed.linear_vel = linear_x - linear_y + angular_z*(half_width+half_length);
+	Kinematics.wheel2.target_speed.linear_vel = linear_x + linear_y - angular_z*(half_width+half_length);
+	Kinematics.wheel3.target_speed.linear_vel = linear_x + linear_y + angular_z*(half_width+half_length);
+	Kinematics.wheel4.target_speed.linear_vel = linear_x -  linear_y - angular_z*(half_width+half_length);
 	//线速度 cm/s  转转度  RPM 
 	Kinematics.wheel1.target_speed.rpm = Kinematics.wheel1.target_speed.linear_vel * VEL2RPM;
 	Kinematics.wheel2.target_speed.rpm = Kinematics.wheel2.target_speed.linear_vel * VEL2RPM;

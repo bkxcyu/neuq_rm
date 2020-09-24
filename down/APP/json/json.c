@@ -16,7 +16,7 @@
   enum fric_mode_t fric_modes;
 
 float pwm_pulse1=1500;
-float pwm_pulse2=1500;
+float pwm_pulse2=1290;
 
 
 
@@ -177,8 +177,8 @@ void resolve_json_gimbal_command()
 	gimbal_obj = json_object_get( root, "gimbal" );
 	item_obj = json_array_get( gimbal_obj, 0 );
 	Kinematics.target_angular.gimbal_angular.yaw_angular=1.0f*json_integer_value(item_obj); //10000;
-	item_obj = json_array_get( gimbal_obj, 1 );
-	Kinematics.target_angular.gimbal_angular.pitch_angular=1.0f*json_integer_value(item_obj);
+	//item_obj = json_array_get( gimbal_obj, 1 );
+	//Kinematics.target_angular.gimbal_angular.pitch_angular=1.0f*json_integer_value(item_obj);
 	json_decref(item_obj);
 	json_decref(gimbal_obj);
 	json_decref(root);

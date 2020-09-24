@@ -172,7 +172,7 @@ void Remote_Control()    //Õâ¸öº¯ÊýÀï¾Í²»¶ÏµØÅÐ¶ÏÃ¿¸öÍ¨µÀµÄÖµ£¬Èç¹ûÂú×ãÌõ¼þ¾Í×öÏ
 		Kinematics.target_velocities.linear_x=x_speed;//·ÅÔÚrobomoveÖÐÖ´ÐÐ.
 		Kinematics.target_velocities.linear_y=y_speed;
 		Kinematics.target_velocities.angular_z=r_speed;
-		//speed_control(x_speed,y_speed,r_speed);
+		speed_control(x_speed,y_speed,r_speed);
 		trigger_control(trigger_speed);
 		//TIM_SetCompare1(TIM1,pwm_pulse1);
 		//TIM_SetCompare2(TIM1,pwm_pulse2);
@@ -234,13 +234,13 @@ static float caculate_gimbal_pitch_angle(int width,int mid,int min,int max)
 
 static float caculate_gimbal_yaw_angle(int width,int mid,int min,int max)
 {
-	float pwm_pulse=1500;
+	float pwm_pulse=1290;
 		if(width>=(mid+2))
-		pwm_pulse=(1500 - 1.0*(width-(mid+2))/(max-(mid+2))*420);
+		pwm_pulse=(1290 - 1.0*(width-(mid+2))/(max-(mid+2))*420);
 	else if(width<=(mid-2))
-	  pwm_pulse=(1500 + 1.0*((mid-2)-width)/((mid-2)-min)*420);
+	  pwm_pulse=(1290 + 1.0*((mid-2)-width)/((mid-2)-min)*420);
 	else
-		pwm_pulse=1500;
+		pwm_pulse=1290;
 	return pwm_pulse;
 	
 }
